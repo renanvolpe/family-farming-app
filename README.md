@@ -4,13 +4,14 @@ A new Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+# the project wil be start at the main.dart
 
-A few resources to get you started if this is your first Flutter project:
+# core/ - Folder that include all that will be used in whole project
+# Ex: Extensions and Endpoints
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# models/ - Folder that include the type of the datas that will be get from API or used Insided in pages
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+# modules/ - Folder that Diferent modules that will be processed in app(maps, login, register...) for the moment, just map
+
+# services/ - Folder that that connect to api
+
