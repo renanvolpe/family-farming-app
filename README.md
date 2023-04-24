@@ -15,3 +15,22 @@ A new Flutter project.
 
 # services/ - Folder that that connect to api
 
+# style guide: 
+# 1. In Folders and Files name, use Snake case. Insise the File, use PascalCase
+# Ex: name´s folder: home/ , login/ , register/
+# Ex: name´s files: home_order.dart , home_main.dart, login_page.dart, account_page.dart
+# Ex: name inside the files: HomeOrder, HomeMain, LoginPage, AccountPage
+
+# 2. The name of the files 
+# When create a page, use suffix "Page", like: HomePage, AccountPage, LoginPage
+# When Create a component, use Suffix "Component", like: LocationComponent, UserDetailComponent, AccountInformationComponent 
+
+
+# extensions in VsCode That will help the dev:
+# - Awesome Flutter Snippets
+# - Bloc
+# - Dart
+# - Dart Data Class Generator
+# - Erros Lens
+# - Flutter
+# - Pubspec Assist
