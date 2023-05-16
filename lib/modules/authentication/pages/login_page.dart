@@ -17,13 +17,76 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("This is the title"),
+        title: const Text("Tela login"),
         centerTitle: true,
       ),
       body: Column(
         children: [
+          const Text(
+            'Entre em sua conta',
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              color: Color.fromRGBO(41, 45, 50, 1.0),
+              fontSize: 40,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
           Container(
-            color: Colors.yellow,
+            padding: const EdgeInsets.only(top: 40, right: 180),
+            child: const SizedBox(
+              width: 170.0,
+              height: 25.0,
+              child: Text(
+                'Email',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  color: Color.fromRGBO(41, 45, 50, 1.0),
+                  fontSize: 17,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
+          TextFormField(
+            controller: usernameController,
+            decoration: const InputDecoration(
+              hintText: "Insira seu email",
+              hintStyle: TextStyle(
+                color: Color.fromRGBO(179, 191, 203, 1.0),
+                fontSize: 17,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.only(top: 40, right: 180),
+            child: const SizedBox(
+              width: 170.0,
+              height: 25.0,
+              child: Text(
+                'Senha',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  color: Color.fromRGBO(41, 45, 50, 1.0),
+                  fontSize: 17,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ),
+          TextFormField(
+            decoration: const InputDecoration(
+              hintText: "Insira sua senha",
+              hintStyle: TextStyle(
+                color: Color.fromRGBO(179, 191, 203, 1.0),
+                fontSize: 17,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          Container(
+            color: const Color.fromRGBO(133, 202, 228, 1.0),
+            margin: const EdgeInsets.all(30),
             child: TextButton(
                 onPressed: () {
                   //button´s function
@@ -34,12 +97,13 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   );
                 },
-                child: const Text("Button to page register")),
+                child: const Text(
+                  "Ainda não é usuário? Cadastre-se!",
+                  style: TextStyle(
+                    color: Color.fromRGBO(21, 23, 25, 1.0),
+                  ),
+                )),
           ),
-          TextFormField(
-            controller: usernameController,
-            decoration: const InputDecoration(hintText: "Username"),
-          )
         ],
       ),
     );
