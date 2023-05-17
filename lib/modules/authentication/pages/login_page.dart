@@ -69,30 +69,30 @@ class _LoginPageState extends State<LoginPage> {
             ),
             SizedBox(
               width: 350.0,
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color.fromRGBO(179, 191, 203, 1.0),
+              child: DecoratedBox(
+                decoration: const BoxDecoration(
+                  color:  Color.fromRGBO(239, 242, 245, 1),
+                  borderRadius: BorderRadius.all(
+                        Radius.circular(14.0), //                 <--- border radius here
                     ),
                   ),
-                  hintText: "Insira seu email",
-                  hintStyle: TextStyle(
-                    color: Color.fromRGBO(179, 191, 203, 1.0),
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Abhaya Libre',
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color.fromRGBO(41, 45, 50, 1.0),
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    hintText: "Insira seu email",
+                    hintStyle: TextStyle(
+                      color: Color.fromRGBO(179, 191, 203, 1.0),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Abhaya Libre',
+                      
                     ),
                   ),
                 ),
               ),
             ),
             Container(
-              padding: const EdgeInsets.only(top: 40, right: 180),
+              padding: const EdgeInsets.only(top: 40, right: 180), //mudar padding para margin
               child: const SizedBox(
                 width: 170.0,
                 height: 25.0,
@@ -110,23 +110,23 @@ class _LoginPageState extends State<LoginPage> {
             ),
             SizedBox(
               width: 350.0,
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color.fromRGBO(179, 191, 203, 1.0),
+              child: DecoratedBox(
+                decoration: const BoxDecoration(
+                  color: Color.fromRGBO(239, 242, 245, 1),
+                  borderRadius: BorderRadius.all(
+                        Radius.circular(14.0), //                 <--- border radius here
                     ),
-                  ),
-                  hintText: "Insira sua senha",
-                  hintStyle: TextStyle(
-                    color: Color.fromRGBO(179, 191, 203, 1.0),
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                    fontFamily: 'Abhaya Libre',
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color.fromRGBO(41, 45, 50, 1.0),
+                ),
+                child: TextFormField(
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    hintText: "Insira sua senha",
+                    hintStyle: TextStyle(
+                      color: Color.fromRGBO(179, 191, 203, 1.0),
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Abhaya Libre',
+                      
                     ),
                   ),
                 ),
@@ -183,12 +183,14 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
-            const Row(
-              children: <Widget>[
+            Row(
+              children: const <Widget>[
                 Expanded(
                   child: Divider(
-                    color: Color.fromARGB(213, 222, 231, 194),
+                    color: Color.fromRGBO(213, 222, 231, 1),
                     indent: 30,
+                    thickness: 0.7,
+                    endIndent: 3,
                   ),
                 ),
                 Text(
@@ -201,8 +203,10 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 Expanded(
                   child: Divider(
-                    color: Color.fromARGB(213, 222, 231, 194),
+                    color: Color.fromRGBO(213, 222, 231, 1),
                     endIndent: 30,
+                    indent: 3,
+                    thickness: 0.7,
                   ),
                 ),
               ],
