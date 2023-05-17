@@ -83,9 +83,7 @@ class _LoginPageState extends State<LoginPage> {
             child: DecoratedBox(
               decoration: const BoxDecoration(
                 color: Color.fromRGBO(239, 242, 245, 1),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(14.0),
-                ),
+                borderRadius: BorderRadius.all(Radius.circular(14.0)),
               ),
               child: TextFormField(
                 decoration: const InputDecoration(
@@ -125,9 +123,7 @@ class _LoginPageState extends State<LoginPage> {
             child: DecoratedBox(
               decoration: const BoxDecoration(
                 color: Color.fromRGBO(239, 242, 245, 1),
-                borderRadius: BorderRadius.all(
-                  Radius.circular(14.0),
-                ),
+                borderRadius: BorderRadius.all(Radius.circular(14.0)),
               ),
               child: TextFormField(
                 decoration: const InputDecoration(
