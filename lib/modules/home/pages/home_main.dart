@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:organaki_app/modules/home/pages/home_account_page.dart';
 import 'package:organaki_app/modules/home/pages/home_map_page.dart';
 import 'package:organaki_app/modules/home/pages/home_orders_page.dart';
+import 'package:geolocator/geolocator.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({Key? key}) : super(key: key);
@@ -11,6 +12,13 @@ class HomeMain extends StatefulWidget {
 }
 
 class _HomeMainState extends State<HomeMain> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCurrentPosition();
+  }
+
   int currentIndex = 0;
 
   void changeIndexNavigator(int index) {
@@ -33,10 +41,21 @@ class _HomeMainState extends State<HomeMain> {
   ];
 
   final List<Widget> children = [
-    HomeMapPage(),
+    const HomeMapPage(),
     const HomeOrdersPage(),
     const HomeAccountPage(),
   ];
+
+  getCurrentPosition() async {
+    //LocationPermission response = await Geolocator.checkPermission();
+    LocationPermission response = await Geolocator.requestPermission();
+    if(response.name == "whileInUse"){
+       Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+
+    }
+   
+  }
 
   @override
   Widget build(BuildContext context) {
