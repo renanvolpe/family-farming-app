@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:organaki_app/modules/home/pages/home_account_page.dart';
 import 'package:organaki_app/modules/home/pages/home_map_page.dart';
@@ -16,7 +17,6 @@ class _HomeMainState extends State<HomeMain> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getCurrentPosition();
   }
 
   int currentIndex = 0;
@@ -46,16 +46,7 @@ class _HomeMainState extends State<HomeMain> {
     const HomeAccountPage(),
   ];
 
-  getCurrentPosition() async {
-    //LocationPermission response = await Geolocator.checkPermission();
-    LocationPermission response = await Geolocator.requestPermission();
-    if(response.name == "whileInUse"){
-       Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-
-    }
-   
-  }
+  
 
   @override
   Widget build(BuildContext context) {
