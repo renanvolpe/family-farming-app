@@ -191,8 +191,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
           ),
-          const Row(
-            children: <Widget>[
+          Row(
+            children: const <Widget>[
               Expanded(
                 child: Divider(
                   color: Color.fromRGBO(213, 222, 231, 1),
