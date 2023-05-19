@@ -1,36 +1,303 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:organaki_app/core/extensions.dart';
+
+
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key}) : super(key: key);
+  const RegisterPage({super.key});
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  // ignore: library_private_types_in_public_api
+  _RegisterPageState createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  //set variables here
-  //like  // int age = 20;
-  TextEditingController usernameController = TextEditingController();
+  File? _image;
+  final picker = ImagePicker();
+
+  Future getImage() async {
+    // ignore: deprecated_member_use
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      }
+    });
+  }
+  Future editImage() async {
+    // ignore: deprecated_member_use
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _image = File(pickedFile.path);
+      }
+    });
+  }
+  final _formKey = GlobalKey<FormState>();
+  final _fullNameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  final String _profileImage = '';
+
+  @override
+  void dispose() {
+    _fullNameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  void _register() {
+    if (_formKey.currentState!.validate()) {
+      // Processar o registro do usuário
+      String fullName = _fullNameController.text;
+      String email = _emailController.text;
+      String password = _passwordController.text;
+
+      // Aqui você pode fazer o que quiser com as informações do usuário, como enviar para um servidor, salvar localmente, etc.
+
+      // Exemplo de saída dos dados
+      if (kDebugMode) {
+        print('Full Name: $fullName');
+      }
+      if (kDebugMode) {
+        print('E-mail: $email');
+      }
+      if (kDebugMode) {
+        print('Password: $password');
+      }
+      if (kDebugMode) {
+        print('Profile Image: $_profileImage');
+      }
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text("This is the title of register"),
-        centerTitle: true,
+        leading: const Icon(Icons.arrow_back, color: Colors.black),
+        title: const Text('Fill your profile', style: TextStyle(color: Colors.black)),
+        backgroundColor: Colors.white,
       ),
-      body: Column(
-        children: [
-          Container(
-              color: Colors.black,
-              child:
-                  TextButton(onPressed: () {}, child: const Text(" register"))),
-          TextFormField(
-            controller: usernameController,
-            decoration: const InputDecoration(hintText: "Username"),
-          )
-        ],
+      body:SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(21.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const SizedBox(height: 1),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                onTap: getImage,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    _image != null
+                        ? CircleAvatar(
+                            backgroundImage: FileImage(_image!),
+                            radius: 50,
+                            backgroundColor: const Color.fromRGBO(0, 48, 70, 1)
+                          )
+                        : const CircleAvatar(
+                            radius: 50,
+                            child:  Icon(
+                              Icons.person,
+                              size: 30,
+                              color: Colors.white,
+                            ),
+                          ),
+                   Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: Container(
+                      decoration: const BoxDecoration(
+                          color: Colors.black,
+                          shape: BoxShape.circle,
+                        ),
+                        padding: const EdgeInsets.all(7),
+                        child:  const Icon(
+                          Icons.edit,
+                          size: 25,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ), 
+                  ],
+                ),
+              ),
+                  ],
+                ),
+                
+              const SizedBox(height: 29),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                   Text(
+                textAlign: TextAlign.center,
+                'Register Account',
+                  style: TextStyle (
+                    fontSize: 40,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                ),
+                ],
+              ),
+              const SizedBox(height:18),
+              const Text(
+                'Full Name',
+                  textAlign: TextAlign.left,
+                  style: TextStyle (
+                    fontSize: 17,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                ),
+                10.sizeH,
+                TextFormField(
+                  controller: _fullNameController,
+                  decoration: InputDecoration(
+                    labelText: 'Enter your full name',
+                    fillColor: Colors.grey.withOpacity(0.5),
+                    filled: true,
+                    border: UnderlineInputBorder(borderSide:BorderSide.none, borderRadius: BorderRadius.circular(18)),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Enter your full name';
+                    }
+                    return null;
+                  },
+                ),
+                15.sizeH,
+                const Text(
+                'E-mail',
+                  textAlign: TextAlign.left,
+                  style: TextStyle (
+                    fontSize: 17,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                ),
+                10.sizeH,
+                TextFormField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    labelText: 'Enter your e-mail',
+                    fillColor: Colors.grey.withOpacity(0.5),
+                    filled: true,
+                    border: UnderlineInputBorder(borderSide:BorderSide.none, borderRadius: BorderRadius.circular(18)),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Enter your e-mail';
+                    }
+                    // Aqui você pode adicionar uma validação de formato de e-mail, se desejar.
+                    return null;
+                  },
+                ),
+                15.sizeH,
+                const Text(
+                'Password',
+                  textAlign: TextAlign.left,
+                  style: TextStyle (
+                    fontSize: 17,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                ),
+                10.sizeH,
+                TextFormField(
+                  controller: _passwordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'Enter your password',
+                    fillColor: Colors.grey.withOpacity(0.5),
+                    filled: true,
+                    border: UnderlineInputBorder(borderSide:BorderSide.none, borderRadius: BorderRadius.circular(18)),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Enter your password';
+                   
+                    }
+                  return null;
+                  },
+                ),
+                15.sizeH,
+                const Text(
+                'Confirm Password',
+                  textDirection:TextDirection.ltr,
+                  textAlign: TextAlign.left,
+                  style: TextStyle (
+                    fontSize: 17,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                ),
+                10.sizeH,
+                TextFormField(
+                  controller: _confirmPasswordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'Confirm your Password',
+                    fillColor: Colors.grey.withOpacity(0.5),
+                    filled: true,
+                    border: UnderlineInputBorder(borderSide:BorderSide.none, borderRadius: BorderRadius.circular(18)),
+                  ),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Confirm your Password';
+                    }
+                    if (value != _passwordController.text) {
+                      return 'Your Password does not match';
+                    }
+                  return null;
+                  },
+                ),
+                const SizedBox(height: 30),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: _register,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromRGBO(0, 48, 70, 1),
+                        textStyle: const TextStyle(fontSize: 18 , color: Colors.white),
+                        shape: RoundedRectangleBorder(
+                           borderRadius: BorderRadius.circular(18.0)),
+                            fixedSize: const Size(368, 58),
+                        ),
+                    child: const Text('Sign Up'),
+                ),
+                  ],
+                )
+                
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
+}
+
+void main() {
+  runApp(const MaterialApp(
+    home: RegisterPage(),
+  ));
 }
