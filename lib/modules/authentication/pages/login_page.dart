@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute<void>(
-                      builder: (BuildContext context) => const RegisterPage(),
+                      builder: (BuildContext context) => RegisterPage(),
                     ),
                   );
                 },
