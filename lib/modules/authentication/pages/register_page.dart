@@ -4,8 +4,6 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:organaki_app/core/extensions.dart';
 
-
-
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
@@ -28,6 +26,7 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     });
   }
+
   Future editImage() async {
     // ignore: deprecated_member_use
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
@@ -38,6 +37,7 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     });
   }
+
   final _formKey = GlobalKey<FormState>();
   final _fullNameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -79,17 +79,19 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        leading: const Icon(Icons.arrow_back, color: Colors.black),
-        title: const Text('Fill your profile', style: TextStyle(color: Colors.black)),
+        leading: InkWell(
+            onTap: () => Navigator.pop(context),
+            child: const Icon(Icons.arrow_back, color: Colors.black)),
+        title: const Text('Fill your profile',
+            style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.white,
       ),
-      body:SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(21.0),
           child: Form(
@@ -102,66 +104,65 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                onTap: getImage,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    _image != null
-                        ? CircleAvatar(
-                            backgroundImage: FileImage(_image!),
-                            radius: 50,
-                            backgroundColor: const Color.fromRGBO(0, 48, 70, 1)
-                          )
-                        : const CircleAvatar(
-                            radius: 50,
-                            child:  Icon(
-                              Icons.person,
-                              size: 30,
-                              color: Colors.white,
+                      onTap: getImage,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          _image != null
+                              ? CircleAvatar(
+                                  backgroundImage: FileImage(_image!),
+                                  radius: 50,
+                                  backgroundColor:
+                                      const Color.fromRGBO(0, 48, 70, 1))
+                              : const CircleAvatar(
+                                  radius: 50,
+                                  child: Icon(
+                                    Icons.person,
+                                    size: 30,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                color: Colors.black,
+                                shape: BoxShape.circle,
+                              ),
+                              padding: const EdgeInsets.all(7),
+                              child: const Icon(
+                                Icons.edit,
+                                size: 25,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
-                   Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                      decoration: const BoxDecoration(
-                          color: Colors.black,
-                          shape: BoxShape.circle,
-                        ),
-                        padding: const EdgeInsets.all(7),
-                        child:  const Icon(
-                          Icons.edit,
-                          size: 25,
-                          color: Colors.white,
-                        ),
+                        ],
                       ),
-                    ), 
+                    ),
                   ],
                 ),
-              ),
-                  ],
-                ),
-                
-              const SizedBox(height: 29),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                const SizedBox(height: 29),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
-                   Text(
-                textAlign: TextAlign.center,
-                'Register Account',
-                  style: TextStyle (
-                    fontSize: 40,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
+                    Text(
+                      textAlign: TextAlign.center,
+                      'Register Account',
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
                 ),
-                ],
-              ),
-              const SizedBox(height:18),
-              const Text(
-                'Full Name',
+                const SizedBox(height: 18),
+                const Text(
+                  'Full Name',
                   textAlign: TextAlign.left,
-                  style: TextStyle (
+                  style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w500,
                     color: Colors.black,
@@ -174,7 +175,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     labelText: 'Enter your full name',
                     fillColor: Colors.grey.withOpacity(0.5),
                     filled: true,
-                    border: UnderlineInputBorder(borderSide:BorderSide.none, borderRadius: BorderRadius.circular(18)),
+                    border: UnderlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(18)),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -185,9 +188,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 15.sizeH,
                 const Text(
-                'E-mail',
+                  'E-mail',
                   textAlign: TextAlign.left,
-                  style: TextStyle (
+                  style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w500,
                     color: Colors.black,
@@ -200,7 +203,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     labelText: 'Enter your e-mail',
                     fillColor: Colors.grey.withOpacity(0.5),
                     filled: true,
-                    border: UnderlineInputBorder(borderSide:BorderSide.none, borderRadius: BorderRadius.circular(18)),
+                    border: UnderlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(18)),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -212,9 +217,9 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 15.sizeH,
                 const Text(
-                'Password',
+                  'Password',
                   textAlign: TextAlign.left,
-                  style: TextStyle (
+                  style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w500,
                     color: Colors.black,
@@ -228,22 +233,23 @@ class _RegisterPageState extends State<RegisterPage> {
                     labelText: 'Enter your password',
                     fillColor: Colors.grey.withOpacity(0.5),
                     filled: true,
-                    border: UnderlineInputBorder(borderSide:BorderSide.none, borderRadius: BorderRadius.circular(18)),
+                    border: UnderlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(18)),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Enter your password';
-                   
                     }
-                  return null;
+                    return null;
                   },
                 ),
                 15.sizeH,
                 const Text(
-                'Confirm Password',
-                  textDirection:TextDirection.ltr,
+                  'Confirm Password',
+                  textDirection: TextDirection.ltr,
                   textAlign: TextAlign.left,
-                  style: TextStyle (
+                  style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w500,
                     color: Colors.black,
@@ -257,7 +263,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     labelText: 'Confirm your Password',
                     fillColor: Colors.grey.withOpacity(0.5),
                     filled: true,
-                    border: UnderlineInputBorder(borderSide:BorderSide.none, borderRadius: BorderRadius.circular(18)),
+                    border: UnderlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(18)),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -266,7 +274,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     if (value != _passwordController.text) {
                       return 'Your Password does not match';
                     }
-                  return null;
+                    return null;
                   },
                 ),
                 const SizedBox(height: 30),
@@ -277,16 +285,20 @@ class _RegisterPageState extends State<RegisterPage> {
                       onPressed: _register,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color.fromRGBO(0, 48, 70, 1),
-                        textStyle: const TextStyle(fontSize: 18 , color: Colors.white),
+                        textStyle:
+                            const TextStyle(fontSize: 18, color: Colors.white),
                         shape: RoundedRectangleBorder(
-                           borderRadius: BorderRadius.circular(18.0)),
-                            fixedSize: const Size(368, 58),
-                        ),
-                    child: const Text('Sign Up'),
-                ),
+                            borderRadius: BorderRadius.circular(18.0)),
+                        fixedSize:
+                            Size(MediaQuery.of(context).size.width * 0.8, 58),
+                      ),
+                      child: const Text(
+                        'Sign Up',
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                    ),
                   ],
                 )
-                
               ],
             ),
           ),
@@ -294,10 +306,4 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
-}
-
-void main() {
-  runApp(const MaterialApp(
-    home: RegisterPage(),
-  ));
 }
