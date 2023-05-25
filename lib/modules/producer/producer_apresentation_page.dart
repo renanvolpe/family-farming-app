@@ -5,14 +5,14 @@ import 'package:organaki_app/core/colors_app.dart';
 import 'package:organaki_app/core/extensions.dart';
 
 class ProducerApresentationPage extends StatefulWidget {
-  ProducerApresentationPage(
+  const ProducerApresentationPage(
       {super.key,
       required this.mapOptions,
       required this.mapController,
       required this.currentPosition});
-  MapOptions mapOptions;
-  MapController mapController;
-  LatLng currentPosition;
+  final MapOptions mapOptions;
+  final MapController mapController;
+  final LatLng currentPosition;
   @override
   State<ProducerApresentationPage> createState() =>
       _ProducerApresentationPageState();
@@ -148,7 +148,6 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                                       ),
                                     ),
                                   ),
-                                  
                                 ],
                               ),
                             ],

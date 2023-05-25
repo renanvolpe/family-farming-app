@@ -16,6 +16,7 @@ dependencies:
   dio: ^5.1.1
   flutter_map: ^3.1.0
   flutter_bloc: ^8.1.2
+  bloc: 
   result_dart: ^1.0.6
   latlong2: ^0.8.1
   latlng: ^1.0.0

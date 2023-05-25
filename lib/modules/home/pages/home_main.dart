@@ -108,7 +108,7 @@ class _AnimatedBottomBarState extends State<AnimatedBottomBar>
     for (int i = 0; i < widget.barItems!.length; i++) {
       BarItem item = widget.barItems![i];
 
-      bool isSelected = selectedBarIndex == i;
+      //bool isSelected = selectedBarIndex == i;
 
       barItems.add(InkWell(
         splashColor: Colors.transparent,
