@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:organaki_app/core/endpoints.dart';
 import 'package:organaki_app/models/producer.dart';
-import 'package:organaki_app/models/user.dart';
 import 'package:result_dart/result_dart.dart';
 
 abstract class ProducerService {

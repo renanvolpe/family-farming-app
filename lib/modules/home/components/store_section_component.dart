@@ -4,10 +4,10 @@ import 'package:organaki_app/core/extensions.dart';
 import 'package:organaki_app/models/producer.dart';
 
 class StoreSectionComponent extends StatelessWidget {
-   StoreSectionComponent({super.key, 
+   const StoreSectionComponent({super.key, 
   required this.producer   
   });
-  Producer producer;
+  final Producer producer;
   @override
   Widget build(BuildContext context) {
     return Container(
