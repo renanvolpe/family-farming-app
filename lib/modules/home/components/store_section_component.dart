@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:organaki_app/core/colors_app.dart';
 import 'package:organaki_app/core/extensions.dart';
+import 'package:organaki_app/models/producer.dart';
 
 class StoreSectionComponent extends StatelessWidget {
-  const StoreSectionComponent({
-    super.key,
+   const StoreSectionComponent({super.key, 
+  required this.producer   
   });
-
+  final Producer producer;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,7 +37,7 @@ class StoreSectionComponent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Name store",
+                    producer.companyName,
                     style: TextStyle(color: ColorApp.blue3, fontSize: 20),
                   ),
                   Row(
@@ -47,7 +48,7 @@ class StoreSectionComponent extends StatelessWidget {
                         size: 16,
                       ),
                       Text(
-                        "Slogan or place",
+                       producer.email,
                         style: TextStyle(color: ColorApp.grey2, fontSize: 16),
                       ),
                     ],
