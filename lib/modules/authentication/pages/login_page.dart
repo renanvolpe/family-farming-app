@@ -43,9 +43,9 @@ class _LoginPageState extends State<LoginPage> {
                   Container(
                     width: 124.0,
                     height: 124.0,
-                    margin: const EdgeInsets.only(top: 55, bottom: 25),
-                    decoration: const BoxDecoration(
-                      color: Color.fromRGBO(133, 202, 228, 0.3),
+                    margin: const EdgeInsets.only(top: 75, bottom: 20),
+                    decoration: BoxDecoration(
+                      color: ColorApp.blue5,
                       shape: BoxShape.circle,
                     ),
                     child: Container(
@@ -58,12 +58,12 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  const Text(
+                  Text(
                     'Entre em sua conta',
                     textAlign: TextAlign.center,
                     maxLines: 2,
                     style: TextStyle(
-                      color: Color.fromRGBO(41, 45, 50, 1.0),
+                      color: ColorApp.dark1,
                       fontSize: 40,
                       fontWeight: FontWeight.w500,
                       fontFamily: 'Abhaya Libre',
@@ -72,15 +72,15 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
               Container(
-                margin: const EdgeInsets.only(right: 150, bottom: 5),
-                child: const SizedBox(
+                margin: const EdgeInsets.only(top: 28, right: 150, bottom: 5),
+                child: SizedBox(
                   width: 170.0,
                   height: 25.0,
                   child: Text(
                     'Email',
                     textAlign: TextAlign.left,
                     style: TextStyle(
-                      color: Color.fromRGBO(41, 45, 50, 1.0),
+                      color: ColorApp.dark1,
                       fontSize: 17,
                       fontWeight: FontWeight.w500,
                       fontFamily: 'Abhaya Libre',
@@ -92,17 +92,17 @@ class _LoginPageState extends State<LoginPage> {
                 width: 350.0,
                 margin: const EdgeInsets.only(left: 30, right: 30),
                 child: DecoratedBox(
-                  decoration: const BoxDecoration(
-                    color: Color.fromRGBO(239, 242, 245, 1),
-                    borderRadius: BorderRadius.all(Radius.circular(14.0)),
+                  decoration: BoxDecoration(
+                    color: ColorApp.white4,
+                    borderRadius: const BorderRadius.all(Radius.circular(14.0)),
                   ),
                   child: TextFormField(
-                    decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.only(left: 15),
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.only(left: 15),
                       border: InputBorder.none,
                       hintText: "Insira seu email",
                       hintStyle: TextStyle(
-                        color: Color.fromRGBO(179, 191, 203, 1.0),
+                        color: ColorApp.grey3,
                         fontSize: 17,
                         fontWeight: FontWeight.w500,
                         fontFamily: 'Abhaya Libre',
@@ -112,15 +112,15 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(top: 40, right: 150, bottom: 5),
-                child: const SizedBox(
+                margin: const EdgeInsets.only(top: 30, right: 150, bottom: 5),
+                child: SizedBox(
                   width: 170.0,
                   height: 25.0,
                   child: Text(
                     'Senha',
                     textAlign: TextAlign.left,
                     style: TextStyle(
-                      color: Color.fromRGBO(41, 45, 50, 1.0),
+                      color: ColorApp.dark1,
                       fontSize: 17,
                       fontWeight: FontWeight.w500,
                       fontFamily: 'Abhaya Libre',
@@ -132,17 +132,17 @@ class _LoginPageState extends State<LoginPage> {
                 width: 350.0,
                 margin: const EdgeInsets.only(left: 30, right: 30),
                 child: DecoratedBox(
-                  decoration: const BoxDecoration(
-                    color: Color.fromRGBO(239, 242, 245, 1),
-                    borderRadius: BorderRadius.all(Radius.circular(14.0)),
+                  decoration: BoxDecoration(
+                    color: ColorApp.white4,
+                    borderRadius: const BorderRadius.all(Radius.circular(14.0)),
                   ),
                   child: TextFormField(
-                    decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.only(left: 15),
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.only(left: 15),
                       border: InputBorder.none,
                       hintText: "Insira sua senha",
                       hintStyle: TextStyle(
-                        color: Color.fromRGBO(179, 191, 203, 1.0),
+                        color: ColorApp.grey3,
                         fontSize: 17,
                         fontWeight: FontWeight.w500,
                         fontFamily: 'Abhaya Libre',
@@ -151,14 +151,14 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              const SizedBox(
+              SizedBox(
                 width: 350,
                 height: 50,
                 child: Text(
                   'Esqueci minha senha',
                   textAlign: TextAlign.end,
                   style: TextStyle(
-                    color: Color.fromRGBO(106, 121, 138, 1.0),
+                    color: ColorApp.blue4,
                     fontSize: 17,
                     height: 2.9,
                     fontWeight: FontWeight.w500,
@@ -175,8 +175,8 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: () => BlocProvider.of<LoginAuthBloc>(context)
                       .add(LoginAuthStart("username", "passoword")),
                   style: ButtonStyle(
-                    backgroundColor: const MaterialStatePropertyAll<Color>(
-                      Color.fromRGBO(0, 48, 70, 1.0),
+                    backgroundColor: MaterialStatePropertyAll<Color>(
+                      ColorApp.blue3,
                     ),
                     shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
@@ -188,14 +188,15 @@ class _LoginPageState extends State<LoginPage> {
                     builder: (context, state) {
                       if (state is LoginAuthProgress) {
                         return Center(
-                            child: CircularProgressIndicator(
-                          color: ColorApp.white1,
-                        ));
+                          child: CircularProgressIndicator(
+                            color: ColorApp.white1,
+                          ),
+                        );
                       }
-                      return const Text(
+                      return Text(
                         "Faça login",
                         style: TextStyle(
-                          color: Color.fromRGBO(255, 255, 255, 1.0),
+                          color: ColorApp.white1,
                           fontWeight: FontWeight.w500,
                           fontFamily: 'Abhaya Libre',
                           fontSize: 18,
@@ -207,9 +208,9 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Row(
                 children: <Widget>[
-                  const Expanded(
+                  Expanded(
                     child: Divider(
-                      color: Color.fromRGBO(213, 222, 231, 1),
+                      color: ColorApp.grey4,
                       indent: 30,
                       thickness: 0.7,
                       endIndent: 3,
@@ -225,9 +226,9 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   10.sizeW,
-                  const Expanded(
+                  Expanded(
                     child: Divider(
-                      color: Color.fromRGBO(213, 222, 231, 1),
+                      color: ColorApp.grey4,
                       endIndent: 30,
                       indent: 3,
                       thickness: 0.7,
@@ -250,8 +251,8 @@ class _LoginPageState extends State<LoginPage> {
                     );
                   },
                   style: ButtonStyle(
-                    backgroundColor: const MaterialStatePropertyAll<Color>(
-                      Color.fromRGBO(133, 202, 228, 1.0),
+                    backgroundColor: MaterialStatePropertyAll<Color>(
+                      ColorApp.blue1,
                     ),
                     shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
@@ -259,10 +260,10 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     "Cadastre-se",
                     style: TextStyle(
-                      color: Color.fromRGBO(21, 23, 25, 1.0),
+                      color: ColorApp.dark2,
                       fontWeight: FontWeight.w500,
                       fontFamily: 'Abhaya Libre',
                       fontSize: 18,
