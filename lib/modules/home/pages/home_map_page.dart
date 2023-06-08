@@ -4,12 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:organaki_app/core/colors_app.dart';
 import 'package:organaki_app/core/extensions.dart';
 import 'package:organaki_app/modules/home/bloc/bloc_get_list_producer/get_list_producers_bloc.dart';
 import 'package:organaki_app/modules/home/components/store_section_component.dart';
-import 'package:organaki_app/modules/producer/producer_apresentation_page.dart'; // Only import if required functionality is not exposed by default
+// Only import if required functionality is not exposed by default
 
 class HomeMapPage extends StatefulWidget {
   const HomeMapPage({Key? key}) : super(key: key);
@@ -101,7 +102,8 @@ class _HomeMapPageState extends State<HomeMapPage> {
                       child: SizedBox(
                           height: 40,
                           width: 40,
-                          child: Text("Ocorreu o erro: ${stateListProducer.errorMessage}")),
+                          child: Text(
+                              "Ocorreu o erro: ${stateListProducer.errorMessage}")),
                     );
                   }
                   if (stateListProducer is GetListProducersSuccess) {
@@ -143,19 +145,18 @@ class _HomeMapPageState extends State<HomeMapPage> {
                                 6,
                                 (index) {
                                   return InkWell(
-                                      onTap: () => Navigator.push(
-                                            context,
-                                            MaterialPageRoute<void>(
-                                              builder: (BuildContext context) =>
-                                                  ProducerApresentationPage(
-                                                mapOptions: _mapOption,
-                                                mapController: _mapController,
-                                                currentPosition:
+                                      onTap: () => context.push(
+                                              "/producerDetail",
+                                              extra: {
+                                                "mapOptions": _mapOption,
+                                                "mapController": _mapController,
+                                                "currentPosition":
                                                     currentLatlong!,
-                                              ),
-                                            ),
-                                          ),
-                                      child: StoreSectionComponent(producer: stateListProducer.listProducers[index],));
+                                              }),
+                                      child: StoreSectionComponent(
+                                        producer: stateListProducer
+                                            .listProducers[index],
+                                      ));
                                 },
                               )),
                             ),
