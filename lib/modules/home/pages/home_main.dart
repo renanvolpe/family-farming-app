@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:organaki_app/core/colors_app.dart';
 import 'package:organaki_app/modules/authentication/pages/login_page.dart';
 import 'package:organaki_app/modules/home/pages/home_map_page.dart';
 import 'package:organaki_app/modules/home/pages/home_orders_page.dart';
@@ -125,12 +126,21 @@ class _AnimatedBottomBarState extends State<AnimatedBottomBar>
             mainAxisSize: MainAxisSize.min,
             children: [
               Row(
-                children: <Widget>[Icon(item.icon)],
+                children: <Widget>[
+                  Icon(
+                    item.icon,
+                    color: ColorApp.blue3,
+                  )
+                ],
               ),
               Row(
                 children: [
                   Text(
                     item.text,
+                    style: TextStyle(
+                      fontFamily: 'Abhaya Libre',
+                      color: ColorApp.blue3,
+                    ),
                   ),
                 ],
               ),
