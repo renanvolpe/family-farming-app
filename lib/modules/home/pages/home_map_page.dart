@@ -4,12 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:organaki_app/core/colors_app.dart';
 import 'package:organaki_app/core/extensions.dart';
 import 'package:organaki_app/modules/home/bloc/bloc_get_list_producer/get_list_producers_bloc.dart';
 import 'package:organaki_app/modules/home/components/store_section_component.dart';
-import 'package:organaki_app/modules/producer/producer_apresentation_page.dart'; // Only import if required functionality is not exposed by default
+// Only import if required functionality is not exposed by default
 
 class HomeMapPage extends StatefulWidget {
   const HomeMapPage({Key? key}) : super(key: key);
@@ -77,19 +78,6 @@ class _HomeMapPageState extends State<HomeMapPage> {
             fontFamily: 'Abhaya Libre',
           ),
         ),
-        toolbarHeight: 60,
-        actions: [
-          Icon(
-            Icons.search_rounded,
-            color: ColorApp.black,
-          ),
-          10.sizeW,
-          Icon(
-            Icons.shopping_cart,
-            color: ColorApp.black,
-          ),
-          15.sizeW,
-        ],
       ),
       body: currentLatlong != null // to wait user to get the current value
           ? BlocBuilder<GetListProducersBloc, GetListProducersState>(
@@ -97,21 +85,18 @@ class _HomeMapPageState extends State<HomeMapPage> {
                 if (stateListProducer is GetListProducersProgress) {
                   return const Center(
                     child: SizedBox(
-                      height: 40,
-                      width: 40,
-                      child: CircularProgressIndicator(),
-                    ),
+                        height: 40,
+                        width: 40,
+                        child: CircularProgressIndicator()),
                   );
                 }
                 if (stateListProducer is GetListProducersFailure) {
                   return Center(
                     child: SizedBox(
-                      height: 40,
-                      width: 40,
-                      child: Text(
-                        "Ocorreu o erro: ${stateListProducer.errorMessage}",
-                      ),
-                    ),
+                        height: 40,
+                        width: 40,
+                        child: Text(
+                            "Ocorreu o erro: ${stateListProducer.errorMessage}")),
                   );
                 }
                 if (stateListProducer is GetListProducersSuccess) {
@@ -126,21 +111,17 @@ class _HomeMapPageState extends State<HomeMapPage> {
                               returnCurrentLocation();
                             },
                             child: Container(
-                              margin: const EdgeInsets.only(
-                                top: 15,
-                                right: 15,
-                              ),
+                              margin: const EdgeInsets.only(top: 15, right: 15),
                               child: Material(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(20),
                                 elevation: 5,
                                 child: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Icon(
-                                    Icons.my_location,
-                                    color: ColorApp.blue3,
-                                  ),
-                                ),
+                                    padding: const EdgeInsets.all(8),
+                                    child: Icon(
+                                      Icons.my_location,
+                                      color: ColorApp.blue3,
+                                    )),
                               ),
                             ),
                           )),
@@ -156,17 +137,12 @@ class _HomeMapPageState extends State<HomeMapPage> {
                               6,
                               (index) {
                                 return InkWell(
-                                    onTap: () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute<void>(
-                                            builder: (BuildContext context) =>
-                                                ProducerApresentationPage(
-                                              mapOptions: _mapOption,
-                                              mapController: _mapController,
-                                              currentPosition: currentLatlong!,
-                                            ),
-                                          ),
-                                        ),
+                                    onTap: () =>
+                                        context.push("/producerDetail", extra: {
+                                          "mapOptions": _mapOption,
+                                          "mapController": _mapController,
+                                          "currentPosition": currentLatlong!,
+                                        }),
                                     child: StoreSectionComponent(
                                       producer: stateListProducer
                                           .listProducers[index],
@@ -175,7 +151,7 @@ class _HomeMapPageState extends State<HomeMapPage> {
                             )),
                           ),
                         ),
-                      )
+                      ),
                     ],
                     children: [
                       TileLayer(

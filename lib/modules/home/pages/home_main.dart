@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:organaki_app/core/colors_app.dart';
+import 'package:go_router/go_router.dart';
 import 'package:organaki_app/modules/authentication/pages/login_page.dart';
 import 'package:organaki_app/modules/home/pages/home_map_page.dart';
 import 'package:organaki_app/modules/home/pages/home_orders_page.dart';
@@ -45,19 +46,48 @@ class _HomeMainState extends State<HomeMain> {
     const LoginPage(),
   ];
 
+  int _calculateSelectedIndex(BuildContext context) {
+    final GoRouter route = GoRouter.of(context);
+    final String location = route.location;
+    if (location.startsWith('/map')) {
+      return 0;
+    }
+    if (location.startsWith('/order')) {
+      return 1;
+    }
+    if (location.startsWith('/account')) {
+      return 2;
+    }
+    return 0;
+  }
+
+  void onTap(int value) {
+    switch (value) {
+      case 0:
+        return context.go('/map');
+      case 1:
+        return context.go('/order');
+      case 2:
+        return context.go('/account');
+      default:
+        return context.go('/map');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(index: currentIndex, children: children),
-      bottomNavigationBar: Container(
-        color: Colors.white,
-        child: AnimatedBottomBar(
-          barItems: barItems,
-          onBarTap: changeIndexNavigator,
-          indexNavigator: currentIndex,
-        ),
-      ),
-    );
+        body: IndexedStack(
+            index: _calculateSelectedIndex(context), children: children),
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: onTap,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Map'),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Order'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.account_box), label: 'Account'),
+          ],
+        ));
   }
 }
 
