@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:organaki_app/services/producer_services.dart';
 
 void main() {
+  //TODO verify shared preferences here
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(

@@ -7,7 +7,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:organaki_app/core/colors_app.dart';
-import 'package:organaki_app/core/extensions.dart';
 import 'package:organaki_app/modules/home/bloc/bloc_get_list_producer/get_list_producers_bloc.dart';
 import 'package:organaki_app/modules/home/components/store_section_component.dart';
 // Only import if required functionality is not exposed by default
@@ -34,14 +33,21 @@ class _HomeMapPageState extends State<HomeMapPage> {
       _mapOption = MapOptions(center: currentLatlong!, zoom: 14);
       currentLatlong;
     });
+    // ignore: use_build_context_synchronously
     BlocProvider.of<GetListProducersBloc>(context).add(GetListProducersStart());
   }
 
+  // -- variables to use in this page --
   LatLng? currentLatlong;
   final _mapController = MapController();
   late MapOptions _mapOption;
 
+  // -- function to use in this page --
+
+  //get actual latlong position
+  //TODO show something when the user rejext to show the actual location
   Future<LatLng?> getCurrentPosition() async {
+    //this is a request to user to get the position
     LocationPermission response = await Geolocator.requestPermission();
     if (response.name == "whileInUse") {
       Position position = await Geolocator.getCurrentPosition(
@@ -58,7 +64,7 @@ class _HomeMapPageState extends State<HomeMapPage> {
     }
     return null;
   }
-
+  //move the camera of map to current location
   void returnCurrentLocation() {
     setState(() {
       _mapController.move(currentLatlong!, 14);
@@ -205,7 +211,7 @@ class _HomeMapPageState extends State<HomeMapPage> {
               },
             )
           : const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(),  
             ),
     );
   }
