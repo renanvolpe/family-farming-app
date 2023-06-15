@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:organaki_app/core/extensions.dart';
-
-
+import 'package:organaki_app/core/colors_app.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -28,6 +27,7 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     });
   }
+
   Future editImage() async {
     // ignore: deprecated_member_use
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
@@ -38,6 +38,7 @@ class _RegisterPageState extends State<RegisterPage> {
       }
     });
   }
+
   final _formKey = GlobalKey<FormState>();
   final _fullNameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -79,92 +80,96 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        leading: const Icon(Icons.arrow_back, color: Colors.black),
-        title: const Text('Fill your profile', style: TextStyle(color: Colors.black)),
-        backgroundColor: Colors.white,
+        leading: Icon(Icons.arrow_back, color: ColorApp.black),
+        title: Text('Fill your profile',
+            style:
+                TextStyle(color: ColorApp.black, fontFamily: 'Abhaya Libre')),
+        backgroundColor: ColorApp.white1,
       ),
-      body:SingleChildScrollView(
+      body: SingleChildScrollView(
+        reverse: true,
         child: Container(
           padding: const EdgeInsets.all(21.0),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const SizedBox(height: 1),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GestureDetector(
-                onTap: getImage,
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    _image != null
-                        ? CircleAvatar(
-                            backgroundImage: FileImage(_image!),
-                            radius: 50,
-                            backgroundColor: const Color.fromRGBO(0, 48, 70, 1)
-                          )
-                        : const CircleAvatar(
-                            radius: 50,
-                            child:  Icon(
-                              Icons.person,
-                              size: 30,
-                              color: Colors.white,
+                      onTap: getImage,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          _image != null
+                              ? CircleAvatar(
+                                  backgroundImage: FileImage(_image!),
+                                  radius: 50,
+                                  backgroundColor: ColorApp.blue3,
+                                )
+                              : const CircleAvatar(
+                                  radius: 50,
+                                  child: Icon(
+                                    Icons.person,
+                                    size: 30,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: ColorApp.black,
+                                shape: BoxShape.circle,
+                              ),
+                              padding: const EdgeInsets.all(7),
+                              child: const Icon(
+                                Icons.edit,
+                                size: 25,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
-                   Positioned(
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                      decoration: const BoxDecoration(
-                          color: Colors.black,
-                          shape: BoxShape.circle,
-                        ),
-                        padding: const EdgeInsets.all(7),
-                        child:  const Icon(
-                          Icons.edit,
-                          size: 25,
-                          color: Colors.white,
-                        ),
+                        ],
                       ),
-                    ), 
+                    ),
                   ],
                 ),
-              ),
+                const SizedBox(height: 29),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      textAlign: TextAlign.center,
+                      'Register Account',
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.w500,
+                        color: ColorApp.black,
+                        fontFamily: 'Abhaya Libre',
+                      ),
+                    ),
                   ],
                 ),
-                
-              const SizedBox(height: 29),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                   Text(
-                textAlign: TextAlign.center,
-                'Register Account',
-                  style: TextStyle (
-                    fontSize: 40,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
-                  ),
-                ),
-                ],
-              ),
-              const SizedBox(height:18),
-              const Text(
-                'Full Name',
+                const SizedBox(height: 18),
+                Text(
+                  'Full Name',
                   textAlign: TextAlign.left,
-                  style: TextStyle (
+                  style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w500,
-                    color: Colors.black,
+                    color: ColorApp.black,
+                    fontFamily: 'Abhaya Libre',
                   ),
                 ),
                 10.sizeH,
@@ -172,9 +177,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   controller: _fullNameController,
                   decoration: InputDecoration(
                     labelText: 'Enter your full name',
-                    fillColor: Colors.grey.withOpacity(0.5),
+                    fillColor: ColorApp.grey1,
                     filled: true,
-                    border: UnderlineInputBorder(borderSide:BorderSide.none, borderRadius: BorderRadius.circular(18)),
+                    border: UnderlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(18)),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -184,13 +191,14 @@ class _RegisterPageState extends State<RegisterPage> {
                   },
                 ),
                 15.sizeH,
-                const Text(
-                'E-mail',
+                Text(
+                  'E-mail',
                   textAlign: TextAlign.left,
-                  style: TextStyle (
+                  style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w500,
-                    color: Colors.black,
+                    color: ColorApp.black,
+                    fontFamily: 'Abhaya Libre',
                   ),
                 ),
                 10.sizeH,
@@ -198,9 +206,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   controller: _emailController,
                   decoration: InputDecoration(
                     labelText: 'Enter your e-mail',
-                    fillColor: Colors.grey.withOpacity(0.5),
+                    fillColor: ColorApp.grey1,
                     filled: true,
-                    border: UnderlineInputBorder(borderSide:BorderSide.none, borderRadius: BorderRadius.circular(18)),
+                    border: UnderlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(18)),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -211,13 +221,14 @@ class _RegisterPageState extends State<RegisterPage> {
                   },
                 ),
                 15.sizeH,
-                const Text(
-                'Password',
+                Text(
+                  'Password',
                   textAlign: TextAlign.left,
-                  style: TextStyle (
+                  style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w500,
-                    color: Colors.black,
+                    color: ColorApp.black,
+                    fontFamily: 'Abhaya Libre',
                   ),
                 ),
                 10.sizeH,
@@ -226,27 +237,29 @@ class _RegisterPageState extends State<RegisterPage> {
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Enter your password',
-                    fillColor: Colors.grey.withOpacity(0.5),
+                    fillColor: ColorApp.grey1,
                     filled: true,
-                    border: UnderlineInputBorder(borderSide:BorderSide.none, borderRadius: BorderRadius.circular(18)),
+                    border: UnderlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(18)),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Enter your password';
-                   
                     }
-                  return null;
+                    return null;
                   },
                 ),
                 15.sizeH,
-                const Text(
-                'Confirm Password',
-                  textDirection:TextDirection.ltr,
+                Text(
+                  'Confirm Password',
+                  textDirection: TextDirection.ltr,
                   textAlign: TextAlign.left,
-                  style: TextStyle (
+                  style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.w500,
-                    color: Colors.black,
+                    color: ColorApp.black,
+                    fontFamily: 'Abhaya Libre',
                   ),
                 ),
                 10.sizeH,
@@ -255,9 +268,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Confirm your Password',
-                    fillColor: Colors.grey.withOpacity(0.5),
+                    fillColor: ColorApp.grey1,
                     filled: true,
-                    border: UnderlineInputBorder(borderSide:BorderSide.none, borderRadius: BorderRadius.circular(18)),
+                    border: UnderlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(18)),
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -266,7 +281,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     if (value != _passwordController.text) {
                       return 'Your Password does not match';
                     }
-                  return null;
+                    return null;
                   },
                 ),
                 const SizedBox(height: 30),
@@ -276,17 +291,19 @@ class _RegisterPageState extends State<RegisterPage> {
                     ElevatedButton(
                       onPressed: _register,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromRGBO(0, 48, 70, 1),
-                        textStyle: const TextStyle(fontSize: 18 , color: Colors.white),
+                        backgroundColor: ColorApp.blue3,
+                        textStyle: TextStyle(
+                            fontSize: 18,
+                            color: ColorApp.white1,
+                            fontFamily: 'Abhaya Libre'),
                         shape: RoundedRectangleBorder(
-                           borderRadius: BorderRadius.circular(18.0)),
-                            fixedSize: const Size(368, 58),
-                        ),
-                    child: const Text('Sign Up'),
-                ),
+                            borderRadius: BorderRadius.circular(18.0)),
+                        fixedSize: const Size(368, 58),
+                      ),
+                      child: const Text('Sign Up'),
+                    ),
                   ],
                 )
-                
               ],
             ),
           ),
