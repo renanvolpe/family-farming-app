@@ -3,6 +3,7 @@ import 'package:organaki_app/core/endpoints.dart';
 import 'package:organaki_app/models/singleton_user.dart';
 import 'package:organaki_app/models/user.dart';
 import 'package:result_dart/result_dart.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class AuthenticationService {
   Future<Result<User, String>> doLoginUser(String username, String password);
@@ -14,6 +15,7 @@ class AuthenticationRepository implements AuthenticationService {
   final dio = Dio();
   String? errorMessage;
 
+  
   @override
   Future<Result<User, String>> doLoginUser(
       String username, String password) async {
@@ -45,7 +47,7 @@ class AuthenticationRepository implements AuthenticationService {
     }
     return Failure(errorMessage ?? "Erro não esperado");
   }
-
+  
   @override
   registerUser() {
     throw UnimplementedError();

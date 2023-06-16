@@ -12,7 +12,14 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Producer edit page"),
+        title: const Text("Producer edit page"),
+      ),
+      body: Column(
+        children: [
+          TextButton(onPressed: () {
+            
+          }, child: const Text("LOGOUT HERE"))
+        ],
       ),
     );
   }
