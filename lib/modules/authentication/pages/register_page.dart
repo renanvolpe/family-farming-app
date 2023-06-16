@@ -85,14 +85,14 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        leading: Icon(Icons.arrow_back, color: ColorApp.black),
-        title: Text('Fill your profile',
-            style:
-                TextStyle(color: ColorApp.black, fontFamily: 'Abhaya Libre')),
-        backgroundColor: ColorApp.white1,
+        leading: InkWell(
+            onTap: () => Navigator.pop(context),
+            child: const Icon(Icons.arrow_back, color: Colors.black)),
+        title: const Text('Fill your profile',
+            style: TextStyle(color: Colors.black)),
+        backgroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
-        reverse: true,
         child: Container(
           padding: const EdgeInsets.all(21.0),
           child: Form(
@@ -173,22 +173,24 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 10.sizeH,
-                TextFormField(
-                  controller: _fullNameController,
-                  decoration: InputDecoration(
-                    labelText: 'Enter your full name',
-                    fillColor: ColorApp.grey1,
-                    filled: true,
-                    border: UnderlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(18)),
+                Container(
+                  child: TextFormField(
+                    controller: _fullNameController,
+                    decoration: InputDecoration(
+                      labelText: 'Enter your full name',
+                      fillColor: ColorApp.white4,
+                      filled: true,
+                      border: UnderlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(18)),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter your full name';
+                      }
+                      return null;
+                    },
                   ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Enter your full name';
-                    }
-                    return null;
-                  },
                 ),
                 15.sizeH,
                 Text(
@@ -288,19 +290,25 @@ class _RegisterPageState extends State<RegisterPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(
-                      onPressed: _register,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: ColorApp.blue3,
-                        textStyle: TextStyle(
-                            fontSize: 18,
-                            color: ColorApp.white1,
-                            fontFamily: 'Abhaya Libre'),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(18.0)),
-                        fixedSize: const Size(368, 58),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: _register,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: ColorApp.blue3,
+                          textStyle: TextStyle(
+                              fontSize: 18,
+                              color: ColorApp.white1,
+                              fontFamily: 'Abhaya Libre'),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0)),
+                        ),
+                        child: Container(
+                            // width: MediaQuery.of(context).size.width*0.4,
+                            child: const Text(
+                          'Sign Up',
+                          textAlign: TextAlign.center,
+                        )),
                       ),
-                      child: const Text('Sign Up'),
                     ),
                   ],
                 )
@@ -311,10 +319,4 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
-}
-
-void main() {
-  runApp(const MaterialApp(
-    home: RegisterPage(),
-  ));
 }

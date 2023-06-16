@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:organaki_app/core/colors_app.dart';
 import 'package:organaki_app/core/extensions.dart';
+import 'package:organaki_app/models/producer.dart';
 
 class StoreSectionComponent extends StatelessWidget {
-  const StoreSectionComponent({
-    super.key,
-  });
-
+  const StoreSectionComponent({super.key, required this.producer});
+  final Producer producer;
   @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.85,
       decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: Colors.blue, width: 3),
-          borderRadius: BorderRadius.circular(20)),
+        color: Colors.white,
+        border: Border.all(color: ColorApp.blue3, width: 3),
+        borderRadius: BorderRadius.circular(20),
+      ),
       margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Column(
@@ -36,8 +36,14 @@ class StoreSectionComponent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Name store",
-                    style: TextStyle(color: ColorApp.blue3, fontSize: 20),
+                    producer.companyName,
+                    style: TextStyle(
+                      color: ColorApp.blue3,
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Abhaya Libre',
+                    ),
+                    maxLines: 2,
                   ),
                   Row(
                     children: [
@@ -47,8 +53,13 @@ class StoreSectionComponent extends StatelessWidget {
                         size: 16,
                       ),
                       Text(
-                        "Slogan or place",
-                        style: TextStyle(color: ColorApp.grey2, fontSize: 16),
+                        producer.email,
+                        style: TextStyle(
+                          color: ColorApp.grey2,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Abhaya Libre',
+                        ),
                       ),
                     ],
                   )
@@ -56,14 +67,16 @@ class StoreSectionComponent extends StatelessWidget {
               ),
               const Spacer(),
               Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                      color: ColorApp.grey1,
-                      borderRadius: BorderRadius.circular(30)),
-                  child: const Icon(
-                    Icons.heart_broken,
-                    color: Colors.red,
-                  ))
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: ColorApp.grey1,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: const Icon(
+                  Icons.heart_broken,
+                  color: Colors.red,
+                ),
+              )
             ],
           ),
           10.sizeH,
@@ -101,7 +114,12 @@ class StoreSectionComponent extends StatelessWidget {
               ),
               const Text(
                 "OPEN",
-                style: TextStyle(color: Colors.red, fontSize: 18),
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Abhaya Libre',
+                ),
               )
             ],
           ),

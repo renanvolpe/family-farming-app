@@ -1,9 +1,9 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:organaki_app/modules/home/pages/home_account_page.dart';
+import 'package:organaki_app/core/colors_app.dart';
+import 'package:go_router/go_router.dart';
+import 'package:organaki_app/modules/authentication/pages/login_page.dart';
 import 'package:organaki_app/modules/home/pages/home_map_page.dart';
 import 'package:organaki_app/modules/home/pages/home_orders_page.dart';
-import 'package:geolocator/geolocator.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({Key? key}) : super(key: key);
@@ -43,24 +43,51 @@ class _HomeMainState extends State<HomeMain> {
   final List<Widget> children = [
     const HomeMapPage(),
     const HomeOrdersPage(),
-    const HomeAccountPage(),
+    const LoginPage(),
   ];
 
-  
+  int _calculateSelectedIndex(BuildContext context) {
+    final GoRouter route = GoRouter.of(context);
+    final String location = route.location;
+    if (location.startsWith('/map')) {
+      return 0;
+    }
+    if (location.startsWith('/order')) {
+      return 1;
+    }
+    if (location.startsWith('/account')) {
+      return 2;
+    }
+    return 0;
+  }
+
+  void onTap(int value) {
+    switch (value) {
+      case 0:
+        return context.go('/map');
+      case 1:
+        return context.go('/order');
+      case 2:
+        return context.go('/account');
+      default:
+        return context.go('/map');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(index: currentIndex, children: children),
-      bottomNavigationBar: Container(
-        color: Colors.white,
-        child: AnimatedBottomBar(
-          barItems: barItems,
-          onBarTap: changeIndexNavigator,
-          indexNavigator: currentIndex,
-        ),
-      ),
-    );
+        body: IndexedStack(
+            index: _calculateSelectedIndex(context), children: children),
+        bottomNavigationBar: BottomNavigationBar(
+          onTap: onTap,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Map'),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Order'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.account_box), label: 'Account'),
+          ],
+        ));
   }
 }
 
@@ -112,7 +139,7 @@ class _AnimatedBottomBarState extends State<AnimatedBottomBar>
     for (int i = 0; i < widget.barItems!.length; i++) {
       BarItem item = widget.barItems![i];
 
-      bool isSelected = selectedBarIndex == i;
+      //bool isSelected = selectedBarIndex == i;
 
       barItems.add(InkWell(
         splashColor: Colors.transparent,
@@ -129,12 +156,21 @@ class _AnimatedBottomBarState extends State<AnimatedBottomBar>
             mainAxisSize: MainAxisSize.min,
             children: [
               Row(
-                children: <Widget>[Icon(item.icon)],
+                children: <Widget>[
+                  Icon(
+                    item.icon,
+                    color: ColorApp.blue3,
+                  )
+                ],
               ),
               Row(
                 children: [
                   Text(
                     item.text,
+                    style: TextStyle(
+                      fontFamily: 'Abhaya Libre',
+                      color: ColorApp.blue3,
+                    ),
                   ),
                 ],
               ),
