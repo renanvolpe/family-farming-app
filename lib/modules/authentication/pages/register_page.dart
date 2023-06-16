@@ -87,10 +87,10 @@ class _RegisterPageState extends State<RegisterPage> {
       appBar: AppBar(
         leading: InkWell(
             onTap: () => Navigator.pop(context),
-            child: const Icon(Icons.arrow_back, color: Colors.black)),
-        title: const Text('Fill your profile',
-            style: TextStyle(color: Colors.black)),
-        backgroundColor: Colors.white,
+            child: Icon(Icons.arrow_back, color: ColorApp.black)),
+        title:
+            Text('Fill your profile', style: TextStyle(color: ColorApp.black)),
+        backgroundColor: ColorApp.white1,
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -116,12 +116,12 @@ class _RegisterPageState extends State<RegisterPage> {
                                   radius: 50,
                                   backgroundColor: ColorApp.blue3,
                                 )
-                              : const CircleAvatar(
+                              : CircleAvatar(
                                   radius: 50,
                                   child: Icon(
                                     Icons.person,
                                     size: 30,
-                                    color: Colors.white,
+                                    color: ColorApp.white1,
                                   ),
                                 ),
                           Positioned(
@@ -133,10 +133,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                 shape: BoxShape.circle,
                               ),
                               padding: const EdgeInsets.all(7),
-                              child: const Icon(
+                              child: Icon(
                                 Icons.edit,
                                 size: 25,
-                                color: Colors.white,
+                                color: ColorApp.white1,
                               ),
                             ),
                           ),
@@ -145,7 +145,23 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 29),
+                const SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Coloque uma foto de perfil!",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: ColorApp.black,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Abhaya Libre',
+                        fontSize: 9,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -174,22 +190,34 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 10.sizeH,
                 Container(
-                  child: TextFormField(
-                    controller: _fullNameController,
-                    decoration: InputDecoration(
-                      labelText: 'Enter your full name',
-                      fillColor: ColorApp.white4,
-                      filled: true,
-                      border: UnderlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(18)),
+                  alignment: Alignment.center,
+                  width: 368.0,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: ColorApp.white4,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(14.0)),
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Enter your full name';
-                      }
-                      return null;
-                    },
+                    child: TextFormField(
+                      controller: _fullNameController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.only(left: 15),
+                        border: InputBorder.none,
+                        hintText: "Enter your full name",
+                        hintStyle: TextStyle(
+                          color: ColorApp.grey3,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Abhaya Libre',
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter your full name';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
                 ),
                 15.sizeH,
@@ -204,23 +232,35 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 10.sizeH,
-                TextFormField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    labelText: 'Enter your e-mail',
-                    fillColor: ColorApp.grey1,
-                    filled: true,
-                    border: UnderlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(18)),
+                SizedBox(
+                  width: 368.0,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: ColorApp.white4,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(14.0)),
+                    ),
+                    child: TextFormField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.only(left: 15),
+                        border: InputBorder.none,
+                        hintText: "Enter your e-mail",
+                        hintStyle: TextStyle(
+                          color: ColorApp.grey3,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Abhaya Libre',
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter your e-mail';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Enter your e-mail';
-                    }
-                    // Aqui você pode adicionar uma validação de formato de e-mail, se desejar.
-                    return null;
-                  },
                 ),
                 15.sizeH,
                 Text(
@@ -234,23 +274,35 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 10.sizeH,
-                TextFormField(
-                  controller: _passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Enter your password',
-                    fillColor: ColorApp.grey1,
-                    filled: true,
-                    border: UnderlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(18)),
+                SizedBox(
+                  width: 368.0,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: ColorApp.white4,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(14.0)),
+                    ),
+                    child: TextFormField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.only(left: 15),
+                        border: InputBorder.none,
+                        hintText: "Enter your password",
+                        hintStyle: TextStyle(
+                          color: ColorApp.grey3,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Abhaya Libre',
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter your password';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Enter your password';
-                    }
-                    return null;
-                  },
                 ),
                 15.sizeH,
                 Text(
@@ -265,53 +317,65 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 10.sizeH,
-                TextFormField(
-                  controller: _confirmPasswordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Confirm your Password',
-                    fillColor: ColorApp.grey1,
-                    filled: true,
-                    border: UnderlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(18)),
+                SizedBox(
+                  width: 368.0,
+                  child: DecoratedBox(
+                    position: DecorationPosition.background,
+                    decoration: BoxDecoration(
+                      color: ColorApp.white4,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(14.0)),
+                    ),
+                    child: TextFormField(
+                      controller: _confirmPasswordController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.only(left: 15),
+                        border: InputBorder.none,
+                        hintText: "Confirm your password",
+                        hintStyle: TextStyle(
+                          color: ColorApp.grey3,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Abhaya Libre',
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Confirm your Password';
+                        }
+                        if (value != _passwordController.text) {
+                          return 'Your Password does not match';
+                        }
+                        return null;
+                      },
+                    ),
                   ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Confirm your Password';
-                    }
-                    if (value != _passwordController.text) {
-                      return 'Your Password does not match';
-                    }
-                    return null;
-                  },
                 ),
                 const SizedBox(height: 30),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: ElevatedButton(
-                        onPressed: _register,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: ColorApp.blue3,
-                          textStyle: TextStyle(
-                              fontSize: 18,
-                              color: ColorApp.white1,
-                              fontFamily: 'Abhaya Libre'),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0)),
-                        ),
-                        child: Container(
-                            // width: MediaQuery.of(context).size.width*0.4,
-                            child: const Text(
-                          'Sign Up',
-                          textAlign: TextAlign.center,
-                        )),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  ElevatedButton(
+                    onPressed: _register,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: ColorApp.blue3,
+                      textStyle: TextStyle(
+                          fontSize: 18,
+                          color: ColorApp.white1,
+                          fontFamily: 'Abhaya Libre'),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0)),
+                      fixedSize: const Size(348, 58),
+                    ),
+                    child: Text(
+                      "Sign Up",
+                      style: TextStyle(
+                        color: ColorApp.white1,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Abhaya Libre',
+                        fontSize: 18,
                       ),
                     ),
-                  ],
-                )
+                  ),
+                ])
               ],
             ),
           ),
