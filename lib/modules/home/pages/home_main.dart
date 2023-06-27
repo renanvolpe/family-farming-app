@@ -77,17 +77,39 @@ class _HomeMainState extends State<HomeMain> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: IndexedStack(
-            index: _calculateSelectedIndex(context), children: children),
-        bottomNavigationBar: BottomNavigationBar(
-          onTap: onTap,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Map'),
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Order'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.account_box), label: 'Account'),
-          ],
-        ));
+      body: IndexedStack(
+        index: _calculateSelectedIndex(context),
+        children: children,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: onTap,
+        elevation: 0,
+        useLegacyColorScheme: false,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              color: ColorApp.blue3,
+            ),
+            label: 'Mapa',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.search,
+              color: ColorApp.blue3,
+            ),
+            label: 'Produtores',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.account_circle_outlined,
+              color: ColorApp.blue3,
+            ),
+            label: 'Conta',
+          ),
+        ],
+      ),
+    );
   }
 }
 

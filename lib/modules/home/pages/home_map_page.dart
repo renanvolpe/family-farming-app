@@ -69,11 +69,12 @@ class _HomeMapPageState extends State<HomeMapPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 75,
         title: Text(
           "Discover",
           style: TextStyle(
-            color: ColorApp.blue3,
-            fontSize: 30,
+            color: ColorApp.dark1,
+            fontSize: 36,
             fontWeight: FontWeight.w600,
             fontFamily: 'Abhaya Libre',
           ),
