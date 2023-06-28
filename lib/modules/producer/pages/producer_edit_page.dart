@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:organaki_app/models/singleton_user.dart';
 
 class ProducerEditPage extends StatefulWidget {
   const ProducerEditPage({super.key});
@@ -16,9 +18,12 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
       ),
       body: Column(
         children: [
-          TextButton(onPressed: () {
-            
-          }, child: const Text("LOGOUT HERE"))
+          TextButton(
+              onPressed: () {
+                SingletonUser().removeUserAuth();
+                context.go('/account');
+              },
+              child: const Text("LOGOUT HERE"))
         ],
       ),
     );

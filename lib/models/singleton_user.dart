@@ -19,5 +19,9 @@ class SingletonUser {
     _userAuth = value;
   }
 
+  removeUserAuth() {
+    _userAuth = null;
+  }
+
   User? get userAuth => _userAuth;
 }
