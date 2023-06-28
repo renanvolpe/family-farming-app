@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:organaki_app/core/colors_app.dart';
-import 'package:organaki_app/core/extensions.dart';
 
 class HomeOrdersPage extends StatefulWidget {
   const HomeOrdersPage({Key? key}) : super(key: key);
@@ -103,7 +102,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   Text(
                     'CLEAR ALL',
                     textAlign: TextAlign.end,

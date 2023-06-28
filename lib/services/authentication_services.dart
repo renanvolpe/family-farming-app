@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:organaki_app/core/endpoints.dart';
+import 'package:organaki_app/models/singleton_user.dart';
 import 'package:organaki_app/models/user.dart';
 import 'package:result_dart/result_dart.dart';
 
@@ -14,7 +15,8 @@ class AuthenticationRepository implements AuthenticationService {
   String? errorMessage;
 
   @override
-  Future<Result<User, String>> doLoginUser(String username, String password) async {
+  Future<Result<User, String>> doLoginUser(
+      String username, String password) async {
     //Map<String, dynamic>? params = {"username":username, "password": password};
     // Map<String, dynamic>? header = {};
     // Map body = {};
@@ -25,8 +27,12 @@ class AuthenticationRepository implements AuthenticationService {
     try {
       if (response.statusCode == 200) {
         User user = User.fromMap(response.data);
-        return Success(user);
+        //TODO put in shared preference here
 
+        //Success way here :)
+        //save user in singleton
+        SingletonUser().setUserAuth(user);
+        return Success(user);
       } else if (response.statusCode == 400) {
         errorMessage = "Chamada feita de maneira errada";
       } else if (response.statusCode == 500) {
