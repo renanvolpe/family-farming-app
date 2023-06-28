@@ -22,6 +22,7 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
               onPressed: () {
                 SingletonUser().removeUserAuth();
                 context.go('/account');
+                //TODO aplly flushbar logout here
               },
               child: const Text("LOGOUT HERE"))
         ],
