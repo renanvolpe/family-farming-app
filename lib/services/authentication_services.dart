@@ -6,17 +6,17 @@ import 'package:result_dart/result_dart.dart';
 
 abstract class AuthenticationService {
   Future<Result<User, String>> doLoginUser(String username, String password);
-  registerUser();
+  registerUser(User user);
   setupServiceUser();
 }
 
 class AuthenticationRepository implements AuthenticationService {
   final dio = Dio();
-  String? errorMessage;
 
   @override
   Future<Result<User, String>> doLoginUser(
       String username, String password) async {
+    String? errorMessage;
     //Map<String, dynamic>? params = {"username":username, "password": password};
     // Map<String, dynamic>? header = {};
     // Map body = {};
@@ -46,8 +46,30 @@ class AuthenticationRepository implements AuthenticationService {
   }
 
   @override
-  registerUser() {
-    throw UnimplementedError();
+  Future<Result<String, String>> registerUser(User user) async {
+    String? errorMessage;
+    //Map<String, dynamic>? params = {"username":username, "password": password};
+    // Map<String, dynamic>? header = {};
+    Map body = {};
+    var response = await dio.post(
+      Endpoints.baseUrlMock + Endpoints.registerMock,
+      data: body, // options: Options(headers: header)
+    );
+    try {
+      if (response.statusCode == 201) {
+
+        //Success way here :)
+        return const Success("Operação realizaada com sucesso");
+      } else if (response.statusCode == 400) {
+        errorMessage = "Chamada feita de maneira errada";
+      } else if (response.statusCode == 500) {
+        errorMessage = "Sistema fora do ar, contate o adiminstrador";
+      }
+    } catch (e) {
+      print("Error AuthenticationRepository ::  doLoginUser :: $e ");
+      errorMessage = "Erro do sistema";
+    }
+    return Failure(errorMessage ?? "Erro não esperado");
   }
 
   @override
