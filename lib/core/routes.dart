@@ -65,6 +65,7 @@ final route = GoRouter(
           path: '/producerDetail',
           builder: (BuildContext context, GoRouterState state) {
             var params = state.extra as Map;
+            String id = params["id"];
             var currentPosition = params["currentPosition"];
             MapController mapController = params["mapController"];
             MapOptions mapOptions = params["mapOptions"];
@@ -72,7 +73,9 @@ final route = GoRouter(
             return ProducerApresentationPage(
                 mapController: mapController,
                 mapOptions: mapOptions,
-                currentPosition: currentPosition);
+                currentPosition: currentPosition,
+                id: id,
+                );
           }),
     ]);
 //TODO make a page thats show an error when not implemented yet or just call a rout that not exist
