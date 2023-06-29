@@ -1,24 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:organaki_app/core/colors_app.dart';
 import 'package:organaki_app/core/extensions.dart';
+import 'package:organaki_app/modules/home/bloc/bloc_get_a_producer/get_a_producer_bloc.dart';
 
 class ProducerApresentationPage extends StatefulWidget {
   const ProducerApresentationPage(
       {super.key,
       required this.mapOptions,
       required this.mapController,
-      required this.currentPosition});
+      required this.currentPosition,
+      required this.id});
   final MapOptions mapOptions;
   final MapController mapController;
   final LatLng currentPosition;
+  final String id;
   @override
   State<ProducerApresentationPage> createState() =>
       _ProducerApresentationPageState();
 }
 
 class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    BlocProvider.of<GetAProducerBloc>(context)
+        .add(GetAProducerStart(id: widget.id));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,180 +64,198 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
       ),
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.only(bottom: 20),
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ListTile(
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(
-                    "Nararaya Kirana",
-                    style: TextStyle(
-                      color: ColorApp.blue3,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Abhaya Libre',
+        child: BlocBuilder<GetAProducerBloc, GetAProducerState>(
+          builder: (context, state) {
+            if (state is GetAProducerProgress) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (state is GetAProducerSuccess) {
+              return Container(
+                margin: const EdgeInsets.only(bottom: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        title: Text(
+                          state.producer.name,
+                          style: TextStyle(
+                            color: ColorApp.blue3,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Abhaya Libre',
+                          ),
+                        ),
+                        subtitle: Text(
+                          state.producer.email,
+                          style: TextStyle(
+                            color: ColorApp.grey2,
+                            fontSize: 15,
+                            fontFamily: 'Abhaya Libre',
+                          ),
+                        ),
+                        trailing: Container(
+                          padding: const EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              color: ColorApp.grey2,
+                              borderRadius: BorderRadius.circular(30)),
+                          child: const Icon(
+                            Icons.person,
+                            color: Colors.white,
+                          ),
+                        )),
+                    15.sizeH,
+                    Text(
+                      "About Producer",
+                      style: TextStyle(
+                        color: ColorApp.blue3,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Abhaya Libre',
+                      ),
                     ),
-                  ),
-                  subtitle: Text(
-                    "nararaya.putri@mail.com",
-                    style: TextStyle(
-                      color: ColorApp.grey2,
-                      fontSize: 15,
-                      fontFamily: 'Abhaya Libre',
-                    ),
-                  ),
-                  trailing: Container(
-                    padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(
+                    15.sizeH,
+                    Text(
+                      state.producer.description,
+                      style: TextStyle(
                         color: ColorApp.grey2,
-                        borderRadius: BorderRadius.circular(30)),
-                    child: const Icon(
-                      Icons.person,
-                      color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Abhaya Libre',
+                      ),
                     ),
-                  )),
-              15.sizeH,
-              Text(
-                "About Producer",
-                style: TextStyle(
-                  color: ColorApp.blue3,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: 'Abhaya Libre',
-                ),
-              ),
-              15.sizeH,
-              Text(
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book",
-                style: TextStyle(
-                  color: ColorApp.grey2,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
-                  fontFamily: 'Abhaya Libre',
-                ),
-              ),
-              15.sizeH,
-              Text(
-                "Photos product",
-                style: TextStyle(
-                  color: ColorApp.blue3,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: 'Abhaya Libre',
-                ),
-              ),
-              15.sizeH,
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                    children: List.generate(
-                        5,
-                        (index) => Container(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 15),
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 15),
-                              decoration: BoxDecoration(
-                                  color: ColorApp.grey1,
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: const FlutterLogo(size: 60),
-                            ))),
-              ),
-              15.sizeH,
-              const Text(
-                "Producer Location",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                  fontFamily: 'Abhaya Libre',
-                ),
-              ),
-              15.sizeH,
-              LayoutBuilder(
-                builder: (context, onstraints) => SizedBox(
-                    height: 220,
-                    child: AbsorbPointer(
-                      child: Stack(
-                        children: [
-                          SizedBox(
-                            height: 200,
-                            child: FlutterMap(
-                              mapController: widget.mapController,
-                              options: widget.mapOptions,
-                              nonRotatedChildren: const [],
+                    15.sizeH,
+                    Text(
+                      "Photos product",
+                      style: TextStyle(
+                        color: ColorApp.blue3,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Abhaya Libre',
+                      ),
+                    ),
+                    15.sizeH,
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                          children: List.generate(
+                              5,
+                              (index) => Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 15),
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 15),
+                                    decoration: BoxDecoration(
+                                        color: ColorApp.grey1,
+                                        borderRadius: BorderRadius.circular(8)),
+                                    child: const FlutterLogo(size: 60),
+                                  ))),
+                    ),
+                    15.sizeH,
+                    const Text(
+                      "Producer Location",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Abhaya Libre',
+                      ),
+                    ),
+                    15.sizeH,
+                    LayoutBuilder(
+                      builder: (context, onstraints) => SizedBox(
+                          height: 220,
+                          child: AbsorbPointer(
+                            child: Stack(
                               children: [
-                                TileLayer(
-                                  urlTemplate:
-                                      'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                                  // userAgentPackageName: 'dev.fleaflet.flutter_map.example',
+                                SizedBox(
+                                  height: 200,
+                                  child: FlutterMap(
+                                    mapController: widget.mapController,
+                                    options: widget.mapOptions,
+                                    nonRotatedChildren: const [],
+                                    children: [
+                                      TileLayer(
+                                        urlTemplate:
+                                            'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                        // userAgentPackageName: 'dev.fleaflet.flutter_map.example',
+                                      ),
+                                      MarkerLayer(
+                                        markers: [
+                                          Marker(
+                                            point: LatLng(
+                                                double.parse(
+                                                    state.producer.latitude),
+                                                double.parse(
+                                                    state.producer.longitude)),
+                                            builder: (context) => Container(
+                                              height: 20,
+                                              width: 20,
+                                              decoration: BoxDecoration(
+                                                color: ColorApp.blue3,
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                              ),
+                                              child: const Icon(
+                                                Icons.location_history,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                                MarkerLayer(
-                                  markers: [
-                                    Marker(
-                                      point: widget.currentPosition,
-                                      builder: (context) => Container(
-                                        height: 20,
-                                        width: 20,
-                                        decoration: BoxDecoration(
-                                          color: ColorApp.blue3,
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                        ),
-                                        child: const Icon(
-                                          Icons.location_history,
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Container(
+                                    width: 194,
+                                    margin: const EdgeInsets.only(top: 10),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 10, horizontal: 25),
+                                    decoration: BoxDecoration(
+                                        color: ColorApp.blue3,
+                                        borderRadius: BorderRadius.circular(8)),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const Icon(
+                                          Icons.my_location,
                                           color: Colors.white,
                                         ),
-                                      ),
+                                        15.sizeW,
+                                        const Text(
+                                          "Go to \n Location",
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w400,
+                                            fontFamily: 'Abhaya Libre',
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                )
                               ],
                             ),
-                          ),
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                              width: 194,
-                              margin: const EdgeInsets.only(top: 10),
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 10, horizontal: 25),
-                              decoration: BoxDecoration(
-                                  color: ColorApp.blue3,
-                                  borderRadius: BorderRadius.circular(8)),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const Icon(
-                                    Icons.my_location,
-                                    color: Colors.white,
-                                  ),
-                                  15.sizeW,
-                                  const Text(
-                                    "Go to \n Location",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w400,
-                                      fontFamily: 'Abhaya Libre',
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    )),
-              )
-            ],
-          ),
+                          )),
+                    )
+                  ],
+                ),
+              );
+            }
+
+            return const Center(
+              child: Text("Errou um erro inesperado"),
+            );
+          },
         ),
       ),
     );

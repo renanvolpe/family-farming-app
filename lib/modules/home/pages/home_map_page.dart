@@ -64,6 +64,7 @@ class _HomeMapPageState extends State<HomeMapPage> {
     }
     return null;
   }
+
   //move the camera of map to current location
   void returnCurrentLocation() {
     setState(() {
@@ -146,6 +147,8 @@ class _HomeMapPageState extends State<HomeMapPage> {
                                 return InkWell(
                                     onTap: () =>
                                         context.push("/producerDetail", extra: {
+                                          "id": stateListProducer
+                                              .listProducers[index].id,
                                           "mapOptions": _mapOption,
                                           "mapController": _mapController,
                                           "currentPosition": currentLatlong!,
@@ -212,7 +215,7 @@ class _HomeMapPageState extends State<HomeMapPage> {
               },
             )
           : const Center(
-              child: CircularProgressIndicator(),  
+              child: CircularProgressIndicator(),
             ),
     );
   }
