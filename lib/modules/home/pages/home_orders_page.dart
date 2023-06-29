@@ -25,105 +25,104 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
         return StatefulBuilder(
           builder: (BuildContext context, StateSetter setState) {
             return Container(
-              height: MediaQuery.of(context).size.height * 0.65,
+              height: MediaQuery.of(context).size.height * 0.80,
               padding: const EdgeInsets.all(16.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    ListTile(
-                      title: Text(
-                        'Distance',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          color: ColorApp.black,
-                          fontFamily: 'Abhaya Libre',
-                        ),
-                      ),
-                      trailing: CustomSwitchButton(
-                        value: isDistanceEnabled,
-                        onChanged: (value) {
-                          setState(() {
-                            isDistanceEnabled = value;
-                          });
-                        },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ListTile(
+                    title: Text(
+                      'Distance',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        color: ColorApp.black,
+                        fontFamily: 'Abhaya Libre',
                       ),
                     ),
-                    if (isDistanceEnabled) const DistanceFilter(),
-                    const Divider(),
-                    ListTile(
-                      title: Text(
-                        'Opening Hours',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          color: ColorApp.black,
-                          fontFamily: 'Abhaya Libre',
-                        ),
-                      ),
-                      trailing: CustomSwitchButton(
-                        value: isOpeningHoursEnabled,
-                        onChanged: (value) {
-                          setState(() {
-                            isOpeningHoursEnabled = value;
-                          });
-                        },
+                    trailing: CustomSwitchButton(
+                      value: isDistanceEnabled,
+                      onChanged: (value) {
+                        setState(() {
+                          isDistanceEnabled = value;
+                        });
+                      },
+                    ),
+                  ),
+                  if (isDistanceEnabled) const DistanceFilter(),
+                  const Divider(),
+                  ListTile(
+                    title: Text(
+                      'Opening Hours',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        color: ColorApp.black,
+                        fontFamily: 'Abhaya Libre',
                       ),
                     ),
-                    if (isOpeningHoursEnabled) const OpeningHoursFilter(),
-                    const Divider(),
-                    ListTile(
-                      title: Text(
-                        'Tags',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          color: ColorApp.black,
-                          fontFamily: 'Abhaya Libre',
-                        ),
-                      ),
-                      trailing: CustomSwitchButton(
-                        value: isTagsEnabled,
-                        onChanged: (value) {
-                          setState(() {
-                            isTagsEnabled = value;
-                          });
-                        },
+                    trailing: CustomSwitchButton(
+                      value: isOpeningHoursEnabled,
+                      onChanged: (value) {
+                        setState(() {
+                          isOpeningHoursEnabled = value;
+                        });
+                      },
+                    ),
+                  ),
+                  if (isOpeningHoursEnabled) const OpeningHoursFilter(),
+                  const Divider(),
+                  ListTile(
+                    title: Text(
+                      'Tags',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        color: ColorApp.black,
+                        fontFamily: 'Abhaya Libre',
                       ),
                     ),
-                    if (isTagsEnabled) const TagsFilter(),
-                    30.sizeH,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                fixedSize: const Size(348, 58),
-                                backgroundColor: ColorApp.blue3,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(18.0))),
-                            onPressed: () {
-                              // Aplicar o filtro e fechar o showModalBottomSheet
-                              Navigator.pop(context);
-                            },
-                            child: Text(
-                              'Save and Use',
-                              style: TextStyle(
-                                color: ColorApp.white1,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Abhaya Libre',
-                                fontSize: 18,
-                              ),
+                    trailing: CustomSwitchButton(
+                      value: isTagsEnabled,
+                      onChanged: (value) {
+                        setState(() {
+                          isTagsEnabled = value;
+                        });
+                      },
+                    ),
+                  ),
+                  if (isTagsEnabled) const TagsFilter(),
+                  30.sizeH,
+                  const Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              fixedSize: const Size(348, 58),
+                              backgroundColor: ColorApp.blue3,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0))),
+                          onPressed: () {
+                            // Aplicar o filtro e fechar o showModalBottomSheet
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            'Save and Use',
+                            style: TextStyle(
+                              color: ColorApp.white1,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Abhaya Libre',
+                              fontSize: 18,
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
               ),
             );
           },
@@ -242,6 +241,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                 ),
               ),
             ),
+            // for (int i = 0; i < 4; i++)
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Row(
@@ -321,28 +321,31 @@ class _DistanceFilterState extends State<DistanceFilter> {
             });
           },
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              '0 km',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-                color: ColorApp.black,
-                fontFamily: 'Abhaya Libre',
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '0 km',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: ColorApp.black,
+                  fontFamily: 'Abhaya Libre',
+                ),
               ),
-            ),
-            Text(
-              '${maxDistance.toInt()} km',
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-                color: ColorApp.black,
-                fontFamily: 'Abhaya Libre',
+              Text(
+                '${maxDistance.toInt()} km',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: ColorApp.black,
+                  fontFamily: 'Abhaya Libre',
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );
@@ -391,6 +394,7 @@ class _OpeningHoursFilterState extends State<OpeningHoursFilter> {
       Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               children: [
