@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:organaki_app/core/endpoints.dart';
 import 'package:organaki_app/models/singleton_user.dart';
 import 'package:organaki_app/models/user.dart';
+import 'package:organaki_app/services/shared_preferences_controller.dart';
 import 'package:result_dart/result_dart.dart';
 
 abstract class AuthenticationService {
@@ -27,11 +28,16 @@ class AuthenticationRepository implements AuthenticationService {
     try {
       if (response.statusCode == 200) {
         User user = User.fromMap(response.data);
-        //TODO put in shared preference here
-
         //Success way here :)
+
         //save user in singleton
+        print("save user in singleton");
         SingletonUser().setUserAuth(user);
+        //save login in memory here
+        print("save login in memory here");
+        SharedPreferencesAuthController authControllerShared =
+            SharedPreferencesAuthController();
+        authControllerShared.saveLoginSharedPreferences(user);
         return Success(user);
       } else if (response.statusCode == 400) {
         errorMessage = "Chamada feita de maneira errada";
@@ -57,7 +63,6 @@ class AuthenticationRepository implements AuthenticationService {
     );
     try {
       if (response.statusCode == 201) {
-
         //Success way here :)
         return const Success("Operação realizaada com sucesso");
       } else if (response.statusCode == 400) {

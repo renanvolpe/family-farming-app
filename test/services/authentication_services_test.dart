@@ -12,7 +12,7 @@ void main() {
     });
 
     test("Test Register function", () async {
-      var user = User("Renan", "renan@volpe.com", "Volpe", "123");
+      var user = User("Renan", "renan@volpe.com", "Volpe", "123", "");
       var response = await authRepo.registerUser(user);
       expect(response, isA<Success>());
     });

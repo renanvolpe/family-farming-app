@@ -2,11 +2,13 @@
 import 'dart:convert';
 
 class User {
+  String? id;
   String name;
   String email;
   String lastName;
   String password;
   User(
+    this.id,
     this.name,
     this.email,
     this.lastName,
@@ -14,12 +16,14 @@ class User {
   );
 
   User copyWith({
+    String? id,
     String? name,
     String? email,
     String? lastName,
     String? password,
   }) {
     return User(
+      id ?? this.id,
       name ?? this.name,
       email ?? this.email,
       lastName ?? this.lastName,
@@ -29,6 +33,7 @@ class User {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
       'name': name,
       'email': email,
       'lastName': lastName,
@@ -38,6 +43,7 @@ class User {
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
+      map['id'] != null ? map['id'] as String : null,
       map['name'] as String,
       map['email'] as String,
       map['lastName'] as String,
@@ -47,11 +53,12 @@ class User {
 
   String toJson() => json.encode(toMap());
 
-  factory User.fromJson(String source) => User.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory User.fromJson(String source) =>
+      User.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'User(name: $name, email: $email, lastName: $lastName, password: $password)';
+    return 'User(id: $id, name: $name, email: $email, lastName: $lastName, password: $password)';
   }
 
   @override
@@ -59,6 +66,7 @@ class User {
     if (identical(this, other)) return true;
   
     return 
+      other.id == id &&
       other.name == name &&
       other.email == email &&
       other.lastName == lastName &&
@@ -67,7 +75,8 @@ class User {
 
   @override
   int get hashCode {
-    return name.hashCode ^
+    return id.hashCode ^
+      name.hashCode ^
       email.hashCode ^
       lastName.hashCode ^
       password.hashCode;
