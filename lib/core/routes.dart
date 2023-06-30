@@ -8,8 +8,8 @@ import 'package:organaki_app/modules/home/pages/home_main.dart';
 import 'package:organaki_app/modules/home/pages/home_map_page.dart';
 import 'package:organaki_app/modules/home/pages/home_orders_page.dart';
 import 'package:organaki_app/modules/producer/pages/producer_apresentation_page.dart';
-import 'package:organaki_app/modules/producer/pages/producer_edit_page.dart';
 import 'package:organaki_app/modules/producer/pages/producer_account_page.dart';
+import 'package:organaki_app/modules/producer/pages/producer_edit_page.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> _shellNavigatorKey =
@@ -58,9 +58,15 @@ final route = GoRouter(
       ),
       GoRoute(
           parentNavigatorKey: _rootNavigatorKey,
+          path: '/producerEdit',
+          builder: (BuildContext context, GoRouterState state) =>
+              const ProducerEditPage()),
+      GoRoute(
+          parentNavigatorKey: _rootNavigatorKey,
           path: '/register',
           builder: (BuildContext context, GoRouterState state) =>
               const RegisterPage()),
+      
       GoRoute(
           parentNavigatorKey: _rootNavigatorKey,
           path: '/producerDetail',

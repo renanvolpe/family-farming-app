@@ -83,7 +83,7 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
                 ],
               ),
               20.sizeH,
-              Row(
+              const Row(
                 children: [],
               ),
               Text(
@@ -102,7 +102,9 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
                   Row(
                     children: [
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.push("/producerEdit");
+                        },
                         child: Text(
                           "Edit information",
                           style: TextStyle(
@@ -113,7 +115,7 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
                           ),
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Icon(
                         Icons.arrow_forward_ios_outlined,
                         color: ColorApp.grey5,
@@ -134,7 +136,7 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
                           ),
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Icon(
                         Icons.arrow_forward_ios_outlined,
                         color: ColorApp.grey5,
