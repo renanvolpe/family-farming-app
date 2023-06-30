@@ -1,6 +1,6 @@
 flutter_native_splash:
   color: "#003046"
-  image: images/placeholder.png
+  image: images/organaki-logo.png
 
   # This package generates native code to customize Flutter's default white native splash screen
   # with background color and splash image.
@@ -53,13 +53,13 @@ flutter_native_splash:
     # 640 pixels in diameter.
     # App icon without an icon background: This should be 1152×1152 pixels, and fit within a circle
     # 768 pixels in diameter.
-    image: images/placeholder.png
+    image: images/organaki-logo.png
 
     # Splash screen background color.
     color: "#003046"
 
     # App icon background color.
-    icon_background_color: "#f5cb42"
+    icon_background_color: "#003046"
 
     # The branding property allows you to specify an image used as branding in the splash screen.
     #branding: assets/dart.png
