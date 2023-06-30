@@ -28,11 +28,13 @@ final route = GoRouter(
           GoRoute(
               parentNavigatorKey: _shellNavigatorKey,
               path: '/map',
+              routes: [producerDetailRout],
               builder: (BuildContext context, GoRouterState state) =>
                   const HomeMapPage()),
           GoRoute(
               parentNavigatorKey: _shellNavigatorKey,
               path: '/order',
+              routes: [producerDetailRout],
               builder: (BuildContext context, GoRouterState state) =>
                   const HomeOrdersPage()),
           GoRoute(
@@ -66,23 +68,21 @@ final route = GoRouter(
           path: '/register',
           builder: (BuildContext context, GoRouterState state) =>
               const RegisterPage()),
-      
-      GoRoute(
-          parentNavigatorKey: _rootNavigatorKey,
-          path: '/producerDetail',
-          builder: (BuildContext context, GoRouterState state) {
-            var params = state.extra as Map;
-            String id = params["id"];
-            var currentPosition = params["currentPosition"];
-            MapController mapController = params["mapController"];
-            MapOptions mapOptions = params["mapOptions"];
-
-            return ProducerApresentationPage(
-              mapController: mapController,
-              mapOptions: mapOptions,
-              currentPosition: currentPosition,
-              id: id,
-            );
-          }),
     ]);
-//TODO make a page thats show an error when not implemented yet or just call a rout that not exist
+var producerDetailRout = GoRoute(
+    parentNavigatorKey: _rootNavigatorKey,
+    path: 'producerDetail',
+    builder: (BuildContext context, GoRouterState state) {
+      var params = state.extra as Map;
+      String id = params["id"];
+      var currentPosition = params["currentPosition"];
+      MapController mapController = params["mapController"];
+      MapOptions mapOptions = params["mapOptions"];
+
+      return ProducerApresentationPage(
+        mapController: mapController,
+        mapOptions: mapOptions,
+        currentPosition: currentPosition,
+        id: id,
+      );
+    });
