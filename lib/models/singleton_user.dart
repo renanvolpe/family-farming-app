@@ -5,7 +5,7 @@ class SingletonUser {
   //then, can use stories values inside whole code
   //like bloc, pages, services...
 
-  late User _userAuth;
+  User? _userAuth;
 
   static final SingletonUser _singletonUser = SingletonUser._internal();
 
@@ -19,5 +19,9 @@ class SingletonUser {
     _userAuth = value;
   }
 
-  User get userAuth => _userAuth;
+  removeUserAuth() {
+    _userAuth = null;
+  }
+
+  User? get userAuth => _userAuth;
 }

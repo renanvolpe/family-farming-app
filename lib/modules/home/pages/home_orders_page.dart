@@ -1,4 +1,9 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:organaki_app/modules/home/bloc/bloc_get_list_producer/get_list_producers_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:organaki_app/core/extensions.dart';
@@ -16,6 +21,9 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
   bool isOpeningHoursEnabled = false;
   bool isTagsEnabled = false;
   double distanceValue = 0.0;
+  LatLng? currentLatlong;
+  final _mapController = MapController();
+  late MapOptions _mapOption;
 
   void _showFilterModal(BuildContext context) {
     showModalBottomSheet(
@@ -131,6 +139,24 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
     );
   }
 
+  Future<LatLng?> getCurrentPosition() async {
+    LocationPermission response = await Geolocator.requestPermission();
+    if (response.name == "whileInUse") {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      return LatLng(position.latitude, position.longitude);
+    } else {
+      // ignore: use_build_context_synchronously
+      Flushbar(
+              message: 'Você precisa ativar sua localização',
+              backgroundColor: Colors.red,
+              duration: const Duration(seconds: 6),
+              flushbarPosition: FlushbarPosition.TOP)
+          .show(context);
+    }
+    return null;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -139,154 +165,169 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
   @override
   void didChangeDependencies() async {
     super.didChangeDependencies();
+    currentLatlong = await getCurrentPosition();
 
+    setState(() {
+      _mapOption = MapOptions(center: currentLatlong!, zoom: 14);
+      currentLatlong;
+    });
     BlocProvider.of<GetListProducersBloc>(context).add(GetListProducersStart());
   }
-
-  List<GetListProducersBloc> recentlySearched = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        leading: InkWell(
-            onTap: () => Navigator.pop(context),
-            child: Icon(Icons.arrow_back, color: ColorApp.black)),
-        title: Text('Back',
-            style: TextStyle(
-                color: ColorApp.black,
-                fontSize: 20,
-                fontFamily: 'Abhaya Libre',
-                fontWeight: FontWeight.w500)),
-        backgroundColor: ColorApp.white1,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Search',
-                    style: TextStyle(
-                      fontSize: 36,
-                      fontWeight: FontWeight.w500,
-                      color: ColorApp.black,
-                      fontFamily: 'Abhaya Libre',
-                    ),
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      _showFilterModal(
-                          context); // Implementar ação do botão de filtro aqui
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: ColorApp.blue3,
-                      textStyle: TextStyle(
-                          fontSize: 18,
-                          color: ColorApp.white1,
-                          fontFamily: 'Abhaya Libre'),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0)),
-                    ),
-                    icon: Icon(Icons.filter_list, color: ColorApp.white1),
-                    label: Text(
-                      'Filter',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: ColorApp.white1,
-                        fontFamily: 'Abhaya Libre',
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14.0),
-                  color: ColorApp.white4,
-                ),
-                child: Row(
+      body: SafeArea(
+        child: BlocBuilder<GetListProducersBloc, GetListProducersState>(
+          builder: (context, state) {
+            if (state is GetListProducersProgress) {
+              return const CircularProgressIndicator();
+            }
+            if (state is GetListProducersSuccess) {
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.search,
-                        color: ColorApp.grey3,
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Search',
+                            style: TextStyle(
+                              fontSize: 36,
+                              fontWeight: FontWeight.w500,
+                              color: ColorApp.black,
+                              fontFamily: 'Abhaya Libre',
+                            ),
+                          ),
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              _showFilterModal(
+                                  context); // Implementar ação do botão de filtro aqui
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: ColorApp.blue3,
+                              textStyle: TextStyle(
+                                  fontSize: 18,
+                                  color: ColorApp.white1,
+                                  fontFamily: 'Abhaya Libre'),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18.0)),
+                            ),
+                            icon:
+                                Icon(Icons.filter_list, color: ColorApp.white1),
+                            label: Text(
+                              'Filter',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: ColorApp.white1,
+                                fontFamily: 'Abhaya Libre',
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Search Foods, Restaurants etc.',
-                          border: InputBorder.none,
-                          hintStyle: TextStyle(
-                            color: ColorApp.grey3,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Abhaya Libre',
-                          ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14.0),
+                          color: ColorApp.white4,
+                        ),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.search,
+                                color: ColorApp.grey3,
+                              ),
+                            ),
+                            Expanded(
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  hintText: 'Search Foods, Restaurants etc.',
+                                  border: InputBorder.none,
+                                  hintStyle: TextStyle(
+                                    color: ColorApp.grey3,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'Abhaya Libre',
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
-            // for (int i = 0; i < 4; i++)
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Recently Searched',
-                    style: TextStyle(
-                        color: ColorApp.black,
-                        fontSize: 26,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Abhaya Libre'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      // Implementar ação do botão "Clear all" aqui
-                    },
-                    child: Text(
-                      'CLEAR ALL',
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: ColorApp.blue3,
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Recently Searched',
+                            style: TextStyle(
+                                color: ColorApp.black,
+                                fontSize: 26,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Abhaya Libre'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              // Implementar ação do botão "Clear all" aqui
+                            },
+                            child: Text(
+                              'CLEAR ALL',
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: ColorApp.blue3,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            /*Expanded(
-              child: ListView.builder(
-                itemCount: recentlySearched.length,
-                itemBuilder: (context, index) {
-                  if (index < recentlySearched.length) {
-                    return ListTile(
-                      title: Text(recentlySearched[index] as String),
-                      onTap: () {
-                        // Handle recently searched item tap
-                      },
-                    );
-                  }
-                  return null;
-                },
-              ),
-            ), */ // Aqui você pode adicionar o widget que lista os resultados da pesquisa
-          ],
+                    for (int i = 0; i < state.listProducers.length; i++)
+                      InkWell(
+                        onTap: () => context.push("/order/producerDetail", extra: {
+                          "id": state.listProducers[i].id,
+                          "mapOptions": _mapOption,
+                          "mapController": _mapController,
+                          "currentPosition": currentLatlong!,
+                        }),
+                        child: Column(
+                          children: [
+                            10.sizeH,
+                            ListTile(
+                              leading: const CircleAvatar(),
+                              title: Text(state.listProducers[i].name),
+                              subtitle: Text(
+                                state.listProducers[i].description,
+                                style: const TextStyle(color: Colors.grey),
+                              ),
+                              trailing: const Icon(Icons.chevron_right),
+                            ),
+                            10.sizeH,
+                            Divider(
+                              color: ColorApp.grey1,
+                            ),
+                          ],
+                        ),
+                      ),
+                    20.sizeH
+                  ],
+                ),
+              );
+            }
+            return Container();
+          },
         ),
       ),
     );
