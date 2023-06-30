@@ -67,15 +67,15 @@ class _LoginPageState extends State<LoginPage> {
                       width: 124.0,
                       height: 124.0,
                       margin: const EdgeInsets.only(top: 75, bottom: 20),
-                      decoration: BoxDecoration(
-                        color: ColorApp.blue5,
-                        shape: BoxShape.circle,
-                      ),
+                       decoration: BoxDecoration(
+                         color: ColorApp.blue3,
+                         shape: BoxShape.circle,
+                       ),
                       child: Container(
-                        margin: const EdgeInsets.only(left: 28, right: 5),
+                        margin: const EdgeInsets.only(left: 0, right: 0),
                         decoration: const BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage('images/placeholder.png'),
+                            image: AssetImage('images/organaki-logo.png'),
                             fit: BoxFit.fitWidth,
                           ),
                         ),
