@@ -8,6 +8,7 @@ import 'package:organaki_app/modules/home/pages/home_main.dart';
 import 'package:organaki_app/modules/home/pages/home_map_page.dart';
 import 'package:organaki_app/modules/home/pages/home_orders_page.dart';
 import 'package:organaki_app/modules/producer/pages/producer_apresentation_page.dart';
+import 'package:organaki_app/modules/producer/pages/producer_account_page.dart';
 import 'package:organaki_app/modules/producer/pages/producer_edit_page.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -41,7 +42,7 @@ final route = GoRouter(
                 if (SingletonUser().userAuth == null) {
                   return "/account/login";
                 }
-                return "/account/producerEdit";
+                return "/account/producerAccount";
               },
               routes: [
                 GoRoute(
@@ -49,17 +50,23 @@ final route = GoRouter(
                     builder: (BuildContext context, GoRouterState state) =>
                         const LoginPage()),
                 GoRoute(
-                    path: 'producerEdit',
+                    path: 'producerAccount',
                     builder: (BuildContext context, GoRouterState state) =>
-                        const ProducerEditPage()),
+                        const ProducerAccountPage()),
               ]),
         ],
       ),
       GoRoute(
           parentNavigatorKey: _rootNavigatorKey,
+          path: '/producerEdit',
+          builder: (BuildContext context, GoRouterState state) =>
+              const ProducerEditPage()),
+      GoRoute(
+          parentNavigatorKey: _rootNavigatorKey,
           path: '/register',
           builder: (BuildContext context, GoRouterState state) =>
               const RegisterPage()),
+      
       GoRoute(
           parentNavigatorKey: _rootNavigatorKey,
           path: '/producerDetail',
@@ -71,11 +78,11 @@ final route = GoRouter(
             MapOptions mapOptions = params["mapOptions"];
 
             return ProducerApresentationPage(
-                mapController: mapController,
-                mapOptions: mapOptions,
-                currentPosition: currentPosition,
-                id: id,
-                );
+              mapController: mapController,
+              mapOptions: mapOptions,
+              currentPosition: currentPosition,
+              id: id,
+            );
           }),
     ]);
 //TODO make a page thats show an error when not implemented yet or just call a rout that not exist
