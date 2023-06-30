@@ -9,6 +9,7 @@ import 'package:organaki_app/modules/home/pages/home_map_page.dart';
 import 'package:organaki_app/modules/home/pages/home_orders_page.dart';
 import 'package:organaki_app/modules/producer/pages/producer_apresentation_page.dart';
 import 'package:organaki_app/modules/producer/pages/producer_edit_page.dart';
+import 'package:organaki_app/modules/producer/pages/producer_account_page.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> _shellNavigatorKey =
@@ -41,7 +42,7 @@ final route = GoRouter(
                 if (SingletonUser().userAuth == null) {
                   return "/account/login";
                 }
-                return "/account/producerEdit";
+                return "/account/producerAccount";
               },
               routes: [
                 GoRoute(
@@ -49,9 +50,9 @@ final route = GoRouter(
                     builder: (BuildContext context, GoRouterState state) =>
                         const LoginPage()),
                 GoRoute(
-                    path: 'producerEdit',
+                    path: 'producerAccount',
                     builder: (BuildContext context, GoRouterState state) =>
-                        const ProducerEditPage()),
+                        const ProducerAccountPage()),
               ]),
         ],
       ),
@@ -71,11 +72,11 @@ final route = GoRouter(
             MapOptions mapOptions = params["mapOptions"];
 
             return ProducerApresentationPage(
-                mapController: mapController,
-                mapOptions: mapOptions,
-                currentPosition: currentPosition,
-                id: id,
-                );
+              mapController: mapController,
+              mapOptions: mapOptions,
+              currentPosition: currentPosition,
+              id: id,
+            );
           }),
     ]);
 //TODO make a page thats show an error when not implemented yet or just call a rout that not exist

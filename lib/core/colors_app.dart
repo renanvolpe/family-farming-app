@@ -11,6 +11,7 @@ class ColorApp {
   static Color grey2 = const Color(0xff636773);
   static Color grey3 = const Color(0xffB3BFCB);
   static Color grey4 = const Color(0xffD5DEE7);
+  static Color grey5 = const Color(0xffB3B4BA);
 
   static Color dark1 = const Color(0xff292D32);
   static Color dark2 = const Color(0xff151719);
