@@ -4,6 +4,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:organaki_app/models/producer.dart';
 import 'package:organaki_app/modules/home/bloc/bloc_get_list_producer/get_list_producers_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:organaki_app/core/extensions.dart';
@@ -24,6 +25,9 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
   LatLng? currentLatlong;
   final _mapController = MapController();
   late MapOptions _mapOption;
+  late List<Producer>? listProducers; // list to filter the producers
+  List<Producer> allProducers = []; //fixed list to evet get all producers
+  TextEditingController textFilterController = TextEditingController();
 
   void _showFilterModal(BuildContext context) {
     showModalBottomSheet(
@@ -174,22 +178,22 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
     BlocProvider.of<GetListProducersBloc>(context).add(GetListProducersStart());
   }
 
+  //function to list and update depended on searched
+  void filterListProducersByText(String text) {
+    List<Producer> newListProducers = [];
+    for (int i = 0; i < allProducers.length; i++) {
+      if (allProducers[i].name.toLowerCase().contains(text.toLowerCase())) {
+        newListProducers.add(allProducers[i]);
+      }
+    }
+    setState(() {
+      listProducers = newListProducers;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        toolbarHeight: 75,
-        title: Text(
-          "Search",
-          style: TextStyle(
-            color: ColorApp.dark1,
-            fontSize: 36,
-            fontWeight: FontWeight.w600,
-            fontFamily: 'Abhaya Libre',
-          ),
-        ),
-      ),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: BlocBuilder<GetListProducersBloc, GetListProducersState>(
@@ -198,6 +202,10 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
               return const CircularProgressIndicator();
             }
             if (state is GetListProducersSuccess) {
+              allProducers = state.listProducers;
+              listProducers == null
+                  ? listProducers = state.listProducers
+                  : null;
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -266,6 +274,10 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                             ),
                             Expanded(
                               child: TextField(
+                                controller: textFilterController,
+                                onChanged: (text) {
+                                  filterListProducersByText(text);
+                                },
                                 decoration: InputDecoration(
                                   hintText: 'Search Foods, Restaurants etc.',
                                   border: InputBorder.none,
@@ -297,7 +309,11 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                           ),
                           TextButton(
                             onPressed: () {
-                              // Implementar ação do botão "Clear all" aqui
+                              //remove filter of the text and call function to list text with nothing in text
+                              setState(() {
+                                textFilterController.text = "";
+                                filterListProducersByText("");
+                              });
                             },
                             child: Text(
                               'CLEAR ALL',
@@ -310,11 +326,11 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                         ],
                       ),
                     ),
-                    for (int i = 0; i < state.listProducers.length; i++)
+                    for (int i = 0; i < listProducers!.length; i++)
                       InkWell(
                         onTap: () =>
                             context.push("/order/producerDetail", extra: {
-                          "id": state.listProducers[i].id,
+                          "id": listProducers![i].id,
                           "mapOptions": _mapOption,
                           "mapController": _mapController,
                           "currentPosition": currentLatlong!,
@@ -324,9 +340,9 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                             10.sizeH,
                             ListTile(
                               leading: const CircleAvatar(),
-                              title: Text(state.listProducers[i].name),
+                              title: Text(listProducers![i].name),
                               subtitle: Text(
-                                state.listProducers[i].description,
+                                listProducers![i].description,
                                 style: const TextStyle(color: Colors.grey),
                               ),
                               trailing: const Icon(Icons.chevron_right),
