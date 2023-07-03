@@ -62,8 +62,6 @@ class ProducerRepository implements ProducerService {
 
   @override
   editProducer() {
-    // TODO: implement editProducer
-    throw UnimplementedError();
   }
 
   @override

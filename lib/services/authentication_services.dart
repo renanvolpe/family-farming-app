@@ -28,12 +28,11 @@ class AuthenticationRepository implements AuthenticationService {
     };
     try {
       var response = await dio.post(Endpoints.baseUrl + Endpoints.login,
-          data: body,
-          options: Options(headers: header)
-          );
+          data: body, options: Options(headers: header));
 
       if (response.statusCode == 200) {
-        User user = User.fromMap(response.data);
+        var producerData = response.data["producer"];
+        User user = User.fromMap(producerData);
         //Success way here :)
 
         //save user in singleton
@@ -45,7 +44,7 @@ class AuthenticationRepository implements AuthenticationService {
             SharedPreferencesAuthController();
         authControllerShared.saveLoginSharedPreferences(user);
         return Success(user);
-      } 
+      }
     } catch (e) {
       print("Error AuthenticationRepository ::  doLoginUser :: $e ");
       errorMessage = e.toString();
@@ -58,9 +57,18 @@ class AuthenticationRepository implements AuthenticationService {
     String? errorMessage;
     //Map<String, dynamic>? params = {"username":username, "password": password};
     // Map<String, dynamic>? header = {};
-    Map body = {};
+    Map<String, dynamic> body = {
+      "producer": {
+        "email": user.email,
+        "lat": 0,
+        "lng": 0,
+        "name": user.name,
+        "short_description": "null",
+        "password": user.password
+      }
+    };
     var response = await dio.post(
-      Endpoints.baseUrlMock + Endpoints.registerMock,
+      Endpoints.baseUrl + Endpoints.producers,
       data: body, // options: Options(headers: header)
     );
     try {

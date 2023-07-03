@@ -6,7 +6,7 @@ void main() {
   group("Test Producer services", () {
     ProducerRepository producerRepo = ProducerRepository();
     test("Test get a producer function", () async {
-      var response = await producerRepo.getAProducer("3e24d816-fdbe-4f8e-b802-5ff57449f0b5");
+      var response = await producerRepo.getAProducer("8dd0df98-78cb-4029-9303-9f2c33d8992c");
       expect(response, isA<Success>());
     });
 
