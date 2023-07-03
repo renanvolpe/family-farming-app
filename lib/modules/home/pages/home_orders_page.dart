@@ -309,7 +309,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                               leading: const CircleAvatar(),
                               title: Text(state.listProducers[i].name),
                               subtitle: Text(
-                                state.listProducers[i].description,
+                                state.listProducers[i].short_description,
                                 style: const TextStyle(color: Colors.grey),
                               ),
                               trailing: const Icon(Icons.chevron_right),

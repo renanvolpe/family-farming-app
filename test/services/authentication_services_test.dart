@@ -7,7 +7,7 @@ void main() {
   group("Test authentication services", () {
     AuthenticationRepository authRepo = AuthenticationRepository();
     test("Test doLogin function", () async {
-      var response = await authRepo.doLoginUser("username", "password");
+      var response = await authRepo.doLoginUser("lucasnar@gmail.com", "pipoca");
       expect(response, isA<Success>());
     });
 

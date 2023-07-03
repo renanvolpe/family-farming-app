@@ -36,7 +36,7 @@ class StoreSectionComponent extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    producer.companyName,
+                    "producer.companyName",
                     style: TextStyle(
                       color: ColorApp.blue3,
                       fontSize: 17,

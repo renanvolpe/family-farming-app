@@ -82,7 +82,7 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          state.producer.companyName,
+                          "state.producer.companyName",
                           style: TextStyle(
                             color: ColorApp.blue3,
                             fontSize: 26,
@@ -134,7 +134,7 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                     ),
                     15.sizeH,
                     Text(
-                      state.producer.description,
+                      state.producer.short_description,
                       style: TextStyle(
                         color: ColorApp.grey2,
                         fontSize: 20,
@@ -203,9 +203,9 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                                           Marker(
                                             point: LatLng(
                                                 double.parse(
-                                                    state.producer.latitude),
+                                                    "23"),
                                                 double.parse(
-                                                    state.producer.longitude)),
+                                                    "46")),
                                             builder: (context) => Container(
                                               height: 20,
                                               width: 20,

@@ -1,41 +1,33 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
 import 'dart:convert';
 
 class Producer {
   String id;
   String name;
   String email;
-  String latitude;
-  String longitude;
-  String description;
-  String companyName;
+  bool visible_producer;
+  String short_description;
   Producer({
     required this.id,
     required this.name,
     required this.email,
-    required this.latitude,
-    required this.longitude,
-    required this.description,
-    required this.companyName,
+    required this.visible_producer,
+    required this.short_description,
   });
 
   Producer copyWith({
     String? id,
     String? name,
     String? email,
-    String? latitude,
-    String? longitude,
-    String? description,
-    String? companyName,
+    bool? visible_producer,
+    String? short_description,
   }) {
     return Producer(
       id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
-      latitude: latitude ?? this.latitude,
-      longitude: longitude ?? this.longitude,
-      description: description ?? this.description,
-      companyName: companyName ?? this.companyName,
+      visible_producer: visible_producer ?? this.visible_producer,
+      short_description: short_description ?? this.short_description,
     );
   }
 
@@ -44,10 +36,8 @@ class Producer {
       'id': id,
       'name': name,
       'email': email,
-      'latitude': latitude,
-      'longitude': longitude,
-      'description': description,
-      'companyName': companyName,
+      'visible_producer': visible_producer,
+      'short_description': short_description,
     };
   }
 
@@ -56,10 +46,8 @@ class Producer {
       id: map['id'] as String,
       name: map['name'] as String,
       email: map['email'] as String,
-      latitude: map['latitude'] as String,
-      longitude: map['longitude'] as String,
-      description: map['description'] as String,
-      companyName: map['companyName'] as String,
+      visible_producer: map['visible_producer'] as bool,
+      short_description: map['short_description'] as String,
     );
   }
 
@@ -69,7 +57,7 @@ class Producer {
 
   @override
   String toString() {
-    return 'Producer(id: $id, name: $name, email: $email, latitude: $latitude, longitude: $longitude, description: $description, companyName: $companyName)';
+    return 'Producer(id: $id, name: $name, email: $email, visible_producer: $visible_producer, short_description: $short_description)';
   }
 
   @override
@@ -80,10 +68,8 @@ class Producer {
       other.id == id &&
       other.name == name &&
       other.email == email &&
-      other.latitude == latitude &&
-      other.longitude == longitude &&
-      other.description == description &&
-      other.companyName == companyName;
+      other.visible_producer == visible_producer &&
+      other.short_description == short_description;
   }
 
   @override
@@ -91,10 +77,8 @@ class Producer {
     return id.hashCode ^
       name.hashCode ^
       email.hashCode ^
-      latitude.hashCode ^
-      longitude.hashCode ^
-      description.hashCode ^
-      companyName.hashCode;
+      visible_producer.hashCode ^
+      short_description.hashCode;
   }
 }
 

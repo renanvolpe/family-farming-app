@@ -6,7 +6,7 @@ import 'package:organaki_app/services/shared_preferences_controller.dart';
 import 'package:result_dart/result_dart.dart';
 
 abstract class AuthenticationService {
-  Future<Result<User, String>> doLoginUser(String username, String password);
+  Future<Result<User, String>> doLoginUser(String email, String password);
   registerUser(User user);
   setupServiceUser();
 }
@@ -16,16 +16,22 @@ class AuthenticationRepository implements AuthenticationService {
 
   @override
   Future<Result<User, String>> doLoginUser(
-      String username, String password) async {
+      String email, String password) async {
     String? errorMessage;
     //Map<String, dynamic>? params = {"username":username, "password": password};
-    // Map<String, dynamic>? header = {};
-    // Map body = {};
-    var response = await dio.get(
-      Endpoints.baseUrlMock + Endpoints.loginMock,
-      // queryParameters: params, data: body, options: Options(headers: header)
-    );
+    Map<String, dynamic>? header = {
+      "Content-Type": "application/json",
+    };
+    Map body = {
+      "email": email,
+      "password": password,
+    };
     try {
+      var response = await dio.post(Endpoints.baseUrl + Endpoints.login,
+          data: body,
+          options: Options(headers: header)
+          );
+
       if (response.statusCode == 200) {
         User user = User.fromMap(response.data);
         //Success way here :)
@@ -39,14 +45,10 @@ class AuthenticationRepository implements AuthenticationService {
             SharedPreferencesAuthController();
         authControllerShared.saveLoginSharedPreferences(user);
         return Success(user);
-      } else if (response.statusCode == 400) {
-        errorMessage = "Chamada feita de maneira errada";
-      } else if (response.statusCode == 500) {
-        errorMessage = "Sistema fora do ar, contate o adiminstrador";
-      }
+      } 
     } catch (e) {
       print("Error AuthenticationRepository ::  doLoginUser :: $e ");
-      errorMessage = "Erro do sistema";
+      errorMessage = e.toString();
     }
     return Failure(errorMessage ?? "Erro não esperado");
   }
