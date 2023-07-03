@@ -83,6 +83,9 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
                 ],
               ),
               20.sizeH,
+              const Row(
+                children: [],
+              ),
               Text(
                 "General",
                 style: TextStyle(
@@ -109,7 +112,9 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
                       ),
                       const Spacer(),
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          context.push("/producerEdit");
+                        },
                         icon: Icon(
                           Icons.arrow_forward_ios_outlined,
                           color: ColorApp.grey5,

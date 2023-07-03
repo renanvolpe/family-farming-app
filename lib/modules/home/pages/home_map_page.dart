@@ -146,14 +146,16 @@ class _HomeMapPageState extends State<HomeMapPage> {
                               6,
                               (index) {
                                 return InkWell(
-                                    onTap: () =>
-                                        context.push("/producerDetail", extra: {
-                                          "id": stateListProducer
-                                              .listProducers[index].id,
-                                          "mapOptions": _mapOption,
-                                          "mapController": _mapController,
-                                          "currentPosition": currentLatlong!,
-                                        }),
+                                    onTap: () => context.push(
+                                            "/map/producerDetail",
+                                            extra: {
+                                              "id": stateListProducer
+                                                  .listProducers[index].id,
+                                              "mapOptions": _mapOption,
+                                              "mapController": _mapController,
+                                              "currentPosition":
+                                                  currentLatlong!,
+                                            }),
                                     child: StoreSectionComponent(
                                       producer: stateListProducer
                                           .listProducers[index],
