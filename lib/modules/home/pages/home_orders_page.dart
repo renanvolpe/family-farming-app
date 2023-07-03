@@ -177,6 +177,17 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        toolbarHeight: 75,
+        title: Text(
+          "Search",
+          style: TextStyle(
+            color: ColorApp.dark1,
+            fontSize: 36,
+            fontWeight: FontWeight.w600,
+            fontFamily: 'Abhaya Libre',
+          ),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: BlocBuilder<GetListProducersBloc, GetListProducersState>(

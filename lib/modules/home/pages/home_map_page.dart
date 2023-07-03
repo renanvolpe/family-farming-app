@@ -77,6 +77,7 @@ class _HomeMapPageState extends State<HomeMapPage> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 75,
+        backgroundColor: Colors.white,
         title: Text(
           "Discover",
           style: TextStyle(
