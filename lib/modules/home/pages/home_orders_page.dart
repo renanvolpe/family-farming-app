@@ -25,8 +25,8 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
   LatLng? currentLatlong;
   final _mapController = MapController();
   late MapOptions _mapOption;
-  late List<Producer>? listProducers; // list to filter the producers
-  List<Producer> allProducers = []; //fixed list to evet get all producers
+  List<Producer> listProducers = []; // list to filter the producers
+  List<Producer>? allProducers; //fixed list to evet get all producers
   TextEditingController textFilterController = TextEditingController();
 
   void _showFilterModal(BuildContext context) {
@@ -181,9 +181,9 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
   //function to list and update depended on searched
   void filterListProducersByText(String text) {
     List<Producer> newListProducers = [];
-    for (int i = 0; i < allProducers.length; i++) {
-      if (allProducers[i].name.toLowerCase().contains(text.toLowerCase())) {
-        newListProducers.add(allProducers[i]);
+    for (int i = 0; i < allProducers!.length; i++) {
+      if (allProducers![i].name.toLowerCase().contains(text.toLowerCase())) {
+        newListProducers.add(allProducers![i]);
       }
     }
     setState(() {
@@ -199,12 +199,15 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
         child: BlocBuilder<GetListProducersBloc, GetListProducersState>(
           builder: (context, state) {
             if (state is GetListProducersProgress) {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             }
             if (state is GetListProducersSuccess) {
-              allProducers = state.listProducers;
-              listProducers == null
-                  ? listProducers = state.listProducers
+              allProducers == null
+                  ? {
+                      allProducers = [],
+                      allProducers = state.listProducers,
+                      listProducers = state.listProducers
+                    }
                   : null;
               return SingleChildScrollView(
                 child: Column(
@@ -326,11 +329,11 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                         ],
                       ),
                     ),
-                    for (int i = 0; i < listProducers!.length; i++)
+                    for (int i = 0; i < listProducers.length; i++)
                       InkWell(
                         onTap: () =>
                             context.push("/order/producerDetail", extra: {
-                          "id": listProducers![i].id,
+                          "id": listProducers[i].id,
                           "mapOptions": _mapOption,
                           "mapController": _mapController,
                           "currentPosition": currentLatlong!,
@@ -340,9 +343,9 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                             10.sizeH,
                             ListTile(
                               leading: const CircleAvatar(),
-                              title: Text(listProducers![i].name),
+                              title: Text(listProducers[i].name),
                               subtitle: Text(
-                                listProducers![i].description,
+                                listProducers[i].description,
                                 style: const TextStyle(color: Colors.grey),
                               ),
                               trailing: const Icon(Icons.chevron_right),
