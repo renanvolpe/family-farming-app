@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:map_launcher/map_launcher.dart' as launcher;
 import 'package:organaki_app/core/colors_app.dart';
 import 'package:organaki_app/core/extensions.dart';
 import 'package:organaki_app/modules/home/bloc/bloc_get_a_producer/get_a_producer_bloc.dart';
@@ -183,10 +185,10 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                     LayoutBuilder(
                       builder: (context, onstraints) => SizedBox(
                           height: 220,
-                          child: AbsorbPointer(
-                            child: Stack(
-                              children: [
-                                SizedBox(
+                          child: Stack(
+                            children: [
+                              AbsorbPointer(
+                                child: SizedBox(
                                   height: 200,
                                   child: FlutterMap(
                                     mapController: widget.mapController,
@@ -225,8 +227,95 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                                     ],
                                   ),
                                 ),
-                                Align(
-                                  alignment: Alignment.bottomCenter,
+                              ),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: InkWell(
+                                  onTap: () async {
+                                    var availableMaps = await launcher
+                                        .MapLauncher.installedMaps;
+                                    //ignore: use_build_context_synchronously
+                                    showModalBottomSheet(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return SingleChildScrollView(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                margin:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 10),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      "Selecione o aplicativo que queria abrir",
+                                                      style: TextStyle(
+                                                        color: ColorApp.dark2,
+                                                        fontSize: 18.0,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              for (var map in availableMaps)
+                                                InkWell(
+                                                  onTap: () {
+                                                    map.showMarker(
+                                                      coords: launcher.Coords(
+                                                          double.parse(state
+                                                              .producer
+                                                              .latitude),
+                                                          double.parse(state
+                                                              .producer
+                                                              .longitude)),
+                                                      title: "Destination",
+                                                    );
+                                                  },
+                                                  child: Container(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        vertical: 10,
+                                                        horizontal: 10),
+                                                    child: Row(
+                                                      children: [
+                                                        SizedBox(
+                                                          height: 80,
+                                                          width: 80,
+                                                          child:
+                                                              SvgPicture.asset(
+                                                            map.icon,
+                                                          ),
+                                                        ),
+                                                        const SizedBox(
+                                                          width: 8,
+                                                        ),
+                                                        Text(
+                                                          map.mapName,
+                                                          style:
+                                                              const TextStyle(
+                                                            color: Colors.black,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            fontSize: 14.0,
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              10.sizeH
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
                                   child: Container(
                                     width: 194,
                                     margin: const EdgeInsets.only(top: 10),
@@ -258,9 +347,9 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                                       ],
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
+                                ),
+                              )
+                            ],
                           )),
                     )
                   ],
