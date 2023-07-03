@@ -177,19 +177,6 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        toolbarHeight: 75,
-        title: Text(
-          "Search",
-          style: TextStyle(
-            color: ColorApp.dark1,
-            fontSize: 36,
-            fontWeight: FontWeight.w600,
-            fontFamily: 'Abhaya Libre',
-          ),
-        ),
-      ),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: BlocBuilder<GetListProducersBloc, GetListProducersState>(
@@ -522,7 +509,13 @@ class TagsFilter extends StatefulWidget {
 class _TagsFilterState extends State<TagsFilter> {
   List<String> selectedTags = [];
 
-  List<String> availableTags = ['Herbs', 'Fruits', 'Vegetables'];
+  List<String> availableTags = [
+    'Herbs',
+    'Fruits',
+    'Vegetables',
+    'Natural',
+    'Dairy',
+  ];
 
   bool isTagSelected(String tag) {
     return selectedTags.contains(tag);
@@ -547,13 +540,16 @@ class _TagsFilterState extends State<TagsFilter> {
         margin: const EdgeInsets.all(4.0),
         padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.blue : Colors.grey[300],
+          color: isSelected ? ColorApp.blue1 : ColorApp.white4,
           borderRadius: BorderRadius.circular(16.0),
         ),
         child: Text(
           tag,
           style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black,
+            fontSize: 17,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'Abhaya Libre',
+            color: isSelected ? Colors.white : ColorApp.dark1,
           ),
         ),
       ),
@@ -563,10 +559,13 @@ class _TagsFilterState extends State<TagsFilter> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Wrap(
           spacing: 8.0,
+          runSpacing: 5.0,
+          alignment: WrapAlignment.center,
           children: availableTags.map((tag) => buildTag(tag)).toList(),
         ),
       ],
