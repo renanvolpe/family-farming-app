@@ -188,6 +188,8 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
             fontWeight: FontWeight.w600,
             fontFamily: 'Abhaya Libre',
           ),
+        ),
+      ),
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: BlocBuilder<GetListProducersBloc, GetListProducersState>(
@@ -226,10 +228,13 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                                   color: ColorApp.white1,
                                   fontFamily: 'Abhaya Libre'),
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0)),
+                                borderRadius: BorderRadius.circular(18.0),
+                              ),
                             ),
-                            icon:
-                                Icon(Icons.filter_list, color: ColorApp.white1),
+                            icon: Icon(
+                              Icons.filter_list,
+                              color: ColorApp.white1,
+                            ),
                             label: Text(
                               'Filter',
                               style: TextStyle(
@@ -307,7 +312,8 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                     ),
                     for (int i = 0; i < state.listProducers.length; i++)
                       InkWell(
-                        onTap: () => context.push("/order/producerDetail", extra: {
+                        onTap: () =>
+                            context.push("/order/producerDetail", extra: {
                           "id": state.listProducers[i].id,
                           "mapOptions": _mapOption,
                           "mapController": _mapController,
