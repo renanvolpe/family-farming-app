@@ -83,9 +83,6 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
                 ],
               ),
               20.sizeH,
-              Row(
-                children: [],
-              ),
               Text(
                 "General",
                 style: TextStyle(
@@ -101,46 +98,48 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
                 children: [
                   Row(
                     children: [
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Edit information",
-                          style: TextStyle(
-                            color: ColorApp.blue3,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Abhaya Libre',
-                          ),
+                      Text(
+                        "Edit information",
+                        style: TextStyle(
+                          color: ColorApp.blue3,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Abhaya Libre',
                         ),
                       ),
-                      Spacer(),
-                      Icon(
-                        Icons.arrow_forward_ios_outlined,
-                        color: ColorApp.grey5,
+                      const Spacer(),
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.arrow_forward_ios_outlined,
+                          color: ColorApp.grey5,
+                        ),
                       )
                     ],
                   ),
+                  10.sizeH,
                   Row(
                     children: [
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Enable notification",
-                          style: TextStyle(
-                            color: ColorApp.blue3,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Abhaya Libre',
-                          ),
+                      Text(
+                        "Enable notification",
+                        style: TextStyle(
+                          color: ColorApp.blue3,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Abhaya Libre',
                         ),
                       ),
-                      Spacer(),
-                      Icon(
-                        Icons.arrow_forward_ios_outlined,
-                        color: ColorApp.grey5,
+                      const Spacer(),
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.arrow_forward_ios_outlined,
+                          color: ColorApp.grey5,
+                        ),
                       )
                     ],
                   ),
+                  10.sizeH,
                   TextButton(
                     onPressed: () {
                       SingletonUser().removeUserAuth();
@@ -148,6 +147,11 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
                       context.go('/account');
                       //TODO aplly flushbar logout here
                     },
+                    style: TextButton.styleFrom(
+                      minimumSize: Size.zero,
+                      padding: EdgeInsets.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
                     child: Text(
                       "Logout",
                       style: TextStyle(

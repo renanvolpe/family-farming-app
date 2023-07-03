@@ -13,6 +13,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         toolbarHeight: 75,
         title: Text(
           "Search",
