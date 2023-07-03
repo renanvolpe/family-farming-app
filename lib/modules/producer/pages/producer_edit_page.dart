@@ -142,18 +142,46 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
           child: Column(
             children: [
               //nesses campos, pensei em colocar os nomes de antes da edicao no hintText
-              Container(
-                margin: const EdgeInsets.only(top: 25),
+              SizedBox(
                 width: 124.0,
                 height: 124.0,
-                decoration: BoxDecoration(
-                  color: ColorApp.dark1,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  size: 62.0,
-                  Icons.edit,
-                  color: Colors.white,
+                child: Stack(
+                  children: [
+                    Align(
+                      child: Container(
+                        alignment: Alignment.center,
+                        margin: const EdgeInsets.only(top: 25),
+                        width: 124.0,
+                        height: 124.0,
+                        decoration: BoxDecoration(
+                          color: ColorApp.blue4,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          size: 62.0,
+                          Icons.person,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 25),
+                        width: 40.0,
+                        height: 40.0,
+                        decoration: BoxDecoration(
+                          color: ColorApp.dark1,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          size: 20.0,
+                          Icons.edit,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               buildFormField(
