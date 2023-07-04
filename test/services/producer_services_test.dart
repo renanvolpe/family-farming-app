@@ -14,5 +14,10 @@ void main() {
       var response = await producerRepo.getListProducers();
       expect(response, isA<Success>());
     });
+
+    test("Test tags list", () async {
+      var response = await producerRepo.getTags();
+      expect(response, isA<Success>());
+    });
   });
 }

@@ -164,11 +164,27 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
     BlocProvider.of<GetListProducersBloc>(context).add(GetListProducersStart());
   }
 
+  //here will check if the text has the same chars that a tag of a producer
+  bool checkTagsFilter(String text, Producer producer) {
+    if (producer.tags != null) {
+      for (var tag in producer.tags!) {
+        if (tag.contains(text)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   //function to list and update depended on searched
   void filterListProducersByText(String text) {
     List<Producer> newListProducers = [];
     for (int i = 0; i < allProducers!.length; i++) {
+      //first - see if name has same char that producers name
       if (allProducers![i].name.toLowerCase().contains(text.toLowerCase())) {
+        newListProducers.add(allProducers![i]);
+        //second - check if the text has the same chars that a tag of a producer
+      } else if (checkTagsFilter(text, allProducers![i])) {
         newListProducers.add(allProducers![i]);
       }
     }
@@ -329,9 +345,36 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                             ListTile(
                               leading: const CircleAvatar(),
                               title: Text(listProducers[i].name),
-                              subtitle: Text(
-                                state.listProducers[i].short_description,
-                                style: const TextStyle(color: Colors.grey),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  5.sizeH,
+                                  Text(
+                                    state.listProducers[i].short_description,
+                                    style: const TextStyle(color: Colors.grey),
+                                  ),
+                                  10.sizeH,
+                                  listProducers[i].tags != null
+                                      ? Wrap(
+                                          children: List.generate(
+                                              state.listProducers[i].tags!
+                                                  .length,
+                                              (index) => Container(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        vertical: 3,
+                                                        horizontal: 4),
+                                                    decoration: BoxDecoration(
+                                                        color: ColorApp.blue5,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20)),
+                                                    child: Text(state
+                                                        .listProducers[i]
+                                                        .tags![index]),
+                                                  )))
+                                      : const SizedBox()
+                                ],
                               ),
                               trailing: const Icon(Icons.chevron_right),
                             ),
