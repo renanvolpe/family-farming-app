@@ -67,7 +67,7 @@ class _RegisterPageState extends State<RegisterPage> {
       // Aqui você pode fazer o que quiser com as informações do usuário, como enviar para um servidor, salvar localmente, etc.
 
       BlocProvider.of<RegisterUserBloc>(context)
-          .add(RegisterUserStart(User(fullName, email, fullName, password, "")));
+          .add(RegisterUserStart(User( "", "",fullName, email, password)));
     }
   }
 

@@ -5,9 +5,8 @@ import 'package:result_dart/result_dart.dart';
 
 abstract class ProducerService {
   Future<Result<List<Producer>, String>> getListProducers();
-  getAProducer(id);
+  getAProducer(String id);
   editProducer();
-  deleteProducer();
 }
 
 class ProducerRepository implements ProducerService {
@@ -20,15 +19,18 @@ class ProducerRepository implements ProducerService {
     // Map<String, dynamic>? header = {};
     // Map body = {};
     var response = await dio.get(
-      Endpoints.baseUrlMock + Endpoints.listProducersMock,
+      Endpoints.baseUrl + Endpoints.producers,
       // queryParameters: params, data: body, options: Options(headers: header)
     );
     try {
       if (response.statusCode == 200) {
         List<Producer> listProducer = [];
-        for (var element in response.data) {
-          listProducer.add(Producer.fromMap(element));
+        var listProducerMap = response.data["producers"];
+
+        for (int i = 0; i < listProducerMap.length; i++) {
+          listProducer.add(Producer.fromMap(listProducerMap[i]));
         }
+
         return Success(listProducer);
       } else if (response.statusCode == 400) {
         errorMessage = "Chamada feita de maneira errada";
@@ -43,35 +45,18 @@ class ProducerRepository implements ProducerService {
     return Failure(errorMessage ?? "Erro não esperado");
   }
 
-  registerUser() {
-    throw UnimplementedError();
-  }
-
-  setupServiceUser() {
-    throw UnimplementedError();
-  }
+  @override
+  editProducer() {}
 
   @override
-  deleteProducer() {
-    // TODO: implement deleteProducer
-    throw UnimplementedError();
-  }
-
-  @override
-  editProducer() {
-    // TODO: implement editProducer
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<Result<Producer, String>> getAProducer(id) async {
+  Future<Result<Producer, String>> getAProducer(String id) async {
     var response = await dio.get(
-      Endpoints.baseUrlMock + Endpoints.getAProducerMock,
-      queryParameters: {'id': id},
+      "${Endpoints.baseUrl}${Endpoints.producers}/$id",
+      //queryParameters: {'id': id},
     );
     try {
       if (response.statusCode == 200) {
-        Producer prod = Producer.fromMap(response.data[0]);
+        Producer prod = Producer.fromMap(response.data["producer"]);
         print(prod);
         return Success(prod);
       } else if (response.statusCode == 400) {
@@ -85,5 +70,28 @@ class ProducerRepository implements ProducerService {
       errorMessage = "Erro do sistema";
     }
     return Failure(errorMessage ?? "Erro não esperado");
+  }
+
+  Future<Result<List<String>, String>> getTags() async {
+    var response = await dio.get(
+      "${Endpoints.baseUrl}${Endpoints.tags}",
+    );
+    try {
+      if (response.statusCode == 200) {
+        List<String> listTags = [];
+        for (var element in response.data["tags"]) {
+          listTags.add(element["name"]);
+        }
+        if(listTags.isEmpty){
+          throw Exception("Não há tags recebidas");
+        }
+        return Success(listTags);
+      }
+    } catch (e) {
+      print(
+          "${response.statusCode} Error ProducerRepository ::  getAProducer :: $e ");
+      errorMessage = "Erro do sistema";
+    }
+    return const Failure("Não há tags a serem mostradas");
   }
 }
