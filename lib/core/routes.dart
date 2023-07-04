@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/plugin_api.dart';
 import 'package:go_router/go_router.dart';
 import 'package:organaki_app/models/singleton_user.dart';
 import 'package:organaki_app/modules/authentication/pages/login_page.dart';
@@ -75,14 +74,10 @@ var producerDetailRout = GoRoute(
     builder: (BuildContext context, GoRouterState state) {
       var params = state.extra as Map;
       String id = params["id"];
-      var currentPosition = params["currentPosition"];
-      MapController mapController = params["mapController"];
-      MapOptions mapOptions = params["mapOptions"];
+      var latLongProducer = params["latLongProducer"];
 
       return ProducerApresentationPage(
-        mapController: mapController,
-        mapOptions: mapOptions,
-        currentPosition: currentPosition,
+        latLongProducer: latLongProducer,
         id: id,
       );
     });

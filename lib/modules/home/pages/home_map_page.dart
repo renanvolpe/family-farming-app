@@ -143,7 +143,8 @@ class _HomeMapPageState extends State<HomeMapPage> {
                             scrollDirection: Axis.horizontal,
                             child: Row(
                                 children: List.generate(
-                              6,
+                              stateListProducer
+                                          .listProducers.length,
                               (index) {
                                 return InkWell(
                                     onTap: () => context.push(
@@ -151,9 +152,7 @@ class _HomeMapPageState extends State<HomeMapPage> {
                                             extra: {
                                               "id": stateListProducer
                                                   .listProducers[index].id,
-                                              "mapOptions": _mapOption,
-                                              "mapController": _mapController,
-                                              "currentPosition":
+                                              "latLongProducer":
                                                   currentLatlong!,
                                             }),
                                     child: StoreSectionComponent(

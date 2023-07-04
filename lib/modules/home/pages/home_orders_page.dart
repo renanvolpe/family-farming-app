@@ -1,6 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
@@ -23,8 +22,6 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
   bool isTagsEnabled = false;
   double distanceValue = 0.0;
   LatLng? currentLatlong;
-  final _mapController = MapController();
-  late MapOptions _mapOption;
   List<Producer> listProducers = []; // list to filter the producers
   List<Producer>? allProducers; //fixed list to evet get all producers
   TextEditingController textFilterController = TextEditingController();
@@ -164,17 +161,6 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
-    currentLatlong = await getCurrentPosition();
-
-    setState(() {
-      _mapOption = MapOptions(center: currentLatlong!, zoom: 14);
-      currentLatlong;
-    });
     BlocProvider.of<GetListProducersBloc>(context).add(GetListProducersStart());
   }
 
@@ -333,10 +319,9 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                       InkWell(
                         onTap: () =>
                             context.push("/order/producerDetail", extra: {
-                          "id": listProducers[i].id,
-                          "mapOptions": _mapOption,
-                          "mapController": _mapController,
-                          "currentPosition": currentLatlong!,
+                          "id": state.listProducers[i].id,
+                          "latLongProducer":
+                              LatLng(-23.17, -45.88), // TODO remove this data
                         }),
                         child: Column(
                           children: [
@@ -345,7 +330,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                               leading: const CircleAvatar(),
                               title: Text(listProducers[i].name),
                               subtitle: Text(
-                                listProducers[i].description,
+                                state.listProducers[i].short_description,
                                 style: const TextStyle(color: Colors.grey),
                               ),
                               trailing: const Icon(Icons.chevron_right),

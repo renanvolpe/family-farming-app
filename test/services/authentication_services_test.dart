@@ -7,12 +7,12 @@ void main() {
   group("Test authentication services", () {
     AuthenticationRepository authRepo = AuthenticationRepository();
     test("Test doLogin function", () async {
-      var response = await authRepo.doLoginUser("username", "password");
+      var response = await authRepo.doLoginUser("renan12@volpe.com", "123");
       expect(response, isA<Success>());
     });
 
     test("Test Register function", () async {
-      var user = User("Renan", "renan@volpe.com", "Volpe", "123", "");
+      var user = User( "",  "", "Renan12", "renan12@volpe.com", "123");
       var response = await authRepo.registerUser(user);
       expect(response, isA<Success>());
     });
