@@ -9,13 +9,9 @@ import 'package:organaki_app/modules/home/bloc/bloc_get_a_producer/get_a_produce
 class ProducerApresentationPage extends StatefulWidget {
   const ProducerApresentationPage(
       {super.key,
-      required this.mapOptions,
-      required this.mapController,
-      required this.currentPosition,
+      required this.latLongProducer,
       required this.id});
-  final MapOptions mapOptions;
-  final MapController mapController;
-  final LatLng currentPosition;
+  final LatLng latLongProducer;
   final String id;
   @override
   State<ProducerApresentationPage> createState() =>
@@ -30,6 +26,16 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
     BlocProvider.of<GetAProducerBloc>(context)
         .add(GetAProducerStart(id: widget.id));
   }
+
+  @override
+  void didChangeDependencies() {
+    mapOptions = MapOptions(center: widget.latLongProducer, zoom: 14);
+    super.didChangeDependencies();
+  }
+
+  //variables
+  late MapOptions mapOptions;
+  final MapController mapController = MapController();
 
   @override
   Widget build(BuildContext context) {
@@ -189,8 +195,8 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                                 SizedBox(
                                   height: 200,
                                   child: FlutterMap(
-                                    mapController: widget.mapController,
-                                    options: widget.mapOptions,
+                                    mapController: mapController,
+                                    options: mapOptions,
                                     nonRotatedChildren: const [],
                                     children: [
                                       TileLayer(
@@ -201,11 +207,8 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                                       MarkerLayer(
                                         markers: [
                                           Marker(
-                                            point: LatLng(
-                                                double.parse(
-                                                    "23"),
-                                                double.parse(
-                                                    "46")),
+                                            point: LatLng(double.parse("23"),
+                                                double.parse("46")),
                                             builder: (context) => Container(
                                               height: 20,
                                               width: 20,

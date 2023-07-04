@@ -75,14 +75,10 @@ var producerDetailRout = GoRoute(
     builder: (BuildContext context, GoRouterState state) {
       var params = state.extra as Map;
       String id = params["id"];
-      var currentPosition = params["currentPosition"];
-      MapController mapController = params["mapController"];
-      MapOptions mapOptions = params["mapOptions"];
+      var latLongProducer = params["latLongProducer"];
 
       return ProducerApresentationPage(
-        mapController: mapController,
-        mapOptions: mapOptions,
-        currentPosition: currentPosition,
+        latLongProducer: latLongProducer,
         id: id,
       );
     });

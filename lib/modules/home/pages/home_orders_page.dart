@@ -1,6 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
@@ -21,9 +20,6 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
   bool isOpeningHoursEnabled = false;
   bool isTagsEnabled = false;
   double distanceValue = 0.0;
-  LatLng? currentLatlong;
-  final _mapController = MapController();
-  late MapOptions _mapOption;
 
   void _showFilterModal(BuildContext context) {
     showModalBottomSheet(
@@ -160,17 +156,6 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
-    currentLatlong = await getCurrentPosition();
-
-    setState(() {
-      _mapOption = MapOptions(center: currentLatlong!, zoom: 14);
-      currentLatlong;
-    });
     BlocProvider.of<GetListProducersBloc>(context).add(GetListProducersStart());
   }
 
@@ -296,11 +281,10 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                     ),
                     for (int i = 0; i < state.listProducers.length; i++)
                       InkWell(
-                        onTap: () => context.push("/order/producerDetail", extra: {
+                        onTap: () =>
+                            context.push("/order/producerDetail", extra: {
                           "id": state.listProducers[i].id,
-                          "mapOptions": _mapOption,
-                          "mapController": _mapController,
-                          "currentPosition": currentLatlong!,
+                          "latLongProducer": LatLng(-23.17, -45.88), // TODO remove this data
                         }),
                         child: Column(
                           children: [

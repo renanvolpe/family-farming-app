@@ -151,9 +151,7 @@ class _HomeMapPageState extends State<HomeMapPage> {
                                             extra: {
                                               "id": stateListProducer
                                                   .listProducers[index].id,
-                                              "mapOptions": _mapOption,
-                                              "mapController": _mapController,
-                                              "currentPosition":
+                                              "latLongProducer":
                                                   currentLatlong!,
                                             }),
                                     child: StoreSectionComponent(
