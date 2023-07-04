@@ -40,7 +40,7 @@ class StoreSectionComponent extends StatelessWidget {
                       children: [
                         Flexible(
                           child: Text(
-                            producer.companyName,
+                           " producer.companyName",
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               color: ColorApp.blue3,

@@ -99,50 +99,54 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Edit information",
-                        style: TextStyle(
-                          color: ColorApp.blue3,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Abhaya Libre',
-                        ),
+                  InkWell(
+                    onTap: () => context.push("/producerEdit"),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Edit information",
+                            style: TextStyle(
+                              color: ColorApp.blue3,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Abhaya Libre',
+                            ),
+                          ),
+                          const Spacer(),
+                          Icon(
+                            Icons.arrow_forward_ios_outlined,
+                            color: ColorApp.grey5,
+                          )
+                        ],
                       ),
-                      const Spacer(),
-                      IconButton(
-                        onPressed: () {
-                          context.push("/producerEdit");
-                        },
-                        icon: Icon(
-                          Icons.arrow_forward_ios_outlined,
-                          color: ColorApp.grey5,
-                        ),
-                      )
-                    ],
+                    ),
                   ),
                   10.sizeH,
-                  Row(
-                    children: [
-                      Text(
-                        "Enable notification",
-                        style: TextStyle(
-                          color: ColorApp.blue3,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Abhaya Libre',
-                        ),
+                  InkWell(
+                    onTap: () {},
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Enable notification",
+                            style: TextStyle(
+                              color: ColorApp.blue3,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Abhaya Libre',
+                            ),
+                          ),
+                          const Spacer(),
+                          Icon(
+                            Icons.arrow_forward_ios_outlined,
+                            color: ColorApp.grey5,
+                          )
+                        ],
                       ),
-                      const Spacer(),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.arrow_forward_ios_outlined,
-                          color: ColorApp.grey5,
-                        ),
-                      )
-                    ],
+                    ),
                   ),
                   10.sizeH,
                   TextButton(

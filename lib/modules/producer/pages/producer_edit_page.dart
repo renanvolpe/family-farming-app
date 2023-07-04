@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:organaki_app/core/extensions.dart';
 import 'package:organaki_app/core/colors_app.dart';
-import 'package:organaki_app/models/producer.dart';
 import 'package:organaki_app/modules/home/pages/home_orders_page.dart';
-
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:latlong2/latlong.dart';
-import 'package:map_launcher/map_launcher.dart' as launcher;
 
 class ProducerEditPage extends StatefulWidget {
   const ProducerEditPage({super.key});
