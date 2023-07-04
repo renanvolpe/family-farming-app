@@ -32,40 +32,51 @@ class StoreSectionComponent extends StatelessWidget {
                     size: 30,
                   )),
               8.sizeW,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    producer.companyName,
-                    style: TextStyle(
-                      color: ColorApp.blue3,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Abhaya Libre',
-                    ),
-                    maxLines: 2,
-                  ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.location_on,
-                        color: Colors.grey,
-                        size: 16,
-                      ),
-                      Text(
-                        producer.email,
-                        style: TextStyle(
-                          color: ColorApp.grey2,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Abhaya Libre',
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            producer.companyName,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: ColorApp.blue3,
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Abhaya Libre',
+                            ),
+                            maxLines: 1,
+                          ),
                         ),
-                      ),
-                    ],
-                  )
-                ],
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.location_on,
+                          color: Colors.grey,
+                          size: 16,
+                        ),
+                        Flexible(
+                          child: Text(
+                            producer.email,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: ColorApp.grey2,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Abhaya Libre',
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
-              const Spacer(),
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
