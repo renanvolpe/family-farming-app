@@ -14,4 +14,5 @@ class Endpoints {
 
   static String producers = "/producers";
   static String login = "login";
+   static String tags = "tags";
 }

@@ -7,7 +7,6 @@ abstract class ProducerService {
   Future<Result<List<Producer>, String>> getListProducers();
   getAProducer(String id);
   editProducer();
-  deleteProducer();
 }
 
 class ProducerRepository implements ProducerService {
@@ -46,23 +45,8 @@ class ProducerRepository implements ProducerService {
     return Failure(errorMessage ?? "Erro não esperado");
   }
 
-  registerUser() {
-    throw UnimplementedError();
-  }
-
-  setupServiceUser() {
-    throw UnimplementedError();
-  }
-
   @override
-  deleteProducer() {
-    // TODO: implement deleteProducer
-    throw UnimplementedError();
-  }
-
-  @override
-  editProducer() {
-  }
+  editProducer() {}
 
   @override
   Future<Result<Producer, String>> getAProducer(String id) async {
@@ -86,5 +70,28 @@ class ProducerRepository implements ProducerService {
       errorMessage = "Erro do sistema";
     }
     return Failure(errorMessage ?? "Erro não esperado");
+  }
+
+  Future<Result<List<String>, String>> getTags() async {
+    var response = await dio.get(
+      "${Endpoints.baseUrl}${Endpoints.tags}",
+    );
+    try {
+      if (response.statusCode == 200) {
+        List<String> listTags = [];
+        for (var element in response.data["tags"]) {
+          listTags.add(element["name"]);
+        }
+        if(listTags.isEmpty){
+          throw Exception("Não há tags recebidas");
+        }
+        return Success(listTags);
+      }
+    } catch (e) {
+      print(
+          "${response.statusCode} Error ProducerRepository ::  getAProducer :: $e ");
+      errorMessage = "Erro do sistema";
+    }
+    return const Failure("Não há tags a serem mostradas");
   }
 }
