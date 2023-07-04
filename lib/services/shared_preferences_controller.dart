@@ -3,9 +3,8 @@ import 'package:result_dart/result_dart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesAuthController {
-
   void saveLoginSharedPreferences(User user) async {
-     SharedPreferences prefs;
+    SharedPreferences prefs;
     prefs = await SharedPreferences.getInstance();
     prefs.setString("id", user.id!); // TODO update this when recieve
     prefs.setString("email", user.email);
@@ -37,6 +36,7 @@ class SharedPreferencesAuthController {
           );
       return Success(user);
     } catch (e) {
+      logoutSharedPreferences();
       errorMessage = e.toString();
     }
     print("Erro login Shared Preferences: $errorMessage");

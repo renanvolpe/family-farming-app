@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/plugin_api.dart';
 import 'package:go_router/go_router.dart';
 import 'package:organaki_app/models/singleton_user.dart';
 import 'package:organaki_app/modules/authentication/pages/login_page.dart';

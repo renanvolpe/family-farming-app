@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:organaki_app/models/producer.dart';
 import 'package:organaki_app/modules/home/bloc/bloc_get_list_producer/get_list_producers_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:organaki_app/core/extensions.dart';
@@ -20,6 +21,10 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
   bool isOpeningHoursEnabled = false;
   bool isTagsEnabled = false;
   double distanceValue = 0.0;
+  LatLng? currentLatlong;
+  List<Producer> listProducers = []; // list to filter the producers
+  List<Producer>? allProducers; //fixed list to evet get all producers
+  TextEditingController textFilterController = TextEditingController();
 
   void _showFilterModal(BuildContext context) {
     showModalBottomSheet(
@@ -159,6 +164,19 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
     BlocProvider.of<GetListProducersBloc>(context).add(GetListProducersStart());
   }
 
+  //function to list and update depended on searched
+  void filterListProducersByText(String text) {
+    List<Producer> newListProducers = [];
+    for (int i = 0; i < allProducers!.length; i++) {
+      if (allProducers![i].name.toLowerCase().contains(text.toLowerCase())) {
+        newListProducers.add(allProducers![i]);
+      }
+    }
+    setState(() {
+      listProducers = newListProducers;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -167,9 +185,16 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
         child: BlocBuilder<GetListProducersBloc, GetListProducersState>(
           builder: (context, state) {
             if (state is GetListProducersProgress) {
-              return const CircularProgressIndicator();
+              return const Center(child: CircularProgressIndicator());
             }
             if (state is GetListProducersSuccess) {
+              allProducers == null
+                  ? {
+                      allProducers = [],
+                      allProducers = state.listProducers,
+                      listProducers = state.listProducers
+                    }
+                  : null;
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -200,10 +225,13 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                                   color: ColorApp.white1,
                                   fontFamily: 'Abhaya Libre'),
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0)),
+                                borderRadius: BorderRadius.circular(18.0),
+                              ),
                             ),
-                            icon:
-                                Icon(Icons.filter_list, color: ColorApp.white1),
+                            icon: Icon(
+                              Icons.filter_list,
+                              color: ColorApp.white1,
+                            ),
                             label: Text(
                               'Filter',
                               style: TextStyle(
@@ -235,6 +263,10 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                             ),
                             Expanded(
                               child: TextField(
+                                controller: textFilterController,
+                                onChanged: (text) {
+                                  filterListProducersByText(text);
+                                },
                                 decoration: InputDecoration(
                                   hintText: 'Search Foods, Restaurants etc.',
                                   border: InputBorder.none,
@@ -266,7 +298,11 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                           ),
                           TextButton(
                             onPressed: () {
-                              // Implementar ação do botão "Clear all" aqui
+                              //remove filter of the text and call function to list text with nothing in text
+                              setState(() {
+                                textFilterController.text = "";
+                                filterListProducersByText("");
+                              });
                             },
                             child: Text(
                               'CLEAR ALL',
@@ -279,19 +315,20 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                         ],
                       ),
                     ),
-                    for (int i = 0; i < state.listProducers.length; i++)
+                    for (int i = 0; i < listProducers.length; i++)
                       InkWell(
                         onTap: () =>
                             context.push("/order/producerDetail", extra: {
                           "id": state.listProducers[i].id,
-                          "latLongProducer": LatLng(-23.17, -45.88), // TODO remove this data
+                          "latLongProducer":
+                              LatLng(-23.17, -45.88), // TODO remove this data
                         }),
                         child: Column(
                           children: [
                             10.sizeH,
                             ListTile(
                               leading: const CircleAvatar(),
-                              title: Text(state.listProducers[i].name),
+                              title: Text(listProducers[i].name),
                               subtitle: Text(
                                 state.listProducers[i].short_description,
                                 style: const TextStyle(color: Colors.grey),
