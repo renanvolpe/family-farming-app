@@ -39,7 +39,6 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
     'images/alface.jpg',
     'images/banana.jpg',
     'images/maças.jpg',
-    'images/batata.jpg',
     'images/cenouras.jpg',
     'images/laticinios.jpg',
     'images/leite.jpg',
