@@ -41,6 +41,10 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
     'images/maças.jpg',
     'images/batata.jpg',
     'images/cenouras.jpg',
+    'images/laticinios.jpg',
+    'images/leite.jpg',
+    'images/queijo.jpg',
+    'images/tomate.jpg'
   ];
   final _random = Random();
   late MapOptions mapOptions;
