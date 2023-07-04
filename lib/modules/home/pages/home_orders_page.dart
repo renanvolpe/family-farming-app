@@ -8,6 +8,7 @@ import 'package:organaki_app/modules/home/bloc/bloc_get_list_producer/get_list_p
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:organaki_app/core/extensions.dart';
 import 'package:organaki_app/core/colors_app.dart';
+import 'package:organaki_app/modules/home/bloc/bloc_get_list_tags/get_list_tags_bloc.dart';
 
 class HomeOrdersPage extends StatefulWidget {
   const HomeOrdersPage({Key? key}) : super(key: key);
@@ -36,102 +37,103 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
             return Container(
               height: MediaQuery.of(context).size.height * 0.80,
               padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ListTile(
-                    title: Text(
-                      'Distance',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: ColorApp.black,
-                        fontFamily: 'Abhaya Libre',
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ListTile(
+                      title: Text(
+                        'Distance',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          color: ColorApp.black,
+                          fontFamily: 'Abhaya Libre',
+                        ),
+                      ),
+                      trailing: CustomSwitchButton(
+                        value: isDistanceEnabled,
+                        onChanged: (value) {
+                          setState(() {
+                            isDistanceEnabled = value;
+                          });
+                        },
                       ),
                     ),
-                    trailing: CustomSwitchButton(
-                      value: isDistanceEnabled,
-                      onChanged: (value) {
-                        setState(() {
-                          isDistanceEnabled = value;
-                        });
-                      },
-                    ),
-                  ),
-                  if (isDistanceEnabled) const DistanceFilter(),
-                  const Divider(),
-                  ListTile(
-                    title: Text(
-                      'Opening Hours',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: ColorApp.black,
-                        fontFamily: 'Abhaya Libre',
+                    if (isDistanceEnabled) const DistanceFilter(),
+                    const Divider(),
+                    ListTile(
+                      title: Text(
+                        'Opening Hours',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          color: ColorApp.black,
+                          fontFamily: 'Abhaya Libre',
+                        ),
+                      ),
+                      trailing: CustomSwitchButton(
+                        value: isOpeningHoursEnabled,
+                        onChanged: (value) {
+                          setState(() {
+                            isOpeningHoursEnabled = value;
+                          });
+                        },
                       ),
                     ),
-                    trailing: CustomSwitchButton(
-                      value: isOpeningHoursEnabled,
-                      onChanged: (value) {
-                        setState(() {
-                          isOpeningHoursEnabled = value;
-                        });
-                      },
-                    ),
-                  ),
-                  if (isOpeningHoursEnabled) const OpeningHoursFilter(),
-                  const Divider(),
-                  ListTile(
-                    title: Text(
-                      'Tags',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: ColorApp.black,
-                        fontFamily: 'Abhaya Libre',
+                    if (isOpeningHoursEnabled) const OpeningHoursFilter(),
+                    const Divider(),
+                    ListTile(
+                      title: Text(
+                        'Tags',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          color: ColorApp.black,
+                          fontFamily: 'Abhaya Libre',
+                        ),
+                      ),
+                      trailing: CustomSwitchButton(
+                        value: isTagsEnabled,
+                        onChanged: (value) {
+                          setState(() {
+                            isTagsEnabled = value;
+                          });
+                        },
                       ),
                     ),
-                    trailing: CustomSwitchButton(
-                      value: isTagsEnabled,
-                      onChanged: (value) {
-                        setState(() {
-                          isTagsEnabled = value;
-                        });
-                      },
-                    ),
-                  ),
-                  if (isTagsEnabled) const TagsFilter(),
-                  30.sizeH,
-                  const Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              fixedSize: const Size(348, 58),
-                              backgroundColor: ColorApp.blue3,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0))),
-                          onPressed: () {
-                            // Aplicar o filtro e fechar o showModalBottomSheet
-                            Navigator.pop(context);
-                          },
-                          child: Text(
-                            'Save and Use',
-                            style: TextStyle(
-                              color: ColorApp.white1,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Abhaya Libre',
-                              fontSize: 18,
+                    if (isTagsEnabled) const TagsFilter(),
+                    30.sizeH,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                fixedSize: const Size(348, 58),
+                                backgroundColor: ColorApp.blue3,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0))),
+                            onPressed: () {
+                              // Aplicar o filtro e fechar o showModalBottomSheet
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              'Save and Use',
+                              style: TextStyle(
+                                color: ColorApp.white1,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Abhaya Libre',
+                                fontSize: 18,
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
             );
           },
@@ -279,6 +281,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                             ),
                             Expanded(
                               child: TextField(
+                                autofocus: false,
                                 controller: textFilterController,
                                 onChanged: (text) {
                                   filterListProducersByText(text);
@@ -609,14 +612,27 @@ class _TagsFilterState extends State<TagsFilter> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Wrap(
-          spacing: 8.0,
-          children: availableTags.map((tag) => buildTag(tag)).toList(),
-        ),
-      ],
+    return BlocBuilder<GetListTagsBloc, GetListTagsState>(
+      builder: (context, state) {
+        if (state is GetListTagsSuccess) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Wrap(
+                spacing: 8.0,
+                children: state.listTags.map((tag) => buildTag(tag)).toList(),
+              ),
+            ],
+          );
+        }
+        if (state is GetListTagsProgress) {
+          return const CircularProgressIndicator();
+        }
+        if (state is GetListTagsFailure) {
+          return Text(state.errorMessage);
+        }
+        return Container();
+      },
     );
   }
 }
