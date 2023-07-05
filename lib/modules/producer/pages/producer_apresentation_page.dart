@@ -51,7 +51,7 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
           ),
         ),
         title: Text(
-          "Producer",
+          "Produtor",
           style: TextStyle(
             color: ColorApp.black,
             fontSize: 20,
@@ -130,7 +130,7 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                         )),
                     15.sizeH,
                     Text(
-                      "About Producer",
+                      "Sobre o produtor",
                       style: TextStyle(
                         color: ColorApp.blue3,
                         fontSize: 20,
@@ -150,7 +150,7 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                     ),
                     15.sizeH,
                     Text(
-                      "Photos product",
+                      "Imagens",
                       style: TextStyle(
                         color: ColorApp.blue3,
                         fontSize: 20,
@@ -177,7 +177,7 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                     ),
                     15.sizeH,
                     const Text(
-                      "Producer Location",
+                      "Localização do produtor",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 20,
@@ -334,7 +334,7 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                                         ),
                                         15.sizeW,
                                         const Text(
-                                          "Go to \n Location",
+                                          "Ir para \n o local",
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             color: Colors.white,
