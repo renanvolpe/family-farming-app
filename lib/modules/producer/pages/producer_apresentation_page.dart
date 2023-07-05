@@ -4,9 +4,9 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:map_launcher/map_launcher.dart' as launcher;
+import 'package:organaki_app/bloc/bloc_get_a_producer/get_a_producer_bloc.dart';
 import 'package:organaki_app/core/colors_app.dart';
 import 'package:organaki_app/core/extensions.dart';
-import 'package:organaki_app/modules/home/bloc/bloc_get_a_producer/get_a_producer_bloc.dart';
 
 class ProducerApresentationPage extends StatefulWidget {
   const ProducerApresentationPage(

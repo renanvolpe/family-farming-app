@@ -6,8 +6,8 @@ import 'package:flutter_map/plugin_api.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:organaki_app/bloc/bloc_get_list_producer/get_list_producers_bloc.dart';
 import 'package:organaki_app/core/colors_app.dart';
-import 'package:organaki_app/modules/home/bloc/bloc_get_list_producer/get_list_producers_bloc.dart';
 import 'package:organaki_app/modules/home/components/store_section_component.dart';
 // Only import if required functionality is not exposed by default
 
@@ -143,8 +143,7 @@ class _HomeMapPageState extends State<HomeMapPage> {
                             scrollDirection: Axis.horizontal,
                             child: Row(
                                 children: List.generate(
-                              stateListProducer
-                                          .listProducers.length,
+                              stateListProducer.listProducers.length,
                               (index) {
                                 return InkWell(
                                     onTap: () => context.push(

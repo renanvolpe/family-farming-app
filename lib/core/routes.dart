@@ -60,8 +60,11 @@ final route = GoRouter(
       GoRoute(
           parentNavigatorKey: _rootNavigatorKey,
           path: '/producerEdit',
-          builder: (BuildContext context, GoRouterState state) =>
-              const ProducerEditPage()),
+          builder: (BuildContext context, GoRouterState state) {
+            var params = state.extra as Map;
+            var producerUser  = params["producerUser"];
+            return  ProducerEditPage(producerUser: producerUser);
+          }),
       GoRoute(
           parentNavigatorKey: _rootNavigatorKey,
           path: '/register',
