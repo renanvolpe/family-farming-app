@@ -82,7 +82,7 @@ class _HomeMapPageState extends State<HomeMapPage> {
         toolbarHeight: 75,
         backgroundColor: Colors.white,
         title: Text(
-          "Discover",
+          "Descubra",
           style: TextStyle(
             color: ColorApp.dark1,
             fontSize: 36,

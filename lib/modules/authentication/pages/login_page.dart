@@ -44,10 +44,8 @@ class _LoginPageState extends State<LoginPage> {
     return BlocListener<LoginAuthBloc, LoginAuthState>(
       listener: (context, state) {
         if (state is LoginAuthSuccess) {
-          
           //TODO show success flushbar
-           context.go('/account');
-          
+          context.go('/account');
         }
         if (state is LoginAuthFailure) {
           //TODO show flushbar

@@ -7,6 +7,7 @@ import 'package:map_launcher/map_launcher.dart' as launcher;
 import 'package:organaki_app/bloc/bloc_get_a_producer/get_a_producer_bloc.dart';
 import 'package:organaki_app/core/colors_app.dart';
 import 'package:organaki_app/core/extensions.dart';
+import "dart:math";
 
 class ProducerApresentationPage extends StatefulWidget {
   const ProducerApresentationPage(
@@ -34,6 +35,17 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
   }
 
   //variables
+  final List<String> productsImagesDataBase = [
+    'images/alface.jpg',
+    'images/banana.jpg',
+    'images/maças.jpg',
+    'images/cenouras.jpg',
+    'images/laticinios.jpg',
+    'images/leite.jpg',
+    'images/queijo.jpg',
+    'images/tomate.jpg'
+  ];
+  final _random = Random();
   late MapOptions mapOptions;
   final MapController mapController = MapController();
 
@@ -51,7 +63,7 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
           ),
         ),
         title: Text(
-          "Producer",
+          "Produtor",
           style: TextStyle(
             color: ColorApp.black,
             fontSize: 20,
@@ -130,7 +142,7 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                         )),
                     15.sizeH,
                     Text(
-                      "About Producer",
+                      "Sobre o produtor",
                       style: TextStyle(
                         color: ColorApp.blue3,
                         fontSize: 20,
@@ -150,7 +162,7 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                     ),
                     15.sizeH,
                     Text(
-                      "Photos product",
+                      "Imagens",
                       style: TextStyle(
                         color: ColorApp.blue3,
                         fontSize: 20,
@@ -162,22 +174,32 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
-                          children: List.generate(
-                              5,
-                              (index) => Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 15),
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 15),
-                                    decoration: BoxDecoration(
-                                        color: ColorApp.grey1,
-                                        borderRadius: BorderRadius.circular(8)),
-                                    child: const FlutterLogo(size: 60),
-                                  ))),
+                        children: List.generate(
+                          5,
+                          (index) => Container(
+                            height: 80,
+                            width: 100,
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 15),
+                            margin: const EdgeInsets.symmetric(horizontal: 8),
+                            decoration: BoxDecoration(
+                              color: ColorApp.white1,
+                              borderRadius: BorderRadius.circular(8),
+                              image: DecorationImage(
+                                image: AssetImage(
+                                  productsImagesDataBase[_random
+                                      .nextInt(productsImagesDataBase.length)],
+                                ),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                     15.sizeH,
                     const Text(
-                      "Producer Location",
+                      "Localização do produtor",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 20,
@@ -188,174 +210,182 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                     15.sizeH,
                     LayoutBuilder(
                       builder: (context, onstraints) => SizedBox(
-                          height: 220,
-                          child: Stack(
-                            children: [
-                              AbsorbPointer(
-                                child: SizedBox(
-                                  height: 200,
-                                  child: FlutterMap(
-                                    mapController: mapController,
-                                    options: mapOptions,
-                                    nonRotatedChildren: const [],
-                                    children: [
-                                      TileLayer(
-                                        urlTemplate:
-                                            'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                                        // userAgentPackageName: 'dev.fleaflet.flutter_map.example',
-                                      ),
-                                      MarkerLayer(
-                                        markers: [
-                                          Marker(
-                                            point: LatLng(double.parse("23"),
-                                                double.parse("46")),
-                                            builder: (context) => Container(
-                                              height: 20,
-                                              width: 20,
-                                              decoration: BoxDecoration(
-                                                color: ColorApp.blue3,
-                                                borderRadius:
-                                                    BorderRadius.circular(20),
-                                              ),
-                                              child: const Icon(
-                                                Icons.location_history,
-                                                color: Colors.white,
-                                              ),
+                        height: 220,
+                        child: Stack(
+                          children: [
+                            AbsorbPointer(
+                              child: SizedBox(
+                                height: 200,
+                                child: FlutterMap(
+                                  mapController: mapController,
+                                  options: mapOptions,
+                                  nonRotatedChildren: const [],
+                                  children: [
+                                    TileLayer(
+                                      urlTemplate:
+                                          'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                                      // userAgentPackageName: 'dev.fleaflet.flutter_map.example',
+                                    ),
+                                    MarkerLayer(
+                                      markers: [
+                                        Marker(
+                                          point: LatLng(double.parse("23"),
+                                              double.parse("46")),
+                                          builder: (context) => Container(
+                                            height: 20,
+                                            width: 20,
+                                            decoration: BoxDecoration(
+                                              color: ColorApp.blue3,
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            child: const Icon(
+                                              Icons.location_history,
+                                              color: Colors.white,
                                             ),
                                           ),
-                                        ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: Alignment.bottomCenter,
+                              child: InkWell(
+                                onTap: () async {
+                                  var availableMaps =
+                                      await launcher.MapLauncher.installedMaps;
+                                  //ignore: use_build_context_synchronously
+                                  showModalBottomSheet(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return SingleChildScrollView(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 10),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    "Selecione o aplicativo que queria abrir",
+                                                    style: TextStyle(
+                                                      color: ColorApp.dark2,
+                                                      fontSize: 18.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            for (var map in availableMaps)
+                                              InkWell(
+                                                onTap: () {
+                                                  map.showMarker(
+                                                    coords: launcher.Coords(
+                                                        widget.latLongProducer
+                                                            .latitude,
+                                                        widget.latLongProducer
+                                                            .latitude),
+                                                    title: "Destination",
+                                                  );
+                                                },
+                                                child: Container(
+                                                  padding: const EdgeInsets
+                                                          .symmetric(
+                                                      vertical: 10,
+                                                      horizontal: 10),
+                                                  child: Row(
+                                                    children: [
+                                                      SizedBox(
+                                                        height: 80,
+                                                        width: 80,
+                                                        child: SvgPicture.asset(
+                                                          map.icon,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 8,
+                                                      ),
+                                                      Text(
+                                                        map.mapName,
+                                                        style: const TextStyle(
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                          fontSize: 14.0,
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            10.sizeH
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Container(
+                                  width: 194,
+                                  margin: const EdgeInsets.only(top: 10),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 25),
+                                  decoration: BoxDecoration(
+                                      color: ColorApp.blue3,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      const Icon(
+                                        Icons.my_location,
+                                        color: Colors.white,
                                       ),
+                                      15.sizeW,
+                                      const Text(
+                                        "Go to \n Location",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: 'Abhaya Libre',
+                                        ),
+                                      ),
+                                      15.sizeW,
+                                      const Text(
+                                        "Ir para \n o local",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: 'Abhaya Libre',
+                                        ),
+                                      )
                                     ],
                                   ),
                                 ),
                               ),
-                              Align(
-                                alignment: Alignment.bottomCenter,
-                                child: InkWell(
-                                  onTap: () async {
-                                    var availableMaps = await launcher
-                                        .MapLauncher.installedMaps;
-                                    //ignore: use_build_context_synchronously
-                                    showModalBottomSheet(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return SingleChildScrollView(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Container(
-                                                margin:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 10),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      "Selecione o aplicativo que queria abrir",
-                                                      style: TextStyle(
-                                                        color: ColorApp.dark2,
-                                                        fontSize: 18.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              for (var map in availableMaps)
-                                                InkWell(
-                                                  onTap: () {
-                                                    map.showMarker(
-                                                      coords: launcher.Coords(
-                                                          widget.latLongProducer
-                                                              .latitude,
-                                                          widget.latLongProducer
-                                                              .latitude),
-                                                      title: "Destination",
-                                                    );
-                                                  },
-                                                  child: Container(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        vertical: 10,
-                                                        horizontal: 10),
-                                                    child: Row(
-                                                      children: [
-                                                        SizedBox(
-                                                          height: 80,
-                                                          width: 80,
-                                                          child:
-                                                              SvgPicture.asset(
-                                                            map.icon,
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                          width: 8,
-                                                        ),
-                                                        Text(
-                                                          map.mapName,
-                                                          style:
-                                                              const TextStyle(
-                                                            color: Colors.black,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontSize: 14.0,
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              10.sizeH
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: Container(
-                                    width: 194,
-                                    margin: const EdgeInsets.only(top: 10),
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10, horizontal: 25),
-                                    decoration: BoxDecoration(
-                                        color: ColorApp.blue3,
-                                        borderRadius: BorderRadius.circular(8)),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        const Icon(
-                                          Icons.my_location,
-                                          color: Colors.white,
-                                        ),
-                                        15.sizeW,
-                                        const Text(
-                                          "Go to \n Location",
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w400,
-                                            fontFamily: 'Abhaya Libre',
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          )),
+                            ),
+                          ],
+                        ),
+                      ),
                     )
                   ],
                 ),
               );
             }
-
             return const Center(
               child: Text("Errou um erro inesperado"),
             );

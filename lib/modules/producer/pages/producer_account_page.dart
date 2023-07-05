@@ -43,7 +43,7 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
             toolbarHeight: 75,
             backgroundColor: Colors.white,
             title: Text(
-              "Account",
+              "Conta",
               style: TextStyle(
                 color: ColorApp.dark1,
                 fontSize: 36,

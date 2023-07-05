@@ -9,6 +9,7 @@ import 'package:organaki_app/models/producer.dart';
 import 'package:organaki_app/models/singleton_location_user.dart';
 import 'package:organaki_app/models/singleton_user.dart';
 import 'package:organaki_app/modules/home/pages/home_orders_page.dart';
+import 'package:flutter/services.dart';
 
 class ProducerEditPage extends StatefulWidget {
   const ProducerEditPage({super.key, required this.producerUser});
@@ -60,7 +61,8 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
   }
 
   Widget buildFormField(String nameField, String hintTextField,
-      TextEditingController controllerField) {
+      TextEditingController controllerField,
+      [TextInputType? type]) {
     return Column(
       children: [
         Container(
@@ -85,6 +87,7 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
           margin: const EdgeInsets.only(left: 30, right: 30),
           child: TextFormField(
             controller: controllerField,
+            keyboardType: type,
             style: TextStyle(
               color: ColorApp.dark1,
               fontSize: 17,
@@ -136,7 +139,7 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
           ),
         ),
         title: Text(
-          "Edit Information",
+          "Editar",
           style: TextStyle(
             color: ColorApp.black,
             fontSize: 20,
@@ -435,7 +438,7 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                         ));
                       }
                       return Text(
-                        "Save Changes",
+                        "Salvar alterações",
                         style: TextStyle(
                           color: ColorApp.white1,
                           fontWeight: FontWeight.w500,
