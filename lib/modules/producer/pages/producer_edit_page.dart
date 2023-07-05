@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:organaki_app/bloc/bloc_edit_producer/edit_producer_bloc.dart';
-import 'package:organaki_app/core/extensions.dart';
 import 'package:organaki_app/core/colors_app.dart';
+import 'package:organaki_app/core/extensions.dart';
 import 'package:organaki_app/models/producer.dart';
 import 'package:organaki_app/models/singleton_user.dart';
 import 'package:organaki_app/modules/home/pages/home_orders_page.dart';
@@ -42,6 +44,8 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
   late TextEditingController _addressController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+
+  LatLng? LatLongUser;
 
   @override
   void dispose() {
@@ -253,22 +257,79 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                   },
                 ),
               ),
-
+              15.sizeH,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                    child: SizedBox(
+                      child: Text(
+                        "Marque no mapa a sua localização",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: ColorApp.dark1,
+                          fontSize: 21,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Abhaya Libre',
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               Container(
-                height: 250,
+                height: 300,
                 margin: const EdgeInsets.only(top: 20),
                 child: Stack(
                   children: [
                     Align(
-                      alignment: Alignment.center,
+                      alignment: Alignment.topCenter,
                       child: SizedBox(
-                        height: 220,
-                        child: Container(
-                          width: 348,
-                          decoration: BoxDecoration(
-                            color: ColorApp.white4,
-                            borderRadius: BorderRadius.circular(15),
+                        height: 260,
+                        child: FlutterMap(
+                          mapController: MapController(),
+                          options: MapOptions(
+                            center: LatLng(-23.5, -46.5),
+                            zoom: 14,
+                            onTap: (tapPosition, point) {
+                              setState(() {
+                                LatLongUser =
+                                    LatLng(point.latitude, point.longitude);
+                              });
+                            },
                           ),
+                          nonRotatedChildren: const [],
+                          children: [
+                            TileLayer(
+                              urlTemplate:
+                                  'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                            ),
+                            MarkerLayer(
+                              markers: [
+                                if (LatLongUser != null)
+                                  Marker(
+                                    width: 20,
+                                    height: 20,
+                                    point: LatLongUser!,
+                                    builder: (ctx) => Container(
+                                      decoration: BoxDecoration(
+                                          color: ColorApp.blue3,
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      child: const Center(
+                                        child: Icon(
+                                          Icons.my_location,
+                                          size: 17,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     ),
@@ -284,17 +345,12 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                           color: ColorApp.blue3,
                           borderRadius: BorderRadius.circular(15),
                         ),
-                        child: Row(
+                        child: const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            const Icon(
-                              Icons.my_location,
-                              color: Colors.white,
-                            ),
-                            15.sizeW,
-                            const Text(
-                              "Pin Location",
+                            Text(
+                              "Clique no mapa para\n salvar a localização",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.white,
