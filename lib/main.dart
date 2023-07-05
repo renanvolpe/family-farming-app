@@ -30,6 +30,8 @@ void main() async {
   response.fold((success) => SingletonUser().setUserAuth(success),
       (failure) => debugPrint("Usuário ainda não logado"));
 
+  
+
   runApp(MultiBlocProvider(
     providers: [
       BlocProvider(
