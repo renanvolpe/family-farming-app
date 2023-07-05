@@ -184,6 +184,8 @@ class _HomeMapPageState extends State<HomeMapPage> {
                               i < stateListProducer.listProducers.length;
                               i++)
                             Marker(
+                              height: 50,
+                              width: 50,
                               point: LatLng(
                                   stateListProducer.listProducers[i].lat!,
                                   stateListProducer.listProducers[i].lng!),
@@ -196,15 +198,32 @@ class _HomeMapPageState extends State<HomeMapPage> {
                                       stateListProducer.listProducers[i].lng!),
                                 }),
                                 child: Container(
-                                  height: 15,
-                                  width: 15,
-                                  decoration: BoxDecoration(
-                                    color: ColorApp.blue3,
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: const Icon(
-                                    Icons.location_history,
-                                    color: Colors.white,
+                                  child: Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Align(
+                                        child: Icon(
+                                          Icons.location_on_rounded,
+                                          size: 50,
+                                          color: ColorApp.blue3,
+                                        ),
+                                      ),
+                                      Align(
+                                        child: Icon(
+                                          Icons.circle,
+                                          color: ColorApp.blue3,
+                                        ),
+                                      ),
+                                      const Align(
+                                        child: Padding(
+                                          padding: EdgeInsets.only(bottom: 7),
+                                          child: Icon(
+                                            Icons.store,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -219,7 +238,7 @@ class _HomeMapPageState extends State<HomeMapPage> {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: const Icon(
-                                Icons.person,
+                                Icons.house,
                                 color: Colors.white,
                               ),
                             ),

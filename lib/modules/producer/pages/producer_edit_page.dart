@@ -68,18 +68,20 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.only(top: 28, right: 150, bottom: 5),
-          child: SizedBox(
-            width: 170.0,
-            height: 25.0,
-            child: Text(
-              nameField,
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                color: ColorApp.dark1,
-                fontSize: 17,
-                fontWeight: FontWeight.w500,
-                fontFamily: 'Abhaya Libre',
+          margin: const EdgeInsets.only(top: 28, bottom: 5, left: 40),
+          child: Align(
+            alignment: Alignment.bottomLeft,
+            child: SizedBox(
+              height: 25.0,
+              child: Text(
+                nameField,
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  color: ColorApp.dark1,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'Abhaya Libre',
+                ),
               ),
             ),
           ),
@@ -218,7 +220,7 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                 _emailNameController,
               ),
               buildFormField(
-                "Descrição do produtor",
+                "Descrição",
                 widget.producerUser.short_description,
                 _descrpitionController,
               ),
@@ -228,7 +230,7 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                 _contactController,
               ),
               buildFormField(
-                "Horas Abertas",
+                "Horas abertas",
                 widget.producerUser.opening_hours ?? "",
                 _openingHoursController,
               ),
@@ -356,23 +358,21 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,
-                      child: Container(
-                        height: 60,
-                        width: 194,
-                        margin: const EdgeInsets.only(top: 10),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 25),
-                        decoration: BoxDecoration(
-                          color: ColorApp.blue3,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Flexible(
-                              child: Text(
-                                "Clique no mapa para salvar a localização",
+                      child: Flexible(
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 10),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 25),
+                          decoration: BoxDecoration(
+                            color: ColorApp.blue3,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "Clique no mapa para\n salvar a localização",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: Colors.white,
@@ -380,9 +380,9 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                                   fontWeight: FontWeight.w400,
                                   fontFamily: 'Abhaya Libre',
                                 ),
-                              ),
-                            )
-                          ],
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -390,7 +390,7 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                 ),
               ),
               buildFormField(
-                "Explicação do endereço",
+                "Informação adicional",
                 widget.producerUser.address ?? "",
                 _addressController,
               ),
