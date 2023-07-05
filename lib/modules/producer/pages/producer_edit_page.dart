@@ -66,18 +66,20 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
     return Column(
       children: [
         Container(
-          margin: const EdgeInsets.only(top: 28, right: 150, bottom: 5),
-          child: SizedBox(
-            width: 170.0,
-            height: 25.0,
-            child: Text(
-              nameField,
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                color: ColorApp.dark1,
-                fontSize: 17,
-                fontWeight: FontWeight.w500,
-                fontFamily: 'Abhaya Libre',
+          margin: const EdgeInsets.only(top: 28, bottom: 5, left: 40),
+          child: Align(
+            alignment: Alignment.bottomLeft,
+            child: SizedBox(
+              height: 25.0,
+              child: Text(
+                nameField,
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  color: ColorApp.dark1,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'Abhaya Libre',
+                ),
               ),
             ),
           ),
@@ -216,7 +218,7 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                 _emailNameController,
               ),
               buildFormField(
-                "Descrição do produtor",
+                "Descrição",
                 widget.producerUser.short_description,
                 _descrpitionController,
               ),
@@ -226,7 +228,7 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                 _contactController,
               ),
               buildFormField(
-                "Horas Abertas",
+                "Horas abertas",
                 widget.producerUser.opening_hours ?? "",
                 _openingHoursController,
               ),
@@ -386,7 +388,7 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                 ),
               ),
               buildFormField(
-                "Explicação do endereço",
+                "Informação adicional",
                 widget.producerUser.address ?? "",
                 _addressController,
               ),
