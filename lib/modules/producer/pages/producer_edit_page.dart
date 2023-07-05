@@ -6,6 +6,7 @@ import 'package:organaki_app/bloc/bloc_edit_producer/edit_producer_bloc.dart';
 import 'package:organaki_app/core/colors_app.dart';
 import 'package:organaki_app/core/extensions.dart';
 import 'package:organaki_app/models/producer.dart';
+import 'package:organaki_app/models/singleton_location_user.dart';
 import 'package:organaki_app/models/singleton_user.dart';
 import 'package:organaki_app/modules/home/pages/home_orders_page.dart';
 
@@ -291,7 +292,7 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                         child: FlutterMap(
                           mapController: MapController(),
                           options: MapOptions(
-                            center: LatLng(-23.5, -46.5),
+                            center: SingletonLocationUser().userLocation,
                             zoom: 14,
                             onTap: (tapPosition, point) {
                               setState(() {
@@ -326,7 +327,22 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                                         ),
                                       ),
                                     ),
-                                  )
+                                  ),
+                                Marker(
+                                  point: SingletonLocationUser().userLocation!,
+                                  builder: (context) => Container(
+                                    height: 20,
+                                    width: 20,
+                                    decoration: BoxDecoration(
+                                      color: ColorApp.red,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: const Icon(
+                                      Icons.person,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ],
