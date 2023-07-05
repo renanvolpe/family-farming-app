@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:organaki_app/bloc/bloc_register_user/register_user_bloc.dart';
 import 'package:organaki_app/core/extensions.dart';
 import 'package:organaki_app/core/colors_app.dart';
 import 'package:organaki_app/models/user.dart';
-import 'package:organaki_app/modules/authentication/bloc/bloc_register_user/register_user_bloc.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

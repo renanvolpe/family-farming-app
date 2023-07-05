@@ -6,7 +6,7 @@ import 'package:result_dart/result_dart.dart';
 abstract class ProducerService {
   Future<Result<List<Producer>, String>> getListProducers();
   getAProducer(String id);
-  editProducer();
+  editProducer(Producer producer, String token);
 }
 
 class ProducerRepository implements ProducerService {
@@ -45,8 +45,37 @@ class ProducerRepository implements ProducerService {
     return Failure(errorMessage ?? "Erro não esperado");
   }
 
+  //  String id;
   @override
-  editProducer() {}
+  Future<Result<String, String>> editProducer(
+      Producer producer, String token) async {
+    Map body = {"producer": {}};
+    var producerMap = producer.toMap();
+    Map newProducerMap = {};
+    producerMap.forEach((key, value) {
+      if (value != "" && value != null) {
+        newProducerMap.addAll({key: value});
+      }
+    });
+
+    body["producer"].addAll(newProducerMap);
+    body["producer"]["visible_producer"] = checkAllFieldsProducer(producer);
+    Map<String, dynamic> header = {"Authorization": "Bearer $token"};
+
+    try {
+      var response = await dio.put(
+          "${Endpoints.baseUrl}${Endpoints.producers}/${producer.id}",
+          data: body,
+          options: Options(headers: header));
+      if (response.statusCode == 200) {
+        return const Success("Atualizado com sucesso");
+      }
+    } catch (e) {
+      print("Error AuthenticationRepository :: updateUser :: $e");
+      errorMessage = "Erro do sistema";
+    }
+    return Failure(errorMessage ?? "Erro não esperado");
+  }
 
   @override
   Future<Result<Producer, String>> getAProducer(String id) async {
@@ -59,10 +88,6 @@ class ProducerRepository implements ProducerService {
         Producer prod = Producer.fromMap(response.data["producer"]);
         print(prod);
         return Success(prod);
-      } else if (response.statusCode == 400) {
-        errorMessage = "Chamada feita de maneira errada";
-      } else if (response.statusCode == 500) {
-        errorMessage = "Sistema fora do ar, contate o administrador";
       }
     } catch (e) {
       print(
@@ -82,7 +107,7 @@ class ProducerRepository implements ProducerService {
         for (var element in response.data["tags"]) {
           listTags.add(element["name"]);
         }
-        if(listTags.isEmpty){
+        if (listTags.isEmpty) {
           throw Exception("Não há tags recebidas");
         }
         return Success(listTags);
@@ -93,5 +118,16 @@ class ProducerRepository implements ProducerService {
       errorMessage = "Erro do sistema";
     }
     return const Failure("Não há tags a serem mostradas");
+  }
+
+  //function to see if all fields are completed in producer
+  bool checkAllFieldsProducer(Producer producer) {
+    if (producer.address != "" &&
+        producer.contact != "" &&
+        producer.opening_hours != "" &&
+        producer.tags != null) {
+      return true;
+    }
+    return false;
   }
 }
