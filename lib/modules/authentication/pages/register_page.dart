@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:organaki_app/bloc/bloc_register_user/register_user_bloc.dart';
 import 'package:organaki_app/core/extensions.dart';
 import 'package:organaki_app/core/colors_app.dart';
 import 'package:organaki_app/models/user.dart';
-import 'package:organaki_app/modules/authentication/bloc/bloc_register_user/register_user_bloc.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -67,7 +67,7 @@ class _RegisterPageState extends State<RegisterPage> {
       // Aqui você pode fazer o que quiser com as informações do usuário, como enviar para um servidor, salvar localmente, etc.
 
       BlocProvider.of<RegisterUserBloc>(context)
-          .add(RegisterUserStart(User( "", "",fullName, email, password)));
+          .add(RegisterUserStart(User("", "", fullName, email, password)));
     }
   }
 
@@ -78,9 +78,12 @@ class _RegisterPageState extends State<RegisterPage> {
       appBar: AppBar(
         leading: InkWell(
             onTap: () => Navigator.pop(context),
-            child: Icon(Icons.arrow_back, color: ColorApp.black)),
-        title:
-            Text('Fill your profile', style: TextStyle(color: ColorApp.black)),
+            child: Icon(
+              Icons.chevron_left,
+              color: ColorApp.black,
+              size: 35,
+              weight: 10,
+            )),
         backgroundColor: ColorApp.white1,
       ),
       body: BlocListener<RegisterUserBloc, RegisterUserState>(
@@ -170,7 +173,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     children: [
                       Text(
                         textAlign: TextAlign.center,
-                        'Register Account',
+                        'Crie sua conta',
                         style: TextStyle(
                           fontSize: 40,
                           fontWeight: FontWeight.w500,
@@ -182,7 +185,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   const SizedBox(height: 18),
                   Text(
-                    'Full Name',
+                    'Nome completo',
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: 17,
@@ -195,32 +198,32 @@ class _RegisterPageState extends State<RegisterPage> {
                   Container(
                     alignment: Alignment.center,
                     width: 368.0,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: ColorApp.white4,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(14.0)),
-                      ),
-                      child: TextFormField(
-                        controller: _fullNameController,
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.only(left: 15),
-                          border: InputBorder.none,
-                          hintText: "Enter your full name",
-                          hintStyle: TextStyle(
-                            color: ColorApp.grey3,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Abhaya Libre',
+                    child: TextFormField(
+                      controller: _fullNameController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.only(left: 15),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(14.0),
                           ),
+                          borderSide: BorderSide.none,
                         ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Enter your full name';
-                          }
-                          return null;
-                        },
+                        filled: true,
+                        fillColor: ColorApp.white4,
+                        hintText: "Insira seu nome completo",
+                        hintStyle: TextStyle(
+                          color: ColorApp.grey3,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Abhaya Libre',
+                        ),
                       ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Campo obrigatório.';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   15.sizeH,
@@ -237,37 +240,37 @@ class _RegisterPageState extends State<RegisterPage> {
                   10.sizeH,
                   SizedBox(
                     width: 368.0,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: ColorApp.white4,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(14.0)),
-                      ),
-                      child: TextFormField(
-                        controller: _emailController,
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.only(left: 15),
-                          border: InputBorder.none,
-                          hintText: "Enter your e-mail",
-                          hintStyle: TextStyle(
-                            color: ColorApp.grey3,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Abhaya Libre',
+                    child: TextFormField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.only(left: 15),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(14.0),
                           ),
+                          borderSide: BorderSide.none,
                         ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Enter your e-mail';
-                          }
-                          return null;
-                        },
+                        filled: true,
+                        fillColor: ColorApp.white4,
+                        hintText: "Insira seu e-mail",
+                        hintStyle: TextStyle(
+                          color: ColorApp.grey3,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Abhaya Libre',
+                        ),
                       ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Campo obrigatório.';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   15.sizeH,
                   Text(
-                    'Password',
+                    'Senha',
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       fontSize: 17,
@@ -279,37 +282,37 @@ class _RegisterPageState extends State<RegisterPage> {
                   10.sizeH,
                   SizedBox(
                     width: 368.0,
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: ColorApp.white4,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(14.0)),
-                      ),
-                      child: TextFormField(
-                        controller: _passwordController,
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.only(left: 15),
-                          border: InputBorder.none,
-                          hintText: "Enter your password",
-                          hintStyle: TextStyle(
-                            color: ColorApp.grey3,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Abhaya Libre',
+                    child: TextFormField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.only(left: 15),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(14.0),
                           ),
+                          borderSide: BorderSide.none,
                         ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Enter your password';
-                          }
-                          return null;
-                        },
+                        filled: true,
+                        fillColor: ColorApp.white4,
+                        hintText: "Insira sua senha",
+                        hintStyle: TextStyle(
+                          color: ColorApp.grey3,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Abhaya Libre',
+                        ),
                       ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Campo obrigatório.';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   15.sizeH,
                   Text(
-                    'Confirm Password',
+                    'Confirme sua senha',
                     textDirection: TextDirection.ltr,
                     textAlign: TextAlign.left,
                     style: TextStyle(
@@ -322,36 +325,35 @@ class _RegisterPageState extends State<RegisterPage> {
                   10.sizeH,
                   SizedBox(
                     width: 368.0,
-                    child: DecoratedBox(
-                      position: DecorationPosition.background,
-                      decoration: BoxDecoration(
-                        color: ColorApp.white4,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(14.0)),
-                      ),
-                      child: TextFormField(
-                        controller: _confirmPasswordController,
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.only(left: 15),
-                          border: InputBorder.none,
-                          hintText: "Confirm your password",
-                          hintStyle: TextStyle(
-                            color: ColorApp.grey3,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Abhaya Libre',
+                    child: TextFormField(
+                      controller: _confirmPasswordController,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.only(left: 15),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(14.0),
                           ),
+                          borderSide: BorderSide.none,
                         ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Confirm your Password';
-                          }
-                          if (value != _passwordController.text) {
-                            return 'Your Password does not match';
-                          }
-                          return null;
-                        },
+                        filled: true,
+                        fillColor: ColorApp.white4,
+                        hintText: "Insira sua senha novamente",
+                        hintStyle: TextStyle(
+                          color: ColorApp.grey3,
+                          fontSize: 17,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Abhaya Libre',
+                        ),
                       ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Campo obrigatório.';
+                        }
+                        if (value != _passwordController.text) {
+                          return 'Essa senha não corresponde.';
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   const SizedBox(height: 30),
@@ -376,7 +378,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             );
                           }
                           return Text(
-                            "Sign Up",
+                            "Cadastre-se",
                             style: TextStyle(
                               color: ColorApp.white1,
                               fontWeight: FontWeight.w500,

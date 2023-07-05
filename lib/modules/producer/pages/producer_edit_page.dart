@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:organaki_app/bloc/bloc_edit_producer/edit_producer_bloc.dart';
 import 'package:organaki_app/core/extensions.dart';
 import 'package:organaki_app/core/colors_app.dart';
+import 'package:organaki_app/models/producer.dart';
+import 'package:organaki_app/models/singleton_user.dart';
 import 'package:organaki_app/modules/home/pages/home_orders_page.dart';
+import 'package:flutter/services.dart';
 
 class ProducerEditPage extends StatefulWidget {
-  const ProducerEditPage({super.key});
+  const ProducerEditPage({super.key, required this.producerUser});
+
+  final Producer producerUser;
 
   @override
   State<ProducerEditPage> createState() => _ProducerEditPageState();
@@ -14,28 +21,43 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
   @override
   void initState() {
     super.initState();
+    _fullNameController = TextEditingController(text: widget.producerUser.name);
+    _emailNameController =
+        TextEditingController(text: widget.producerUser.email);
+    _descrpitionController =
+        TextEditingController(text: widget.producerUser.short_description);
+    _contactController =
+        TextEditingController(text: widget.producerUser.contact);
+    _openingHoursController =
+        TextEditingController(text: widget.producerUser.opening_hours);
+    _addressController =
+        TextEditingController(text: widget.producerUser.address);
   }
 
   //final Producer producer;
-  final _fullNameController = TextEditingController();
-  final _phoneController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _addressController = TextEditingController();
-  final _aboutController = TextEditingController();
+  late TextEditingController _fullNameController = TextEditingController();
+  late TextEditingController _emailNameController = TextEditingController();
+  late TextEditingController _descrpitionController = TextEditingController();
+  late TextEditingController _contactController = TextEditingController();
+  late TextEditingController _openingHoursController = TextEditingController();
+  late TextEditingController _addressController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
     _fullNameController.dispose();
-    _passwordController.dispose();
-    _phoneController.dispose();
+    _emailNameController.dispose();
+    _descrpitionController.dispose();
+    _contactController.dispose();
+    _openingHoursController.dispose();
     _addressController.dispose();
     super.dispose();
   }
 
   Widget buildFormField(String nameField, String hintTextField,
-      TextEditingController controllerField) {
+      TextEditingController controllerField,
+      [TextInputType? type]) {
     return Column(
       children: [
         Container(
@@ -60,6 +82,7 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
           margin: const EdgeInsets.only(left: 30, right: 30),
           child: TextFormField(
             controller: controllerField,
+            keyboardType: type,
             style: TextStyle(
               color: ColorApp.dark1,
               fontSize: 17,
@@ -111,7 +134,7 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
           ),
         ),
         title: Text(
-          "Edit Information",
+          "Editar",
           style: TextStyle(
             color: ColorApp.black,
             fontSize: 20,
@@ -128,7 +151,7 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
           ),
         ),
       ),
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -178,25 +201,31 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                 ),
               ),
               buildFormField(
-                "Full Name",
-                "Producer.name",
+                "Nome",
+                widget.producerUser.name,
                 _fullNameController,
               ),
               buildFormField(
-                "Phone Number",
-                "Producer.phone",
-                _phoneController,
+                "E-mail",
+                widget.producerUser.email,
+                _emailNameController,
               ),
               buildFormField(
-                "Password",
-                "New Password",
-                _passwordController,
+                "Descrição do produtor",
+                widget.producerUser.short_description,
+                _descrpitionController,
               ),
               buildFormField(
-                "About",
-                "Producer.about",
-                _aboutController,
+                "Número para contato",
+                widget.producerUser.contact ?? "",
+                _contactController,
               ),
+              buildFormField(
+                "Horas Abertas",
+                widget.producerUser.opening_hours ?? "",
+                _openingHoursController,
+              ),
+
               Container(
                 margin: const EdgeInsets.only(top: 28, right: 150, bottom: 5),
                 child: SizedBox(
@@ -220,13 +249,14 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                   left: 10,
                   right: 10,
                 ),
-                child: const TagsFilter(),
+                child: TagsFilter(
+                  listTags: widget.producerUser.tags,
+                  startTagsSelecteds: (listTags) {
+                    widget.producerUser.tags = listTags;
+                  },
+                ),
               ),
-              buildFormField(
-                "Location",
-                "Producer.address",
-                _addressController,
-              ),
+
               Container(
                 height: 250,
                 margin: const EdgeInsets.only(top: 20),
@@ -267,7 +297,7 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                             ),
                             15.sizeW,
                             const Text(
-                              "Pin Location",
+                              "Marcar local",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 color: Colors.white,
@@ -283,12 +313,31 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                   ],
                 ),
               ),
+              buildFormField(
+                "Explicação do endereço",
+                widget.producerUser.address ?? "",
+                _addressController,
+              ),
               Container(
                 margin: const EdgeInsets.all(30),
                 width: 348,
                 height: 58,
                 child: FilledButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    var updatedProducer = Producer(
+                        id: widget.producerUser.id,
+                        name: _fullNameController.text,
+                        email: _emailNameController.text,
+                        visible_producer: false, // no matter the value
+                        short_description: _descrpitionController.text,
+                        address: _addressController.text,
+                        contact: _contactController.text,
+                        opening_hours: _openingHoursController.text,
+                        tags: widget.producerUser.tags);
+                    BlocProvider.of<EditProducerBloc>(context).add(
+                        EditProducerStart(
+                            updatedProducer, SingletonUser().userAuth!.token!));
+                  },
                   style: ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll<Color>(
                       ColorApp.blue3,
@@ -299,14 +348,33 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                       ),
                     ),
                   ),
-                  child: Text(
-                    "Save Changes",
-                    style: TextStyle(
-                      color: ColorApp.white1,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Abhaya Libre',
-                      fontSize: 18,
-                    ),
+                  child: BlocConsumer<EditProducerBloc, EditProducerState>(
+                    listener: (context, state) {
+                      if (state is EditProducerFailure) {
+                        //TODO apply flushbar here
+                      }
+                      if (state is EditProducerSuccess) {
+                        //TODO apply flushbar here
+                        Navigator.pop(context);
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is EditProducerProgress) {
+                        return const Center(
+                            child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ));
+                      }
+                      return Text(
+                        "Salvar alterações",
+                        style: TextStyle(
+                          color: ColorApp.white1,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Abhaya Libre',
+                          fontSize: 18,
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),

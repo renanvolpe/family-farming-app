@@ -13,6 +13,8 @@ class Producer {
   String? contact;
   String? opening_hours;
   List<String>? tags;
+  double? lat;
+  double? long;
   Producer({
     required this.id,
     required this.name,
@@ -23,6 +25,8 @@ class Producer {
     this.contact,
     this.opening_hours,
     this.tags,
+    this.lat,
+    this.long,
   });
 
   Producer copyWith({
@@ -35,6 +39,8 @@ class Producer {
     String? contact,
     String? opening_hours,
     List<String>? tags,
+    double? lat,
+    double? long,
   }) {
     return Producer(
       id: id ?? this.id,
@@ -46,6 +52,8 @@ class Producer {
       contact: contact ?? this.contact,
       opening_hours: opening_hours ?? this.opening_hours,
       tags: tags ?? this.tags,
+      lat: lat ?? this.lat,
+      long: long ?? this.long,
     );
   }
 
@@ -60,6 +68,8 @@ class Producer {
       'contact': contact,
       'opening_hours': opening_hours,
       'tags': tags,
+      'lat': lat,
+      'long': long,
     };
   }
 
@@ -72,9 +82,10 @@ class Producer {
       short_description: map['short_description'] as String,
       address: map['address'] != null ? map['address'] as String : null,
       contact: map['contact'] != null ? map['contact'] as String : null,
-      opening_hours:
-          map['opening_hours'] != null ? map['opening_hours'] as String : null,
-      tags: map['tags'] != null ? List<String>.from((map['tags'])) : null,
+      opening_hours: map['opening_hours'] != null ? map['opening_hours'] as String : null,
+      tags: map['tags'] != null ? List<String>.from((map['tags'] )) : null,
+      lat: map['lat'] != null ? map['lat'] as double : null,
+      long: map['long'] != null ? map['long'] as double : null,
     );
   }
 
@@ -85,34 +96,39 @@ class Producer {
 
   @override
   String toString() {
-    return 'Producer(id: $id, name: $name, email: $email, visible_producer: $visible_producer, short_description: $short_description, address: $address, contact: $contact, opening_hours: $opening_hours, tags: $tags)';
+    return 'Producer(id: $id, name: $name, email: $email, visible_producer: $visible_producer, short_description: $short_description, address: $address, contact: $contact, opening_hours: $opening_hours, tags: $tags, lat: $lat, long: $long)';
   }
 
   @override
   bool operator ==(covariant Producer other) {
     if (identical(this, other)) return true;
-
-    return other.id == id &&
-        other.name == name &&
-        other.email == email &&
-        other.visible_producer == visible_producer &&
-        other.short_description == short_description &&
-        other.address == address &&
-        other.contact == contact &&
-        other.opening_hours == opening_hours &&
-        listEquals(other.tags, tags);
+  
+    return 
+      other.id == id &&
+      other.name == name &&
+      other.email == email &&
+      other.visible_producer == visible_producer &&
+      other.short_description == short_description &&
+      other.address == address &&
+      other.contact == contact &&
+      other.opening_hours == opening_hours &&
+      listEquals(other.tags, tags) &&
+      other.lat == lat &&
+      other.long == long;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-        name.hashCode ^
-        email.hashCode ^
-        visible_producer.hashCode ^
-        short_description.hashCode ^
-        address.hashCode ^
-        contact.hashCode ^
-        opening_hours.hashCode ^
-        tags.hashCode;
+      name.hashCode ^
+      email.hashCode ^
+      visible_producer.hashCode ^
+      short_description.hashCode ^
+      address.hashCode ^
+      contact.hashCode ^
+      opening_hours.hashCode ^
+      tags.hashCode ^
+      lat.hashCode ^
+      long.hashCode;
   }
 }

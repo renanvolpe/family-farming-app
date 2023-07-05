@@ -4,9 +4,9 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:map_launcher/map_launcher.dart' as launcher;
+import 'package:organaki_app/bloc/bloc_get_a_producer/get_a_producer_bloc.dart';
 import 'package:organaki_app/core/colors_app.dart';
 import 'package:organaki_app/core/extensions.dart';
-import 'package:organaki_app/modules/home/bloc/bloc_get_a_producer/get_a_producer_bloc.dart';
 import "dart:math";
 
 class ProducerApresentationPage extends StatefulWidget {
@@ -63,7 +63,7 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
           ),
         ),
         title: Text(
-          "Producer",
+          "Produtor",
           style: TextStyle(
             color: ColorApp.black,
             fontSize: 20,
@@ -142,7 +142,7 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                         )),
                     15.sizeH,
                     Text(
-                      "About Producer",
+                      "Sobre o produtor",
                       style: TextStyle(
                         color: ColorApp.blue3,
                         fontSize: 20,
@@ -162,7 +162,7 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                     ),
                     15.sizeH,
                     Text(
-                      "Photos product",
+                      "Imagens",
                       style: TextStyle(
                         color: ColorApp.blue3,
                         fontSize: 20,
@@ -199,7 +199,7 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                     ),
                     15.sizeH,
                     const Text(
-                      "Producer Location",
+                      "Localização do produtor",
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 20,
@@ -361,12 +361,23 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                                           fontWeight: FontWeight.w400,
                                           fontFamily: 'Abhaya Libre',
                                         ),
+                                      ),
+                                      15.sizeW,
+                                      const Text(
+                                        "Ir para \n o local",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: 'Abhaya Libre',
+                                        ),
                                       )
                                     ],
                                   ),
                                 ),
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),

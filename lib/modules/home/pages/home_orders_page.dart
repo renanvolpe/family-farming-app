@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:organaki_app/bloc/bloc_get_list_producer/get_list_producers_bloc.dart';
+import 'package:organaki_app/bloc/bloc_get_list_tags/get_list_tags_bloc.dart';
 import 'package:organaki_app/models/producer.dart';
-import 'package:organaki_app/modules/home/bloc/bloc_get_list_producer/get_list_producers_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:organaki_app/core/extensions.dart';
 import 'package:organaki_app/core/colors_app.dart';
-import 'package:organaki_app/modules/home/bloc/bloc_get_list_tags/get_list_tags_bloc.dart';
 
 class HomeOrdersPage extends StatefulWidget {
   const HomeOrdersPage({Key? key}) : super(key: key);
@@ -43,7 +43,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                   children: [
                     ListTile(
                       title: Text(
-                        'Distance',
+                        'Distância',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
@@ -64,7 +64,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                     const Divider(),
                     ListTile(
                       title: Text(
-                        'Opening Hours',
+                        'Hora de Abertura',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
@@ -223,7 +223,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Search',
+                            'Pesquisar',
                             style: TextStyle(
                               fontSize: 36,
                               fontWeight: FontWeight.w500,
@@ -251,7 +251,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                               color: ColorApp.white1,
                             ),
                             label: Text(
-                              'Filter',
+                              'Filtros',
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
@@ -287,7 +287,8 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                                   filterListProducersByText(text);
                                 },
                                 decoration: InputDecoration(
-                                  hintText: 'Search Foods, Restaurants etc.',
+                                  hintText:
+                                      'Procure produtos, comerciantes etc.',
                                   border: InputBorder.none,
                                   hintStyle: TextStyle(
                                     color: ColorApp.grey3,
@@ -308,7 +309,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Recently Searched',
+                            'Visto recentemente',
                             style: TextStyle(
                                 color: ColorApp.black,
                                 fontSize: 26,
@@ -324,7 +325,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                               });
                             },
                             child: Text(
-                              'CLEAR ALL',
+                              'LIMPAR',
                               style: TextStyle(
                                 fontSize: 10,
                                 color: ColorApp.blue3,
@@ -338,7 +339,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                       InkWell(
                         onTap: () =>
                             context.push("/order/producerDetail", extra: {
-                          "id": state.listProducers[i].id,
+                          "id": listProducers[i].id,
                           "latLongProducer":
                               LatLng(-23.17, -45.88), // TODO remove this data
                         }),
@@ -353,27 +354,29 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                                 children: [
                                   5.sizeH,
                                   Text(
-                                    state.listProducers[i].short_description,
+                                    listProducers[i].short_description,
                                     style: const TextStyle(color: Colors.grey),
                                   ),
                                   10.sizeH,
                                   listProducers[i].tags != null
                                       ? Wrap(
                                           children: List.generate(
-                                              state.listProducers[i].tags!
-                                                  .length,
+                                              listProducers[i].tags!.length,
                                               (index) => Container(
                                                     padding: const EdgeInsets
                                                             .symmetric(
                                                         vertical: 3,
                                                         horizontal: 4),
+                                                    margin: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 2,
+                                                        vertical: 2),
                                                     decoration: BoxDecoration(
                                                         color: ColorApp.blue5,
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(20)),
-                                                    child: Text(state
-                                                        .listProducers[i]
+                                                    child: Text(listProducers[i]
                                                         .tags![index]),
                                                   )))
                                       : const SizedBox()
@@ -507,7 +510,7 @@ class _OpeningHoursFilterState extends State<OpeningHoursFilter> {
             Row(
               children: [
                 Text(
-                  'From: ',
+                  'De: ',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
@@ -532,7 +535,7 @@ class _OpeningHoursFilterState extends State<OpeningHoursFilter> {
             Row(
               children: [
                 Text(
-                  'To: ',
+                  'Até: ',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
@@ -562,23 +565,25 @@ class _OpeningHoursFilterState extends State<OpeningHoursFilter> {
 }
 
 class TagsFilter extends StatefulWidget {
-  const TagsFilter({super.key});
-
+  const TagsFilter({super.key, this.startTagsSelecteds, this.listTags});
+  final List<String>? listTags;
+  final Function(List<String> listTags)? startTagsSelecteds;
   @override
   // ignore: library_private_types_in_public_api
   _TagsFilterState createState() => _TagsFilterState();
 }
 
 class _TagsFilterState extends State<TagsFilter> {
-  List<String> selectedTags = [];
+  @override
+  void initState() {
+    super.initState();
+    if (widget.listTags != null) {
+      selectedTags = widget.listTags!;
+      widget.startTagsSelecteds!(selectedTags);
+    }
+  }
 
-  List<String> availableTags = [
-    'Herbs',
-    'Fruits',
-    'Vegetables',
-    'Natural',
-    'Dairy',
-  ];
+  List<String> selectedTags = [];
 
   bool isTagSelected(String tag) {
     return selectedTags.contains(tag);
@@ -590,6 +595,9 @@ class _TagsFilterState extends State<TagsFilter> {
         selectedTags.remove(tag);
       } else {
         selectedTags.add(tag);
+      }
+      if (widget.listTags != null) {
+        widget.startTagsSelecteds!(selectedTags);
       }
     });
   }

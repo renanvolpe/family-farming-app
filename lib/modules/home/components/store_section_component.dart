@@ -57,7 +57,7 @@ class StoreSectionComponent extends StatelessWidget {
                       children: [
                         Flexible(
                           child: Text(
-                            " producer.companyName",
+                            producer.name,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               color: ColorApp.blue3,
@@ -141,7 +141,7 @@ class StoreSectionComponent extends StatelessWidget {
                 ],
               ),
               const Text(
-                "OPEN",
+                "ABERTO",
                 style: TextStyle(
                   color: Colors.red,
                   fontSize: 18,
