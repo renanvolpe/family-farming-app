@@ -120,7 +120,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                               Navigator.pop(context);
                             },
                             child: Text(
-                              'Save and Use',
+                              'Aplicar e salvar',
                               style: TextStyle(
                                 color: ColorApp.white1,
                                 fontWeight: FontWeight.w500,
