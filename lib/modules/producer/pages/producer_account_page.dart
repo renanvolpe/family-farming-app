@@ -20,7 +20,7 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
         toolbarHeight: 75,
         backgroundColor: Colors.white,
         title: Text(
-          "Account",
+          "Conta",
           style: TextStyle(
             color: ColorApp.dark1,
             fontSize: 36,
@@ -87,7 +87,7 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
                 children: [],
               ),
               Text(
-                "General",
+                "Geral",
                 style: TextStyle(
                   color: ColorApp.blue3,
                   fontSize: 20,
@@ -106,7 +106,7 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
                       child: Row(
                         children: [
                           Text(
-                            "Edit information",
+                            "Editar informações",
                             style: TextStyle(
                               color: ColorApp.blue3,
                               fontSize: 16,
@@ -131,7 +131,7 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
                       child: Row(
                         children: [
                           Text(
-                            "Enable notification",
+                            "Habilitar notificações",
                             style: TextStyle(
                               color: ColorApp.blue3,
                               fontSize: 16,
@@ -162,7 +162,7 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
                     child: Text(
-                      "Logout",
+                      "Sair",
                       style: TextStyle(
                         color: ColorApp.blue3,
                         fontSize: 16,

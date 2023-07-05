@@ -79,7 +79,7 @@ class _HomeMapPageState extends State<HomeMapPage> {
         toolbarHeight: 75,
         backgroundColor: Colors.white,
         title: Text(
-          "Discover",
+          "Descubra",
           style: TextStyle(
             color: ColorApp.dark1,
             fontSize: 36,
@@ -143,8 +143,7 @@ class _HomeMapPageState extends State<HomeMapPage> {
                             scrollDirection: Axis.horizontal,
                             child: Row(
                                 children: List.generate(
-                              stateListProducer
-                                          .listProducers.length,
+                              stateListProducer.listProducers.length,
                               (index) {
                                 return InkWell(
                                     onTap: () => context.push(

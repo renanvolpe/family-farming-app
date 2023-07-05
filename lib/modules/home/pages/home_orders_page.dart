@@ -43,7 +43,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                   children: [
                     ListTile(
                       title: Text(
-                        'Distance',
+                        'Distância',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
@@ -64,7 +64,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                     const Divider(),
                     ListTile(
                       title: Text(
-                        'Opening Hours',
+                        'Hora de Abertura',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w500,
@@ -223,7 +223,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Search',
+                            'Pesquisar',
                             style: TextStyle(
                               fontSize: 36,
                               fontWeight: FontWeight.w500,
@@ -251,7 +251,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                               color: ColorApp.white1,
                             ),
                             label: Text(
-                              'Filter',
+                              'Filtros',
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.w500,
@@ -287,7 +287,8 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                                   filterListProducersByText(text);
                                 },
                                 decoration: InputDecoration(
-                                  hintText: 'Search Foods, Restaurants etc.',
+                                  hintText:
+                                      'Procure produtos, comerciantes etc.',
                                   border: InputBorder.none,
                                   hintStyle: TextStyle(
                                     color: ColorApp.grey3,
@@ -308,7 +309,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Recently Searched',
+                            'Visto recentemente',
                             style: TextStyle(
                                 color: ColorApp.black,
                                 fontSize: 26,
@@ -324,7 +325,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                               });
                             },
                             child: Text(
-                              'CLEAR ALL',
+                              'LIMPAR',
                               style: TextStyle(
                                 fontSize: 10,
                                 color: ColorApp.blue3,
@@ -507,7 +508,7 @@ class _OpeningHoursFilterState extends State<OpeningHoursFilter> {
             Row(
               children: [
                 Text(
-                  'From: ',
+                  'De: ',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
@@ -532,7 +533,7 @@ class _OpeningHoursFilterState extends State<OpeningHoursFilter> {
             Row(
               children: [
                 Text(
-                  'To: ',
+                  'Até: ',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
