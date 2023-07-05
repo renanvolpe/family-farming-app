@@ -95,11 +95,20 @@ class _HomeMainState extends State<HomeMain> {
           currentIndex: teste,
           selectedItemColor: ColorApp.blue3,
           onTap: onTap,
+          selectedLabelStyle: const TextStyle(
+            fontFamily: 'Abhaya Libre',
+            fontWeight: FontWeight.w600,
+          ),
+          unselectedLabelStyle: const TextStyle(
+            fontFamily: 'Abhaya Libre',
+            fontWeight: FontWeight.w600,
+          ),
           items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Map'),
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Order'),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Mapa'),
             BottomNavigationBarItem(
-                icon: Icon(Icons.account_box), label: 'Account'),
+                icon: Icon(Icons.search), label: 'Produtores'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.account_box), label: 'Conta'),
           ],
         ));
   }
