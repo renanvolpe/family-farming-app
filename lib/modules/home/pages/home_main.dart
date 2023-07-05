@@ -61,15 +61,20 @@ class _HomeMainState extends State<HomeMain> {
     return 0;
   }
 
+  int teste = 0;
   void onTap(int value) {
     switch (value) {
       case 0:
+        teste = 0;
         return context.go('/map');
       case 1:
+        teste = 1;
         return context.go('/order');
       case 2:
+        teste = 2;
         return context.go('/account');
       default:
+        teste = 0;
         return context.go('/map');
     }
   }
@@ -80,6 +85,8 @@ class _HomeMainState extends State<HomeMain> {
         body: IndexedStack(
             index: _calculateSelectedIndex(context), children: children),
         bottomNavigationBar: BottomNavigationBar(
+          currentIndex: teste,
+          selectedItemColor: ColorApp.blue3,
           onTap: onTap,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Map'),
@@ -91,7 +98,7 @@ class _HomeMainState extends State<HomeMain> {
   }
 }
 
-class AnimatedBottomBar extends StatefulWidget {
+/*class AnimatedBottomBar extends StatefulWidget {
   final List<BarItem>? barItems;
   final Function? onBarTap;
   final bool? isItemsPage;
@@ -181,7 +188,7 @@ class _AnimatedBottomBarState extends State<AnimatedBottomBar>
     }
     return barItems;
   }
-}
+}*/
 
 class BarItem {
   String text;

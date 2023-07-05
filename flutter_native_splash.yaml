@@ -1,5 +1,5 @@
 flutter_native_splash:
-  color: "#003046"
+  color: "#FFFFFF"
   image: images/organaki-logo.png
 
   # This package generates native code to customize Flutter's default white native splash screen
@@ -13,7 +13,7 @@ flutter_native_splash:
   # of your splash screen to a solid color.  Use background_image to set the background of your
   # splash screen to a png image.  This is useful for gradients. The image will be stretch to the
   # size of the app. Only one parameter can be used, color and background_image cannot both be set.
-  #color: "0xff003046"
+  #color: "0xffFFFFFF"
   #background_image: "assets/background.png"
 
   # Optional parameters are listed below.  To enable a parameter, uncomment the line by removing
@@ -37,7 +37,7 @@ flutter_native_splash:
   # parameters from above. If the image_dark parameter is specified, color_dark or
   # background_image_dark must be specified.  color_dark and background_image_dark cannot both be
   # set.
-  #color_dark: "0xff003046"
+  #color_dark: "0xffFFFFFF"
   #background_image_dark: "assets/dark-background.png"
   #image_dark: assets/splash-invert.png
   #branding_dark: assets/dart_dark.png
@@ -56,10 +56,10 @@ flutter_native_splash:
     image: images/organaki-logo.png
 
     # Splash screen background color.
-    color: "#003046"
+    color: "#FFFFFF"
 
     # App icon background color.
-    icon_background_color: "#003046"
+    icon_background_color: "#FFFFFF"
 
     # The branding property allows you to specify an image used as branding in the splash screen.
     #branding: assets/dart.png
@@ -68,7 +68,7 @@ flutter_native_splash:
     # apply when the device is in dark mode. If they are not specified, the app will use the
     # parameters from above.
     #image_dark: images/placeholder.png
-    #color_dark: "0xff003046"
+    #color_dark: "0xffFFFFFF"
     #icon_background_color_dark: "#eeeeee"
 
   # The android, ios and web parameters can be used to disable generating a splash screen on a given
@@ -79,8 +79,8 @@ flutter_native_splash:
 
   # Platform specific images can be specified with the following parameters, which will override
   # the respective parameter.  You may specify all, selected, or none of these parameters:
-  #color_android: "0xff003046"
-  #color_dark_android: "0xff003046"
+  #color_android: "0xffFFFFFF"
+  #color_dark_android: "0xffFFFFFF"
   #color_ios: "#42a5f5"
   #color_dark_ios: "#042a49"
   #color_web: "#42a5f5"
