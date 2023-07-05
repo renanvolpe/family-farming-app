@@ -9,7 +9,6 @@ import 'package:organaki_app/models/producer.dart';
 import 'package:organaki_app/models/singleton_location_user.dart';
 import 'package:organaki_app/models/singleton_user.dart';
 import 'package:organaki_app/modules/home/pages/home_orders_page.dart';
-import 'package:flutter/services.dart';
 
 class ProducerEditPage extends StatefulWidget {
   const ProducerEditPage({super.key, required this.producerUser});
@@ -35,6 +34,9 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
         TextEditingController(text: widget.producerUser.opening_hours);
     _addressController =
         TextEditingController(text: widget.producerUser.address);
+    if (widget.producerUser.lat != null && widget.producerUser.lat != null) {
+      LatLongUser = LatLng(widget.producerUser.lat!, widget.producerUser.lng!);
+    }
   }
 
   //final Producer producer;
@@ -333,21 +335,21 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                                       ),
                                     ),
                                   ),
-                                Marker(
-                                  point: SingletonLocationUser().userLocation!,
-                                  builder: (context) => Container(
-                                    height: 20,
-                                    width: 20,
-                                    decoration: BoxDecoration(
-                                      color: ColorApp.red,
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: const Icon(
-                                      Icons.person,
-                                      color: Colors.white,
+                                  Marker(
+                                    point: SingletonLocationUser().userLocation!,
+                                    builder: (context) => Container(
+                                      height: 20,
+                                      width: 20,
+                                      decoration: BoxDecoration(
+                                        color: ColorApp.red,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: const Icon(
+                                        Icons.person,
+                                        color: Colors.white,
+                                      ),
                                     ),
                                   ),
-                                ),
                               ],
                             ),
                           ],
@@ -407,7 +409,9 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                         address: _addressController.text,
                         contact: _contactController.text,
                         opening_hours: _openingHoursController.text,
-                        tags: widget.producerUser.tags);
+                        tags: widget.producerUser.tags,
+                        lat: LatLongUser?.latitude,
+                        lng: LatLongUser?.longitude);
                     BlocProvider.of<EditProducerBloc>(context).add(
                         EditProducerStart(
                             updatedProducer, SingletonUser().userAuth!.token!));

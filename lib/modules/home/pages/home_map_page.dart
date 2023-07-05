@@ -154,8 +154,13 @@ class _HomeMapPageState extends State<HomeMapPage> {
                                             extra: {
                                               "id": stateListProducer
                                                   .listProducers[index].id,
-                                              "latLongProducer":
-                                                  currentLatlong!,
+                                              "latLongProducer": LatLng(
+                                                  stateListProducer
+                                                      .listProducers[index]
+                                                      .lat!,
+                                                  stateListProducer
+                                                      .listProducers[index]
+                                                      .lng!),
                                             }),
                                     child: StoreSectionComponent(
                                       producer: stateListProducer
@@ -175,42 +180,51 @@ class _HomeMapPageState extends State<HomeMapPage> {
                       ),
                       MarkerLayer(
                         markers: [
-                          for (int i = 1; i < 20; i++)
+                          for (int i = 0;
+                              i < stateListProducer.listProducers.length;
+                              i++)
                             Marker(
                               height: 50,
                               width: 50,
-                              point: i % 2 == 0
-                                  ? LatLng(currentLatlong!.latitude + i * 0.01,
-                                      currentLatlong!.longitude + i * 0.001)
-                                  : LatLng(currentLatlong!.latitude - i * 0.001,
-                                      currentLatlong!.longitude - i * 0.01),
-                              builder: (context) => Container(
-                                child: Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Align(
-                                      child: Icon(
-                                        Icons.location_on_rounded,
-                                        size: 50,
-                                        color: ColorApp.blue3,
-                                      ),
-                                    ),
-                                    Align(
-                                      child: Icon(
-                                        Icons.circle,
-                                        color: ColorApp.blue3,
-                                      ),
-                                    ),
-                                    const Align(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(bottom: 7),
+                              point: LatLng(
+                                  stateListProducer.listProducers[i].lat!,
+                                  stateListProducer.listProducers[i].lng!),
+                              builder: (context) => InkWell(
+                                onTap: () =>
+                                    context.push("/map/producerDetail", extra: {
+                                  "id": stateListProducer.listProducers[i].id,
+                                  "latLongProducer": LatLng(
+                                      stateListProducer.listProducers[i].lat!,
+                                      stateListProducer.listProducers[i].lng!),
+                                }),
+                                child: Container(
+                                  child: Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Align(
                                         child: Icon(
-                                          Icons.store,
-                                          color: Colors.white,
+                                          Icons.location_on_rounded,
+                                          size: 50,
+                                          color: ColorApp.blue3,
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                      Align(
+                                        child: Icon(
+                                          Icons.circle,
+                                          color: ColorApp.blue3,
+                                        ),
+                                      ),
+                                      const Align(
+                                        child: Padding(
+                                          padding: EdgeInsets.only(bottom: 7),
+                                          child: Icon(
+                                            Icons.store,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

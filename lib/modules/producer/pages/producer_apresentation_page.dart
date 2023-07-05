@@ -95,24 +95,6 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    /*
-                    15.sizeH,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "state.producer.companyName",
-                          style: TextStyle(
-                            color: ColorApp.blue3,
-                            fontSize: 26,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Abhaya Libre',
-                          ),
-                        ),
-                      ],
-                    ), 
-                    */
-                    15.sizeH,
                     ListTile(
                       contentPadding: EdgeInsets.zero,
                       title: Text(
@@ -329,8 +311,9 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                                     MarkerLayer(
                                       markers: [
                                         Marker(
-                                          point: LatLng(double.parse("23"),
-                                              double.parse("46")),
+                                          point: LatLng(
+                                              widget.latLongProducer.latitude,
+                                              widget.latLongProducer.longitude),
                                           builder: (context) => Container(
                                             height: 20,
                                             width: 20,

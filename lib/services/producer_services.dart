@@ -81,7 +81,6 @@ class ProducerRepository implements ProducerService {
   Future<Result<Producer, String>> getAProducer(String id) async {
     var response = await dio.get(
       "${Endpoints.baseUrl}${Endpoints.producers}/$id",
-      //queryParameters: {'id': id},
     );
     try {
       if (response.statusCode == 200) {
@@ -125,7 +124,9 @@ class ProducerRepository implements ProducerService {
     if (producer.address != "" &&
         producer.contact != "" &&
         producer.opening_hours != "" &&
-        producer.tags != null) {
+        producer.tags != null &&
+        producer.lat != null &&
+        producer.lng != null) {
       return true;
     }
     return false;
