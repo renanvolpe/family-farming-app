@@ -1,5 +1,11 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:organaki_app/modules/home/bloc/bloc_get_list_producer/get_list_producers_bloc.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:organaki_app/bloc/bloc_get_list_producer/get_list_producers_bloc.dart';
+import 'package:organaki_app/bloc/bloc_get_list_tags/get_list_tags_bloc.dart';
+import 'package:organaki_app/models/producer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:organaki_app/core/extensions.dart';
 import 'package:organaki_app/core/colors_app.dart';
@@ -16,6 +22,10 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
   bool isOpeningHoursEnabled = false;
   bool isTagsEnabled = false;
   double distanceValue = 0.0;
+  LatLng? currentLatlong;
+  List<Producer> listProducers = []; // list to filter the producers
+  List<Producer>? allProducers; //fixed list to evet get all producers
+  TextEditingController textFilterController = TextEditingController();
 
   void _showFilterModal(BuildContext context) {
     showModalBottomSheet(
@@ -27,102 +37,103 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
             return Container(
               height: MediaQuery.of(context).size.height * 0.80,
               padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ListTile(
-                    title: Text(
-                      'Distance',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: ColorApp.black,
-                        fontFamily: 'Abhaya Libre',
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ListTile(
+                      title: Text(
+                        'Distância',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          color: ColorApp.black,
+                          fontFamily: 'Abhaya Libre',
+                        ),
+                      ),
+                      trailing: CustomSwitchButton(
+                        value: isDistanceEnabled,
+                        onChanged: (value) {
+                          setState(() {
+                            isDistanceEnabled = value;
+                          });
+                        },
                       ),
                     ),
-                    trailing: CustomSwitchButton(
-                      value: isDistanceEnabled,
-                      onChanged: (value) {
-                        setState(() {
-                          isDistanceEnabled = value;
-                        });
-                      },
-                    ),
-                  ),
-                  if (isDistanceEnabled) const DistanceFilter(),
-                  const Divider(),
-                  ListTile(
-                    title: Text(
-                      'Opening Hours',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: ColorApp.black,
-                        fontFamily: 'Abhaya Libre',
+                    if (isDistanceEnabled) const DistanceFilter(),
+                    const Divider(),
+                    ListTile(
+                      title: Text(
+                        'Hora de Abertura',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          color: ColorApp.black,
+                          fontFamily: 'Abhaya Libre',
+                        ),
+                      ),
+                      trailing: CustomSwitchButton(
+                        value: isOpeningHoursEnabled,
+                        onChanged: (value) {
+                          setState(() {
+                            isOpeningHoursEnabled = value;
+                          });
+                        },
                       ),
                     ),
-                    trailing: CustomSwitchButton(
-                      value: isOpeningHoursEnabled,
-                      onChanged: (value) {
-                        setState(() {
-                          isOpeningHoursEnabled = value;
-                        });
-                      },
-                    ),
-                  ),
-                  if (isOpeningHoursEnabled) const OpeningHoursFilter(),
-                  const Divider(),
-                  ListTile(
-                    title: Text(
-                      'Tags',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        color: ColorApp.black,
-                        fontFamily: 'Abhaya Libre',
+                    if (isOpeningHoursEnabled) const OpeningHoursFilter(),
+                    const Divider(),
+                    ListTile(
+                      title: Text(
+                        'Tags',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          color: ColorApp.black,
+                          fontFamily: 'Abhaya Libre',
+                        ),
+                      ),
+                      trailing: CustomSwitchButton(
+                        value: isTagsEnabled,
+                        onChanged: (value) {
+                          setState(() {
+                            isTagsEnabled = value;
+                          });
+                        },
                       ),
                     ),
-                    trailing: CustomSwitchButton(
-                      value: isTagsEnabled,
-                      onChanged: (value) {
-                        setState(() {
-                          isTagsEnabled = value;
-                        });
-                      },
-                    ),
-                  ),
-                  if (isTagsEnabled) const TagsFilter(),
-                  30.sizeH,
-                  const Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              fixedSize: const Size(348, 58),
-                              backgroundColor: ColorApp.blue3,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0))),
-                          onPressed: () {
-                            // Aplicar o filtro e fechar o showModalBottomSheet
-                            Navigator.pop(context);
-                          },
-                          child: Text(
-                            'Save and Use',
-                            style: TextStyle(
-                              color: ColorApp.white1,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Abhaya Libre',
-                              fontSize: 18,
+                    if (isTagsEnabled) const TagsFilter(),
+                    30.sizeH,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                fixedSize: const Size(348, 58),
+                                backgroundColor: ColorApp.blue3,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(18.0))),
+                            onPressed: () {
+                              // Aplicar o filtro e fechar o showModalBottomSheet
+                              Navigator.pop(context);
+                            },
+                            child: Text(
+                              'Save and Use',
+                              style: TextStyle(
+                                color: ColorApp.white1,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Abhaya Libre',
+                                fontSize: 18,
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
             );
           },
@@ -131,162 +142,262 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
     );
   }
 
+  Future<LatLng?> getCurrentPosition() async {
+    LocationPermission response = await Geolocator.requestPermission();
+    if (response.name == "whileInUse") {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      return LatLng(position.latitude, position.longitude);
+    } else {
+      // ignore: use_build_context_synchronously
+      Flushbar(
+              message: 'Você precisa ativar sua localização',
+              backgroundColor: Colors.red,
+              duration: const Duration(seconds: 6),
+              flushbarPosition: FlushbarPosition.TOP)
+          .show(context);
+    }
+    return null;
+  }
+
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() async {
-    super.didChangeDependencies();
-
     BlocProvider.of<GetListProducersBloc>(context).add(GetListProducersStart());
   }
 
-  List<GetListProducersBloc> recentlySearched = [];
+  //here will check if the text has the same chars that a tag of a producer
+  bool checkTagsFilter(String text, Producer producer) {
+    if (producer.tags != null) {
+      for (var tag in producer.tags!) {
+        if (tag.contains(text)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  //function to list and update depended on searched
+  void filterListProducersByText(String text) {
+    List<Producer> newListProducers = [];
+    for (int i = 0; i < allProducers!.length; i++) {
+      //first - see if name has same char that producers name
+      if (allProducers![i].name.toLowerCase().contains(text.toLowerCase())) {
+        newListProducers.add(allProducers![i]);
+        //second - check if the text has the same chars that a tag of a producer
+      } else if (checkTagsFilter(text, allProducers![i])) {
+        newListProducers.add(allProducers![i]);
+      }
+    }
+    setState(() {
+      listProducers = newListProducers;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        leading: InkWell(
-            onTap: () => Navigator.pop(context),
-            child: Icon(Icons.arrow_back, color: ColorApp.black)),
-        title: Text('Back',
-            style: TextStyle(
-                color: ColorApp.black,
-                fontSize: 20,
-                fontFamily: 'Abhaya Libre',
-                fontWeight: FontWeight.w500)),
-        backgroundColor: ColorApp.white1,
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Search',
-                    style: TextStyle(
-                      fontSize: 36,
-                      fontWeight: FontWeight.w500,
-                      color: ColorApp.black,
-                      fontFamily: 'Abhaya Libre',
-                    ),
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      _showFilterModal(
-                          context); // Implementar ação do botão de filtro aqui
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: ColorApp.blue3,
-                      textStyle: TextStyle(
-                          fontSize: 18,
-                          color: ColorApp.white1,
-                          fontFamily: 'Abhaya Libre'),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18.0)),
-                    ),
-                    icon: Icon(Icons.filter_list, color: ColorApp.white1),
-                    label: Text(
-                      'Filter',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: ColorApp.white1,
-                        fontFamily: 'Abhaya Libre',
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14.0),
-                  color: ColorApp.white4,
-                ),
-                child: Row(
+      body: SafeArea(
+        child: BlocBuilder<GetListProducersBloc, GetListProducersState>(
+          builder: (context, state) {
+            if (state is GetListProducersProgress) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (state is GetListProducersSuccess) {
+              allProducers == null
+                  ? {
+                      allProducers = [],
+                      allProducers = state.listProducers,
+                      listProducers = state.listProducers
+                    }
+                  : null;
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.search,
-                        color: ColorApp.grey3,
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Pesquisar',
+                            style: TextStyle(
+                              fontSize: 36,
+                              fontWeight: FontWeight.w500,
+                              color: ColorApp.black,
+                              fontFamily: 'Abhaya Libre',
+                            ),
+                          ),
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              _showFilterModal(
+                                  context); // Implementar ação do botão de filtro aqui
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: ColorApp.blue3,
+                              textStyle: TextStyle(
+                                  fontSize: 18,
+                                  color: ColorApp.white1,
+                                  fontFamily: 'Abhaya Libre'),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.0),
+                              ),
+                            ),
+                            icon: Icon(
+                              Icons.filter_list,
+                              color: ColorApp.white1,
+                            ),
+                            label: Text(
+                              'Filtros',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: ColorApp.white1,
+                                fontFamily: 'Abhaya Libre',
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Search Foods, Restaurants etc.',
-                          border: InputBorder.none,
-                          hintStyle: TextStyle(
-                            color: ColorApp.grey3,
-                            fontSize: 17,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Abhaya Libre',
-                          ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14.0),
+                          color: ColorApp.white4,
+                        ),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.search,
+                                color: ColorApp.grey3,
+                              ),
+                            ),
+                            Expanded(
+                              child: TextField(
+                                autofocus: false,
+                                controller: textFilterController,
+                                onChanged: (text) {
+                                  filterListProducersByText(text);
+                                },
+                                decoration: InputDecoration(
+                                  hintText:
+                                      'Procure produtos, comerciantes etc.',
+                                  border: InputBorder.none,
+                                  hintStyle: TextStyle(
+                                    color: ColorApp.grey3,
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'Abhaya Libre',
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
-            // for (int i = 0; i < 4; i++)
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Recently Searched',
-                    style: TextStyle(
-                        color: ColorApp.black,
-                        fontSize: 26,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Abhaya Libre'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      // Implementar ação do botão "Clear all" aqui
-                    },
-                    child: Text(
-                      'CLEAR ALL',
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: ColorApp.blue3,
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Visto recentemente',
+                            style: TextStyle(
+                                color: ColorApp.black,
+                                fontSize: 26,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Abhaya Libre'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              //remove filter of the text and call function to list text with nothing in text
+                              setState(() {
+                                textFilterController.text = "";
+                                filterListProducersByText("");
+                              });
+                            },
+                            child: Text(
+                              'LIMPAR',
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: ColorApp.blue3,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-            /*Expanded(
-              child: ListView.builder(
-                itemCount: recentlySearched.length,
-                itemBuilder: (context, index) {
-                  if (index < recentlySearched.length) {
-                    return ListTile(
-                      title: Text(recentlySearched[index] as String),
-                      onTap: () {
-                        // Handle recently searched item tap
-                      },
-                    );
-                  }
-                  return null;
-                },
-              ),
-            ), */ // Aqui você pode adicionar o widget que lista os resultados da pesquisa
-          ],
+                    for (int i = 0; i < listProducers.length; i++)
+                      InkWell(
+                        onTap: () =>
+                            context.push("/order/producerDetail", extra: {
+                          "id": listProducers[i].id,
+                          "latLongProducer":
+                              LatLng(-23.17, -45.88), // TODO remove this data
+                        }),
+                        child: Column(
+                          children: [
+                            10.sizeH,
+                            ListTile(
+                              leading: const CircleAvatar(),
+                              title: Text(listProducers[i].name),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  5.sizeH,
+                                  Text(
+                                    listProducers[i].short_description,
+                                    style: const TextStyle(color: Colors.grey),
+                                  ),
+                                  10.sizeH,
+                                  listProducers[i].tags != null
+                                      ? Wrap(
+                                          children: List.generate(
+                                              listProducers[i].tags!.length,
+                                              (index) => Container(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        vertical: 3,
+                                                        horizontal: 4),
+                                                    margin: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 2,
+                                                        vertical: 2),
+                                                    decoration: BoxDecoration(
+                                                        color: ColorApp.blue5,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20)),
+                                                    child: Text(listProducers[i]
+                                                        .tags![index]),
+                                                  )))
+                                      : const SizedBox()
+                                ],
+                              ),
+                              trailing: const Icon(Icons.chevron_right),
+                            ),
+                            10.sizeH,
+                            Divider(
+                              color: ColorApp.grey1,
+                            ),
+                          ],
+                        ),
+                      ),
+                    20.sizeH
+                  ],
+                ),
+              );
+            }
+            return Container();
+          },
         ),
       ),
     );
@@ -399,7 +510,7 @@ class _OpeningHoursFilterState extends State<OpeningHoursFilter> {
             Row(
               children: [
                 Text(
-                  'From: ',
+                  'De: ',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
@@ -424,7 +535,7 @@ class _OpeningHoursFilterState extends State<OpeningHoursFilter> {
             Row(
               children: [
                 Text(
-                  'To: ',
+                  'Até: ',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
@@ -454,17 +565,25 @@ class _OpeningHoursFilterState extends State<OpeningHoursFilter> {
 }
 
 class TagsFilter extends StatefulWidget {
-  const TagsFilter({super.key});
-
+  const TagsFilter({super.key, this.startTagsSelecteds, this.listTags});
+  final List<String>? listTags;
+  final Function(List<String> listTags)? startTagsSelecteds;
   @override
   // ignore: library_private_types_in_public_api
   _TagsFilterState createState() => _TagsFilterState();
 }
 
 class _TagsFilterState extends State<TagsFilter> {
-  List<String> selectedTags = [];
+  @override
+  void initState() {
+    super.initState();
+    if (widget.listTags != null) {
+      selectedTags = widget.listTags!;
+      widget.startTagsSelecteds!(selectedTags);
+    }
+  }
 
-  List<String> availableTags = ['Herbs', 'Fruits', 'Vegetables'];
+  List<String> selectedTags = [];
 
   bool isTagSelected(String tag) {
     return selectedTags.contains(tag);
@@ -476,6 +595,9 @@ class _TagsFilterState extends State<TagsFilter> {
         selectedTags.remove(tag);
       } else {
         selectedTags.add(tag);
+      }
+      if (widget.listTags != null) {
+        widget.startTagsSelecteds!(selectedTags);
       }
     });
   }
@@ -489,13 +611,16 @@ class _TagsFilterState extends State<TagsFilter> {
         margin: const EdgeInsets.all(4.0),
         padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
         decoration: BoxDecoration(
-          color: isSelected ? Colors.blue : Colors.grey[300],
+          color: isSelected ? ColorApp.blue1 : ColorApp.white4,
           borderRadius: BorderRadius.circular(16.0),
         ),
         child: Text(
           tag,
           style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black,
+            fontSize: 17,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'Abhaya Libre',
+            color: isSelected ? Colors.white : ColorApp.dark1,
           ),
         ),
       ),
@@ -504,14 +629,27 @@ class _TagsFilterState extends State<TagsFilter> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Wrap(
-          spacing: 8.0,
-          children: availableTags.map((tag) => buildTag(tag)).toList(),
-        ),
-      ],
+    return BlocBuilder<GetListTagsBloc, GetListTagsState>(
+      builder: (context, state) {
+        if (state is GetListTagsSuccess) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Wrap(
+                spacing: 8.0,
+                children: state.listTags.map((tag) => buildTag(tag)).toList(),
+              ),
+            ],
+          );
+        }
+        if (state is GetListTagsProgress) {
+          return const CircularProgressIndicator();
+        }
+        if (state is GetListTagsFailure) {
+          return Text(state.errorMessage);
+        }
+        return Container();
+      },
     );
   }
 }

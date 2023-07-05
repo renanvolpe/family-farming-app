@@ -6,8 +6,9 @@ import 'package:flutter_map/plugin_api.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:organaki_app/bloc/bloc_get_list_producer/get_list_producers_bloc.dart';
 import 'package:organaki_app/core/colors_app.dart';
-import 'package:organaki_app/modules/home/bloc/bloc_get_list_producer/get_list_producers_bloc.dart';
+import 'package:organaki_app/models/singleton_location_user.dart';
 import 'package:organaki_app/modules/home/components/store_section_component.dart';
 // Only import if required functionality is not exposed by default
 
@@ -29,18 +30,27 @@ class _HomeMapPageState extends State<HomeMapPage> {
     super.didChangeDependencies();
     currentLatlong = await getCurrentPosition();
 
+    SingletonLocationUser().setLocationUser(currentLatlong!);
+
     setState(() {
       _mapOption = MapOptions(center: currentLatlong!, zoom: 14);
-      currentLatlong;
+       SingletonLocationUser().userLocation;
     });
+    // ignore: use_build_context_synchronously
     BlocProvider.of<GetListProducersBloc>(context).add(GetListProducersStart());
   }
 
+  // -- variables to use in this page --
   LatLng? currentLatlong;
   final _mapController = MapController();
   late MapOptions _mapOption;
 
+  // -- function to use in this page --
+
+  //get actual latlong position
+  //TODO show something when the user rejext to show the actual location
   Future<LatLng?> getCurrentPosition() async {
+    //this is a request to user to get the position
     LocationPermission response = await Geolocator.requestPermission();
     if (response.name == "whileInUse") {
       Position position = await Geolocator.getCurrentPosition(
@@ -58,9 +68,10 @@ class _HomeMapPageState extends State<HomeMapPage> {
     return null;
   }
 
+  //move the camera of map to current location
   void returnCurrentLocation() {
     setState(() {
-      _mapController.move(currentLatlong!, 14);
+      _mapController.move(SingletonLocationUser().userLocation!, 14);
     });
   }
 
@@ -68,11 +79,13 @@ class _HomeMapPageState extends State<HomeMapPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 75,
+        backgroundColor: Colors.white,
         title: Text(
-          "Discover",
+          "Descubra",
           style: TextStyle(
-            color: ColorApp.blue3,
-            fontSize: 30,
+            color: ColorApp.dark1,
+            fontSize: 36,
             fontWeight: FontWeight.w600,
             fontFamily: 'Abhaya Libre',
           ),
@@ -133,15 +146,17 @@ class _HomeMapPageState extends State<HomeMapPage> {
                             scrollDirection: Axis.horizontal,
                             child: Row(
                                 children: List.generate(
-                              6,
+                              stateListProducer.listProducers.length,
                               (index) {
                                 return InkWell(
-                                    onTap: () =>
-                                        context.push("/producerDetail", extra: {
-                                          "mapOptions": _mapOption,
-                                          "mapController": _mapController,
-                                          "currentPosition": currentLatlong!,
-                                        }),
+                                    onTap: () => context.push(
+                                            "/map/producerDetail",
+                                            extra: {
+                                              "id": stateListProducer
+                                                  .listProducers[index].id,
+                                              "latLongProducer":
+                                                  currentLatlong!,
+                                            }),
                                     child: StoreSectionComponent(
                                       producer: stateListProducer
                                           .listProducers[index],
@@ -181,7 +196,7 @@ class _HomeMapPageState extends State<HomeMapPage> {
                               ),
                             ),
                           Marker(
-                            point: currentLatlong!,
+                            point: SingletonLocationUser().userLocation!,
                             builder: (context) => Container(
                               height: 20,
                               width: 20,

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:organaki_app/modules/authentication/pages/login_page.dart';
 import 'package:organaki_app/modules/home/pages/home_map_page.dart';
 import 'package:organaki_app/modules/home/pages/home_orders_page.dart';
+import 'package:organaki_app/modules/producer/pages/producer_account_page.dart';
 
 class HomeMain extends StatefulWidget {
   const HomeMain({Key? key}) : super(key: key);
@@ -44,6 +45,7 @@ class _HomeMainState extends State<HomeMain> {
     const HomeMapPage(),
     const HomeOrdersPage(),
     const LoginPage(),
+    const ProducerAccountPage()
   ];
 
   int _calculateSelectedIndex(BuildContext context) {
@@ -56,7 +58,12 @@ class _HomeMainState extends State<HomeMain> {
       return 1;
     }
     if (location.startsWith('/account')) {
-      return 2;
+      if (location.startsWith('/account/login')) {
+        return 2; //loginPage
+      }
+      if (location.startsWith('/account/producerAccount')) {
+        return 3; //ProducerEditPage
+      }
     }
     return 0;
   }

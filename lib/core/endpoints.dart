@@ -10,5 +10,9 @@ class Endpoints {
   static String updateProducerMock = "/api/v1/producer/";
   static String deleteProducerMock = "/api/v1/producer/";
 
+  static String baseUrl = "https://fancy-gummy-roebuck.gigalixirapp.com/api/";
 
+  static String producers = "producers";
+  static String login = "login";
+   static String tags = "tags";
 }

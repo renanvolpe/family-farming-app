@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_map/plugin_api.dart';
 import 'package:go_router/go_router.dart';
+import 'package:organaki_app/models/singleton_user.dart';
 import 'package:organaki_app/modules/authentication/pages/login_page.dart';
 import 'package:organaki_app/modules/authentication/pages/register_page.dart';
 import 'package:organaki_app/modules/home/pages/home_main.dart';
 import 'package:organaki_app/modules/home/pages/home_map_page.dart';
 import 'package:organaki_app/modules/home/pages/home_orders_page.dart';
 import 'package:organaki_app/modules/producer/pages/producer_apresentation_page.dart';
+import 'package:organaki_app/modules/producer/pages/producer_account_page.dart';
+import 'package:organaki_app/modules/producer/pages/producer_edit_page.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> _shellNavigatorKey =
@@ -25,38 +27,60 @@ final route = GoRouter(
           GoRoute(
               parentNavigatorKey: _shellNavigatorKey,
               path: '/map',
+              routes: [producerDetailRout],
               builder: (BuildContext context, GoRouterState state) =>
                   const HomeMapPage()),
           GoRoute(
               parentNavigatorKey: _shellNavigatorKey,
               path: '/order',
+              routes: [producerDetailRout],
               builder: (BuildContext context, GoRouterState state) =>
                   const HomeOrdersPage()),
           GoRoute(
-            parentNavigatorKey: _shellNavigatorKey,
-            path: '/account',
-            builder: (BuildContext context, GoRouterState state) =>
-                const LoginPage(),
-          ),
+              parentNavigatorKey: _shellNavigatorKey,
+              path: '/account',
+              redirect: (context, state) {
+                if (SingletonUser().userAuth == null) {
+                  return "/account/login";
+                }
+                return "/account/producerAccount";
+              },
+              routes: [
+                GoRoute(
+                    path: 'login',
+                    builder: (BuildContext context, GoRouterState state) =>
+                        const LoginPage()),
+                GoRoute(
+                    path: 'producerAccount',
+                    builder: (BuildContext context, GoRouterState state) =>
+                        const ProducerAccountPage()),
+              ]),
         ],
       ),
+      GoRoute(
+          parentNavigatorKey: _rootNavigatorKey,
+          path: '/producerEdit',
+          builder: (BuildContext context, GoRouterState state) {
+            var params = state.extra as Map;
+            var producerUser  = params["producerUser"];
+            return  ProducerEditPage(producerUser: producerUser);
+          }),
       GoRoute(
           parentNavigatorKey: _rootNavigatorKey,
           path: '/register',
           builder: (BuildContext context, GoRouterState state) =>
               const RegisterPage()),
-      GoRoute(
-          parentNavigatorKey: _rootNavigatorKey,
-          path: '/producerDetail',
-          builder: (BuildContext context, GoRouterState state) {
-            var params = state.extra as Map;
-            var currentPosition = params["currentPosition"];
-            MapController mapController = params["mapController"];
-            MapOptions mapOptions = params["mapOptions"];
-
-            return ProducerApresentationPage(
-                mapController: mapController,
-                mapOptions: mapOptions,
-                currentPosition: currentPosition);
-          }),
     ]);
+var producerDetailRout = GoRoute(
+    parentNavigatorKey: _rootNavigatorKey,
+    path: 'producerDetail',
+    builder: (BuildContext context, GoRouterState state) {
+      var params = state.extra as Map;
+      String id = params["id"];
+      var latLongProducer = params["latLongProducer"];
+
+      return ProducerApresentationPage(
+        latLongProducer: latLongProducer,
+        id: id,
+      );
+    });

@@ -2,12 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:organaki_app/core/colors_app.dart';
 import 'package:organaki_app/core/extensions.dart';
 import 'package:organaki_app/models/producer.dart';
+import "dart:math";
+
+class Database {
+  final List<String> productsImagesDataBase = [
+    'images/alface.jpg',
+    'images/banana.jpg',
+    'images/maças.jpg',
+    'images/cenouras.jpg',
+    'images/laticinios.jpg',
+    'images/leite.jpg',
+    'images/queijo.jpg',
+    'images/tomate.jpg'
+  ];
+  final _random = Random();
+}
 
 class StoreSectionComponent extends StatelessWidget {
   const StoreSectionComponent({super.key, required this.producer});
   final Producer producer;
+
   @override
   Widget build(BuildContext context) {
+    Database db = Database();
     return Container(
       width: MediaQuery.of(context).size.width * 0.85,
       decoration: BoxDecoration(
@@ -32,40 +49,51 @@ class StoreSectionComponent extends StatelessWidget {
                     size: 30,
                   )),
               8.sizeW,
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    producer.companyName,
-                    style: TextStyle(
-                      color: ColorApp.blue3,
-                      fontSize: 17,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Abhaya Libre',
-                    ),
-                    maxLines: 2,
-                  ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.location_on,
-                        color: Colors.grey,
-                        size: 16,
-                      ),
-                      Text(
-                        producer.email,
-                        style: TextStyle(
-                          color: ColorApp.grey2,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Abhaya Libre',
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            producer.name,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: ColorApp.blue3,
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'Abhaya Libre',
+                            ),
+                            maxLines: 1,
+                          ),
                         ),
-                      ),
-                    ],
-                  )
-                ],
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.location_on,
+                          color: Colors.grey,
+                          size: 16,
+                        ),
+                        Flexible(
+                          child: Text(
+                            producer.email,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              color: ColorApp.grey2,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Abhaya Libre',
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
-              const Spacer(),
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -113,7 +141,7 @@ class StoreSectionComponent extends StatelessWidget {
                 ],
               ),
               const Text(
-                "OPEN",
+                "ABERTO",
                 style: TextStyle(
                   color: Colors.red,
                   fontSize: 18,
@@ -129,14 +157,22 @@ class StoreSectionComponent extends StatelessWidget {
             children: [
               for (int i = 0; i < 4; i++)
                 Container(
-                    padding: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        color: ColorApp.grey1,
-                        borderRadius: BorderRadius.circular(8)),
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    child: const FlutterLogo(
-                      size: 45,
-                    ))
+                  height: 50,
+                  width: 60,
+                  padding: const EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    color: ColorApp.grey1,
+                    borderRadius: BorderRadius.circular(8),
+                    image: DecorationImage(
+                      image: AssetImage(
+                        db.productsImagesDataBase[db._random
+                            .nextInt(db.productsImagesDataBase.length)],
+                      ),
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                  margin: const EdgeInsets.symmetric(horizontal: 10),
+                )
             ],
           )
         ],

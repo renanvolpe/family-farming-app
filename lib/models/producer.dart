@@ -1,41 +1,59 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
 import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 
 class Producer {
   String id;
   String name;
   String email;
-  String latitude;
-  String longitude;
-  String description;
-  String companyName;
+  bool visible_producer;
+  String short_description;
+  String? address;
+  String? contact;
+  String? opening_hours;
+  List<String>? tags;
+  double? lat;
+  double? long;
   Producer({
     required this.id,
     required this.name,
     required this.email,
-    required this.latitude,
-    required this.longitude,
-    required this.description,
-    required this.companyName,
+    required this.visible_producer,
+    required this.short_description,
+    this.address,
+    this.contact,
+    this.opening_hours,
+    this.tags,
+    this.lat,
+    this.long,
   });
 
   Producer copyWith({
     String? id,
     String? name,
     String? email,
-    String? latitude,
-    String? longitude,
-    String? description,
-    String? companyName,
+    bool? visible_producer,
+    String? short_description,
+    String? address,
+    String? contact,
+    String? opening_hours,
+    List<String>? tags,
+    double? lat,
+    double? long,
   }) {
     return Producer(
       id: id ?? this.id,
       name: name ?? this.name,
       email: email ?? this.email,
-      latitude: latitude ?? this.latitude,
-      longitude: longitude ?? this.longitude,
-      description: description ?? this.description,
-      companyName: companyName ?? this.companyName,
+      visible_producer: visible_producer ?? this.visible_producer,
+      short_description: short_description ?? this.short_description,
+      address: address ?? this.address,
+      contact: contact ?? this.contact,
+      opening_hours: opening_hours ?? this.opening_hours,
+      tags: tags ?? this.tags,
+      lat: lat ?? this.lat,
+      long: long ?? this.long,
     );
   }
 
@@ -44,10 +62,14 @@ class Producer {
       'id': id,
       'name': name,
       'email': email,
-      'latitude': latitude,
-      'longitude': longitude,
-      'description': description,
-      'companyName': companyName,
+      'visible_producer': visible_producer,
+      'short_description': short_description,
+      'address': address,
+      'contact': contact,
+      'opening_hours': opening_hours,
+      'tags': tags,
+      'lat': lat,
+      'long': long,
     };
   }
 
@@ -56,20 +78,25 @@ class Producer {
       id: map['id'] as String,
       name: map['name'] as String,
       email: map['email'] as String,
-      latitude: map['latitude'] as String,
-      longitude: map['longitude'] as String,
-      description: map['description'] as String,
-      companyName: map['companyName'] as String,
+      visible_producer: map['visible_producer'] as bool,
+      short_description: map['short_description'] as String,
+      address: map['address'] != null ? map['address'] as String : null,
+      contact: map['contact'] != null ? map['contact'] as String : null,
+      opening_hours: map['opening_hours'] != null ? map['opening_hours'] as String : null,
+      tags: map['tags'] != null ? List<String>.from((map['tags'] )) : null,
+      lat: map['lat'] != null ? map['lat'] as double : null,
+      long: map['long'] != null ? map['long'] as double : null,
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory Producer.fromJson(String source) => Producer.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Producer.fromJson(String source) =>
+      Producer.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'Producer(id: $id, name: $name, email: $email, latitude: $latitude, longitude: $longitude, description: $description, companyName: $companyName)';
+    return 'Producer(id: $id, name: $name, email: $email, visible_producer: $visible_producer, short_description: $short_description, address: $address, contact: $contact, opening_hours: $opening_hours, tags: $tags, lat: $lat, long: $long)';
   }
 
   @override
@@ -80,10 +107,14 @@ class Producer {
       other.id == id &&
       other.name == name &&
       other.email == email &&
-      other.latitude == latitude &&
-      other.longitude == longitude &&
-      other.description == description &&
-      other.companyName == companyName;
+      other.visible_producer == visible_producer &&
+      other.short_description == short_description &&
+      other.address == address &&
+      other.contact == contact &&
+      other.opening_hours == opening_hours &&
+      listEquals(other.tags, tags) &&
+      other.lat == lat &&
+      other.long == long;
   }
 
   @override
@@ -91,11 +122,13 @@ class Producer {
     return id.hashCode ^
       name.hashCode ^
       email.hashCode ^
-      latitude.hashCode ^
-      longitude.hashCode ^
-      description.hashCode ^
-      companyName.hashCode;
+      visible_producer.hashCode ^
+      short_description.hashCode ^
+      address.hashCode ^
+      contact.hashCode ^
+      opening_hours.hashCode ^
+      tags.hashCode ^
+      lat.hashCode ^
+      long.hashCode;
   }
 }
-
-
