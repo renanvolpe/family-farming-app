@@ -95,6 +95,7 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    /*
                     15.sizeH,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -109,37 +110,91 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                           ),
                         ),
                       ],
-                    ),
+                    ), 
+                    */
                     15.sizeH,
                     ListTile(
-                        contentPadding: EdgeInsets.zero,
-                        title: Text(
-                          state.producer.name,
-                          style: TextStyle(
-                            color: ColorApp.blue3,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Abhaya Libre',
-                          ),
+                      contentPadding: EdgeInsets.zero,
+                      title: Text(
+                        state.producer.name,
+                        style: TextStyle(
+                          color: ColorApp.blue3,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Abhaya Libre',
                         ),
-                        subtitle: Text(
-                          state.producer.email,
-                          style: TextStyle(
+                      ),
+                      subtitle: Text(
+                        state.producer.email,
+                        style: TextStyle(
+                          color: ColorApp.grey2,
+                          fontSize: 15,
+                          fontFamily: 'Abhaya Libre',
+                        ),
+                      ),
+                      trailing: Container(
+                        padding: const EdgeInsets.all(15),
+                        decoration: BoxDecoration(
                             color: ColorApp.grey2,
-                            fontSize: 15,
-                            fontFamily: 'Abhaya Libre',
-                          ),
+                            borderRadius: BorderRadius.circular(30)),
+                        child: const Icon(
+                          Icons.person,
+                          color: Colors.white,
                         ),
-                        trailing: Container(
-                          padding: const EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                              color: ColorApp.grey2,
-                              borderRadius: BorderRadius.circular(30)),
-                          child: const Icon(
-                            Icons.person,
-                            color: Colors.white,
-                          ),
-                        )),
+                      ),
+                    ),
+                    15.sizeH,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          children: [
+                            Text(
+                              "Telefone",
+                              style: TextStyle(
+                                color: ColorApp.blue3,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Abhaya Libre',
+                              ),
+                            ),
+                            8.sizeH,
+                            Text(
+                              state.producer.contact ?? "Vazio",
+                              style: TextStyle(
+                                color: ColorApp.grey2,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Abhaya Libre',
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              "Horário",
+                              style: TextStyle(
+                                color: ColorApp.blue3,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Abhaya Libre',
+                              ),
+                            ),
+                            8.sizeH,
+                            Text(
+                              state.producer.opening_hours ?? "Vazio",
+                              style: TextStyle(
+                                color: ColorApp.grey2,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Abhaya Libre',
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
                     15.sizeH,
                     Text(
                       "Sobre o produtor",
@@ -180,8 +235,12 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                             height: 80,
                             width: 100,
                             padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 15),
-                            margin: const EdgeInsets.symmetric(horizontal: 8),
+                              vertical: 10,
+                              horizontal: 15,
+                            ),
+                            margin: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                            ),
                             decoration: BoxDecoration(
                               color: ColorApp.white1,
                               borderRadius: BorderRadius.circular(8),
@@ -191,6 +250,47 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                                       .nextInt(productsImagesDataBase.length)],
                                 ),
                                 fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    15.sizeH,
+                    Text(
+                      "Tags",
+                      style: TextStyle(
+                        color: ColorApp.blue3,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Abhaya Libre',
+                      ),
+                    ),
+                    15.sizeH,
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: List.generate(
+                          state.producer.tags!.length,
+                          (index) => Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 5,
+                              horizontal: 15,
+                            ),
+                            margin: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                            ),
+                            decoration: BoxDecoration(
+                              color: ColorApp.grey1,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Text(
+                              state.producer.tags?[index] ?? "",
+                              style: TextStyle(
+                                color: ColorApp.blue3,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w500,
+                                fontFamily: 'Abhaya Libre',
                               ),
                             ),
                           ),
@@ -275,7 +375,7 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   Text(
-                                                    "Selecione o aplicativo que queria abrir",
+                                                    "Selecione o aplicativo",
                                                     style: TextStyle(
                                                       color: ColorApp.dark2,
                                                       fontSize: 18.0,
@@ -370,7 +470,27 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                           ],
                         ),
                       ),
-                    )
+                    ),
+                    15.sizeH,
+                    Text(
+                      "Informações Adicionais",
+                      style: TextStyle(
+                        color: ColorApp.blue3,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Abhaya Libre',
+                      ),
+                    ),
+                    15.sizeH,
+                    Text(
+                      state.producer.address ?? "Vazio",
+                      style: TextStyle(
+                        color: ColorApp.grey2,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: 'Abhaya Libre',
+                      ),
+                    ),
                   ],
                 ),
               );
