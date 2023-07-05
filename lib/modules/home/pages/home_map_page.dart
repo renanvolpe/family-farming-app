@@ -34,7 +34,7 @@ class _HomeMapPageState extends State<HomeMapPage> {
 
     setState(() {
       _mapOption = MapOptions(center: currentLatlong!, zoom: 14);
-       SingletonLocationUser().userLocation;
+      SingletonLocationUser().userLocation;
     });
     // ignore: use_build_context_synchronously
     BlocProvider.of<GetListProducersBloc>(context).add(GetListProducersStart());
@@ -154,8 +154,13 @@ class _HomeMapPageState extends State<HomeMapPage> {
                                             extra: {
                                               "id": stateListProducer
                                                   .listProducers[index].id,
-                                              "latLongProducer":
-                                                  currentLatlong!,
+                                              "latLongProducer": LatLng(
+                                                  stateListProducer
+                                                      .listProducers[index]
+                                                      .lat!,
+                                                  stateListProducer
+                                                      .listProducers[index]
+                                                      .lng!),
                                             }),
                                     child: StoreSectionComponent(
                                       producer: stateListProducer
@@ -175,23 +180,32 @@ class _HomeMapPageState extends State<HomeMapPage> {
                       ),
                       MarkerLayer(
                         markers: [
-                          for (int i = 1; i < 20; i++)
+                          for (int i = 0;
+                              i < stateListProducer.listProducers.length;
+                              i++)
                             Marker(
-                              point: i % 2 == 0
-                                  ? LatLng(currentLatlong!.latitude + i * 0.01,
-                                      currentLatlong!.longitude + i * 0.001)
-                                  : LatLng(currentLatlong!.latitude - i * 0.001,
-                                      currentLatlong!.longitude - i * 0.01),
-                              builder: (context) => Container(
-                                height: 15,
-                                width: 15,
-                                decoration: BoxDecoration(
-                                  color: ColorApp.blue3,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: const Icon(
-                                  Icons.location_history,
-                                  color: Colors.white,
+                              point: LatLng(
+                                  stateListProducer.listProducers[i].lat!,
+                                  stateListProducer.listProducers[i].lng!),
+                              builder: (context) => InkWell(
+                                onTap: () =>
+                                    context.push("/map/producerDetail", extra: {
+                                  "id": stateListProducer.listProducers[i].id,
+                                  "latLongProducer": LatLng(
+                                      stateListProducer.listProducers[i].lat!,
+                                      stateListProducer.listProducers[i].lng!),
+                                }),
+                                child: Container(
+                                  height: 15,
+                                  width: 15,
+                                  decoration: BoxDecoration(
+                                    color: ColorApp.blue3,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: const Icon(
+                                    Icons.location_history,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
