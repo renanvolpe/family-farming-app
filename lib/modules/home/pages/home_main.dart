@@ -68,15 +68,20 @@ class _HomeMainState extends State<HomeMain> {
     return 0;
   }
 
+  int teste = 0;
   void onTap(int value) {
     switch (value) {
       case 0:
+        teste = 0;
         return context.go('/map');
       case 1:
+        teste = 1;
         return context.go('/order');
       case 2:
+        teste = 2;
         return context.go('/account');
       default:
+        teste = 0;
         return context.go('/map');
     }
   }
@@ -84,43 +89,23 @@ class _HomeMainState extends State<HomeMain> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _calculateSelectedIndex(context),
-        children: children,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: onTap,
-        elevation: 0,
-        useLegacyColorScheme: false,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: ColorApp.blue3,
-            ),
-            label: 'Mapa',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.search,
-              color: ColorApp.blue3,
-            ),
-            label: 'Produtores',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.account_circle_outlined,
-              color: ColorApp.blue3,
-            ),
-            label: 'Conta',
-          ),
-        ],
-      ),
-    );
+        body: IndexedStack(
+            index: _calculateSelectedIndex(context), children: children),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: teste,
+          selectedItemColor: ColorApp.blue3,
+          onTap: onTap,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Map'),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Order'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.account_box), label: 'Account'),
+          ],
+        ));
   }
 }
 
-class AnimatedBottomBar extends StatefulWidget {
+/*class AnimatedBottomBar extends StatefulWidget {
   final List<BarItem>? barItems;
   final Function? onBarTap;
   final bool? isItemsPage;
@@ -210,7 +195,7 @@ class _AnimatedBottomBarState extends State<AnimatedBottomBar>
     }
     return barItems;
   }
-}
+}*/
 
 class BarItem {
   String text;
