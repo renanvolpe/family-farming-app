@@ -353,17 +353,6 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
                                       ),
                                       15.sizeW,
                                       const Text(
-                                        "Go to \n Location",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily: 'Abhaya Libre',
-                                        ),
-                                      ),
-                                      15.sizeW,
-                                      const Text(
                                         "Ir para \n o local",
                                         textAlign: TextAlign.center,
                                         style: TextStyle(

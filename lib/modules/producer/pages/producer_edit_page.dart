@@ -354,31 +354,31 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,
-                      child: Container(
-                        height: 60,
-                        width: 194,
-                        margin: const EdgeInsets.only(top: 10),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 25),
-                        decoration: BoxDecoration(
-                          color: ColorApp.blue3,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              "Clique no mapa para\n salvar a localização",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400,
-                                fontFamily: 'Abhaya Libre',
-                              ),
-                            )
-                          ],
+                      child: Flexible(
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 10),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 25),
+                          decoration: BoxDecoration(
+                            color: ColorApp.blue3,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "Clique no mapa para\n salvar a localização",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  fontFamily: 'Abhaya Libre',
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
