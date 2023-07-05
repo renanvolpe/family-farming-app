@@ -14,7 +14,7 @@ class Producer {
   String? opening_hours;
   List<String>? tags;
   double? lat;
-  double? long;
+  double? lng;
   Producer({
     required this.id,
     required this.name,
@@ -26,7 +26,7 @@ class Producer {
     this.opening_hours,
     this.tags,
     this.lat,
-    this.long,
+    this.lng,
   });
 
   Producer copyWith({
@@ -40,7 +40,7 @@ class Producer {
     String? opening_hours,
     List<String>? tags,
     double? lat,
-    double? long,
+    double? lng,
   }) {
     return Producer(
       id: id ?? this.id,
@@ -53,7 +53,7 @@ class Producer {
       opening_hours: opening_hours ?? this.opening_hours,
       tags: tags ?? this.tags,
       lat: lat ?? this.lat,
-      long: long ?? this.long,
+      lng: lng ?? this.lng,
     );
   }
 
@@ -69,7 +69,7 @@ class Producer {
       'opening_hours': opening_hours,
       'tags': tags,
       'lat': lat,
-      'long': long,
+      'lng': lng,
     };
   }
 
@@ -85,7 +85,7 @@ class Producer {
       opening_hours: map['opening_hours'] != null ? map['opening_hours'] as String : null,
       tags: map['tags'] != null ? List<String>.from((map['tags'] )) : null,
       lat: map['lat'] != null ? map['lat'] as double : null,
-      long: map['long'] != null ? map['long'] as double : null,
+      lng: map['lng'] != null ? map['lng'] as double : null,
     );
   }
 
@@ -96,7 +96,7 @@ class Producer {
 
   @override
   String toString() {
-    return 'Producer(id: $id, name: $name, email: $email, visible_producer: $visible_producer, short_description: $short_description, address: $address, contact: $contact, opening_hours: $opening_hours, tags: $tags, lat: $lat, long: $long)';
+    return 'Producer(id: $id, name: $name, email: $email, visible_producer: $visible_producer, short_description: $short_description, address: $address, contact: $contact, opening_hours: $opening_hours, tags: $tags, lat: $lat, lng: $lng)';
   }
 
   @override
@@ -114,7 +114,7 @@ class Producer {
       other.opening_hours == opening_hours &&
       listEquals(other.tags, tags) &&
       other.lat == lat &&
-      other.long == long;
+      other.lng == lng;
   }
 
   @override
@@ -129,6 +129,6 @@ class Producer {
       opening_hours.hashCode ^
       tags.hashCode ^
       lat.hashCode ^
-      long.hashCode;
+      lng.hashCode;
   }
 }
