@@ -50,6 +50,7 @@ class _HomeMainState extends State<HomeMain> {
 
   int _calculateSelectedIndex(BuildContext context) {
     final GoRouter route = GoRouter.of(context);
+    FocusManager.instance.primaryFocus?.unfocus();
     final String location = route.location;
     if (location.startsWith('/map')) {
       return 0;
