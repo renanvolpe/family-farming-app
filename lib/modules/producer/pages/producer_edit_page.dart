@@ -136,8 +136,9 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
         backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: const Icon(
+          icon: Icon(
             Icons.chevron_left,
+            color: ColorApp.blue3,
             size: 35,
             weight: 10,
           ),
@@ -145,7 +146,7 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
         title: Text(
           "Editar",
           style: TextStyle(
-            color: ColorApp.black,
+            color: ColorApp.blue3,
             fontSize: 20,
             fontWeight: FontWeight.w600,
             fontFamily: 'Abhaya Libre',
@@ -335,21 +336,21 @@ class _ProducerEditPageState extends State<ProducerEditPage> {
                                       ),
                                     ),
                                   ),
-                                  Marker(
-                                    point: SingletonLocationUser().userLocation!,
-                                    builder: (context) => Container(
-                                      height: 20,
-                                      width: 20,
-                                      decoration: BoxDecoration(
-                                        color: ColorApp.red,
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: const Icon(
-                                        Icons.person,
-                                        color: Colors.white,
-                                      ),
+                                Marker(
+                                  point: SingletonLocationUser().userLocation!,
+                                  builder: (context) => Container(
+                                    height: 20,
+                                    width: 20,
+                                    decoration: BoxDecoration(
+                                      color: ColorApp.red,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: const Icon(
+                                      Icons.person,
+                                      color: Colors.white,
                                     ),
                                   ),
+                                ),
                               ],
                             ),
                           ],

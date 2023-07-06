@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ColorApp {
-  static Color blue1 = const Color(0xff85CAE4);
+  static Color blue1 = const Color(0xff3FB06B).withOpacity(0.9);
   static Color blue2 = const Color(0xff009EBA);
-  static Color blue3 = const Color(0xff003046);
+  static Color blue3 = const Color(0xff00704A);
   static Color blue4 = const Color(0xff6A798A);
-  static Color blue5 = const Color(0xff85CAE4).withOpacity(0.3);
+  static Color blue5 = const Color(0xff3FB06B).withOpacity(0.6);
 
   static Color grey1 = const Color(0xffB3B4BA).withOpacity(0.3);
   static Color grey2 = const Color(0xff636773);

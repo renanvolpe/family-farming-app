@@ -56,8 +56,9 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
         backgroundColor: Colors.white,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: const Icon(
+          icon: Icon(
             Icons.chevron_left,
+            color: ColorApp.blue3,
             size: 35,
             weight: 10,
           ),
@@ -65,7 +66,7 @@ class _ProducerApresentationPageState extends State<ProducerApresentationPage> {
         title: Text(
           "Produtor",
           style: TextStyle(
-            color: ColorApp.black,
+            color: ColorApp.blue3,
             fontSize: 20,
             fontWeight: FontWeight.w600,
             fontFamily: 'Abhaya Libre',

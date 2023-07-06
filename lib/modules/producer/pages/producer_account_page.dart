@@ -45,7 +45,7 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
             title: Text(
               "Conta",
               style: TextStyle(
-                color: ColorApp.dark1,
+                color: ColorApp.blue3,
                 fontSize: 36,
                 fontWeight: FontWeight.w600,
                 fontFamily: 'Abhaya Libre',
@@ -87,7 +87,7 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
                             style: TextStyle(
                               color: ColorApp.blue3,
                               fontSize: 20,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w700,
                               fontFamily: 'Abhaya Libre',
                             ),
                           ),
@@ -114,7 +114,7 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
                     style: TextStyle(
                       color: ColorApp.blue3,
                       fontSize: 20,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w700,
                       fontFamily: 'Abhaya Libre',
                     ),
                   ),
@@ -137,7 +137,7 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
                               Text(
                                 "Edit information",
                                 style: TextStyle(
-                                  color: ColorApp.blue3,
+                                  color: ColorApp.black,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
                                   fontFamily: 'Abhaya Libre',
@@ -162,7 +162,7 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
                               Text(
                                 "Enable notification",
                                 style: TextStyle(
-                                  color: ColorApp.blue3,
+                                  color: ColorApp.black,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
                                   fontFamily: 'Abhaya Libre',
@@ -194,7 +194,7 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
                         child: Text(
                           "Logout",
                           style: TextStyle(
-                            color: ColorApp.blue3,
+                            color: ColorApp.black,
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
                             fontFamily: 'Abhaya Libre',

@@ -227,7 +227,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                             style: TextStyle(
                               fontSize: 36,
                               fontWeight: FontWeight.w500,
-                              color: ColorApp.black,
+                              color: ColorApp.blue3,
                               fontFamily: 'Abhaya Libre',
                             ),
                           ),
@@ -311,10 +311,11 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                           Text(
                             'Visto recentemente',
                             style: TextStyle(
-                                color: ColorApp.black,
-                                fontSize: 26,
-                                fontWeight: FontWeight.w500,
-                                fontFamily: 'Abhaya Libre'),
+                              color: ColorApp.blue3,
+                              fontSize: 26,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: 'Abhaya Libre',
+                            ),
                           ),
                           TextButton(
                             onPressed: () {
@@ -345,46 +346,66 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                         }),
                         child: Column(
                           children: [
-                            10.sizeH,
                             ListTile(
                               leading: const CircleAvatar(),
-                              title: Text(listProducers[i].name),
+                              title: Text(
+                                listProducers[i].name,
+                                style: const TextStyle(
+                                  fontFamily: 'Abhaya Libre',
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
                               subtitle: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   5.sizeH,
                                   Text(
                                     listProducers[i].short_description,
-                                    style: const TextStyle(color: Colors.grey),
+                                    style: const TextStyle(
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'Abhaya Libre',
+                                    ),
                                   ),
                                   10.sizeH,
                                   listProducers[i].tags != null
                                       ? Wrap(
                                           children: List.generate(
-                                              listProducers[i].tags!.length,
-                                              (index) => Container(
-                                                    padding: const EdgeInsets
-                                                            .symmetric(
-                                                        vertical: 3,
-                                                        horizontal: 4),
-                                                    margin: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 2,
-                                                        vertical: 2),
-                                                    decoration: BoxDecoration(
-                                                        color: ColorApp.blue5,
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20)),
-                                                    child: Text(listProducers[i]
-                                                        .tags![index]),
-                                                  )))
+                                            listProducers[i].tags!.length,
+                                            (index) => Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                vertical: 3,
+                                                horizontal: 4,
+                                              ),
+                                              margin:
+                                                  const EdgeInsets.symmetric(
+                                                horizontal: 2,
+                                                vertical: 2,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                color: ColorApp.blue5,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                  20,
+                                                ),
+                                              ),
+                                              child: Text(
+                                                listProducers[i].tags![index],
+                                                style: const TextStyle(
+                                                  fontWeight: FontWeight.w500,
+                                                  fontFamily: 'Abhaya Libre',
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        )
                                       : const SizedBox()
                                 ],
                               ),
                               trailing: const Icon(Icons.chevron_right),
                             ),
-                            10.sizeH,
+                            5.sizeH,
                             Divider(
                               color: ColorApp.grey1,
                             ),

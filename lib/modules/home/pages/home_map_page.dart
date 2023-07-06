@@ -84,7 +84,7 @@ class _HomeMapPageState extends State<HomeMapPage> {
         title: Text(
           "Descubra",
           style: TextStyle(
-            color: ColorApp.dark1,
+            color: ColorApp.blue3,
             fontSize: 36,
             fontWeight: FontWeight.w600,
             fontFamily: 'Abhaya Libre',

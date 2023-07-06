@@ -60,7 +60,7 @@ class StoreSectionComponent extends StatelessWidget {
                             producer.name,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              color: ColorApp.blue3,
+                              color: ColorApp.black,
                               fontSize: 17,
                               fontWeight: FontWeight.w600,
                               fontFamily: 'Abhaya Libre',
@@ -115,13 +115,9 @@ class StoreSectionComponent extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(
-                    Icons.airplane_ticket_outlined,
-                    color: Colors.blue,
-                  ),
                   3.sizeW,
                   const Text(
-                    "200m",
+                    "0.2Km",
                     style: TextStyle(color: Colors.black),
                   )
                 ],
@@ -140,10 +136,10 @@ class StoreSectionComponent extends StatelessWidget {
                   ),
                 ],
               ),
-              const Text(
+              Text(
                 "ABERTO",
                 style: TextStyle(
-                  color: Colors.red,
+                  color: ColorApp.blue1,
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
                   fontFamily: 'Abhaya Libre',

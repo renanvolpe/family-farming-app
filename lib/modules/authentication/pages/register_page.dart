@@ -80,7 +80,7 @@ class _RegisterPageState extends State<RegisterPage> {
             onTap: () => Navigator.pop(context),
             child: Icon(
               Icons.chevron_left,
-              color: ColorApp.black,
+              color: ColorApp.blue3,
               size: 35,
               weight: 10,
             )),
