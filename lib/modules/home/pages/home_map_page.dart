@@ -150,7 +150,7 @@ class _HomeMapPageState extends State<HomeMapPage> {
                               (index) {
                                 return InkWell(
                                     onTap: () => context.push(
-                                            "/map/producerDetail",
+                                            "/map/detail",
                                             extra: {
                                               "id": stateListProducer
                                                   .listProducers[index].id,
@@ -191,7 +191,7 @@ class _HomeMapPageState extends State<HomeMapPage> {
                                   stateListProducer.listProducers[i].lng!),
                               builder: (context) => InkWell(
                                 onTap: () =>
-                                    context.push("/map/producerDetail", extra: {
+                                    context.push("/map/detail", extra: {
                                   "id": stateListProducer.listProducers[i].id,
                                   "latLongProducer": LatLng(
                                       stateListProducer.listProducers[i].lat!,

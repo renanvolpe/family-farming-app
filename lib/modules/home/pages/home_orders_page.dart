@@ -338,7 +338,7 @@ class _HomeOrdersPageState extends State<HomeOrdersPage> {
                     for (int i = 0; i < listProducers.length; i++)
                       InkWell(
                         onTap: () =>
-                            context.push("/order/producerDetail", extra: {
+                            context.push("/list/detail", extra: {
                           "id": listProducers[i].id,
                           "latLongProducer":
                               LatLng(-23.17, -45.88), // TODO remove this data

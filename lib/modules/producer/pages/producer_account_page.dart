@@ -123,7 +123,7 @@ class _ProducerAccountPageState extends State<ProducerAccountPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       InkWell(
-                        onTap: () => context.push("/producerEdit", extra: {
+                        onTap: () => context.push("/edit", extra: {
                           "producerUser": producerUser
                         }).whenComplete(() {
                           BlocProvider.of<GetProducerUserBloc>(context).add(
