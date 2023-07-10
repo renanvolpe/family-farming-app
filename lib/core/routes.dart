@@ -32,7 +32,7 @@ final route = GoRouter(
                   const HomeMapPage()),
           GoRoute(
               parentNavigatorKey: _shellNavigatorKey,
-              path: '/order',
+              path: '/list',
               routes: [producerDetailRout],
               builder: (BuildContext context, GoRouterState state) =>
                   const HomeOrdersPage()),
@@ -43,7 +43,7 @@ final route = GoRouter(
                 if (SingletonUser().userAuth == null) {
                   return "/account/login";
                 }
-                return "/account/producerAccount";
+                return "/account/account";
               },
               routes: [
                 GoRoute(
@@ -51,7 +51,7 @@ final route = GoRouter(
                     builder: (BuildContext context, GoRouterState state) =>
                         const LoginPage()),
                 GoRoute(
-                    path: 'producerAccount',
+                    path: 'account',
                     builder: (BuildContext context, GoRouterState state) =>
                         const ProducerAccountPage()),
               ]),
@@ -59,7 +59,7 @@ final route = GoRouter(
       ),
       GoRoute(
           parentNavigatorKey: _rootNavigatorKey,
-          path: '/producerEdit',
+          path: '/edit',
           builder: (BuildContext context, GoRouterState state) {
             var params = state.extra as Map;
             var producerUser  = params["producerUser"];
@@ -73,7 +73,7 @@ final route = GoRouter(
     ]);
 var producerDetailRout = GoRoute(
     parentNavigatorKey: _rootNavigatorKey,
-    path: 'producerDetail',
+    path: 'detail',
     builder: (BuildContext context, GoRouterState state) {
       var params = state.extra as Map;
       String id = params["id"];

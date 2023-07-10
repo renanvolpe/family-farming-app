@@ -55,14 +55,14 @@ class _HomeMainState extends State<HomeMain> {
     if (location.startsWith('/map')) {
       return 0;
     }
-    if (location.startsWith('/order')) {
+    if (location.startsWith('/list')) {
       return 1;
     }
     if (location.startsWith('/account')) {
       if (location.startsWith('/account/login')) {
         return 2; //loginPage
       }
-      if (location.startsWith('/account/producerAccount')) {
+      if (location.startsWith('/account/account')) {
         return 3; //ProducerEditPage
       }
     }
@@ -77,7 +77,7 @@ class _HomeMainState extends State<HomeMain> {
         return context.go('/map');
       case 1:
         teste = 1;
-        return context.go('/order');
+        return context.go('/list');
       case 2:
         teste = 2;
         return context.go('/account');
